@@ -2,7 +2,7 @@
 /**
  * Contains the action-performer
  *
- * @version			$Id: performer.php 475 2008-04-04 15:40:32Z nasmussen $
+ * @version			$Id$
  * @package			todolist
  * @subpackage	src.actions
  * @author			Nils Asmussen <nils@script-solution.de>

@@ -2,7 +2,7 @@
 /**
  * Contains general purpose constants
  *
- * @version			$Id: userdef.php 41 2007-11-25 14:48:45Z nasmussen $
+ * @version			$Id$
  * @package			todolist
  * @subpackage	config
  * @author			Nils Asmussen <nils@script-solution.de>

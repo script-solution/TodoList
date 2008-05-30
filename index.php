@@ -2,7 +2,7 @@
 /**
  * The main file of the project
  *
- * @version			$Id: index.php 747 2008-05-24 15:12:03Z nasmussen $
+ * @version			$Id$
  * @package			todolist
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2007 Nils Asmussen

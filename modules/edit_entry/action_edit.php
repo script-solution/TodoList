@@ -2,7 +2,7 @@
 /**
  * Contains the edit-entry-action
  *
- * @version			$Id: action_edit.php 475 2008-04-04 15:40:32Z nasmussen $
+ * @version			$Id$
  * @package			todoList
  * @subpackage	modules
  * @author			Nils Asmussen <nils@script-solution.de>

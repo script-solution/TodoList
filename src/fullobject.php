@@ -2,7 +2,7 @@
 /**
  * Contains the full-object-class
  *
- * @version			$Id: fullobject.php 320 2008-01-26 17:11:52Z nasmussen $
+ * @version			$Id$
  * @package			Todolist
  * @subpackage	src
  * @author			Nils Asmussen <nils@script-solution.de>

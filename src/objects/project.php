@@ -2,7 +2,7 @@
 /**
  * Contains the project-object-class
  *
- * @version			$Id: project.php 320 2008-01-26 17:11:52Z nasmussen $
+ * @version			$Id$
  * @package			todolist
  * @subpackage	src.objects
  * @author			Nils Asmussen <nils@script-solution.de>

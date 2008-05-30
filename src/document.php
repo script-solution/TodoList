@@ -2,7 +2,7 @@
 /**
  * The document-class
  *
- * @version			$Id: document.php 747 2008-05-24 15:12:03Z nasmussen $
+ * @version			$Id$
  * @package			todolist
  * @subpackage	src
  * @author			Nils Asmussen <nils@script-solution.de>

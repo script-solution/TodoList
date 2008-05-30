@@ -1,7 +1,7 @@
 /**
  * Some general js-functions
  *
- * @version			$Id: functions.js 41 2007-11-25 14:48:45Z nasmussen $
+ * @version			$Id$
  * @package			todolist
  * @subpackage	src
  * @author			Nils Asmussen <nils@script-solution.de>

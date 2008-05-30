@@ -2,7 +2,7 @@
 /**
  * Contains the autoloader
  *
- * @version			$Id: autoloader.php 116 2007-12-03 10:14:45Z nasmussen $
+ * @version			$Id$
  * @package			Todolist
  * @subpackage	src
  * @author			Nils Asmussen <nils@script-solution.de>

@@ -2,7 +2,7 @@
 /**
  * Contains the standalone-page-class
  *
- * @version			$Id: standalone.php 320 2008-01-26 17:11:52Z nasmussen $
+ * @version			$Id$
  * @package			Todolist
  * @subpackage	src.page
  * @author			Nils Asmussen <nils@script-solution.de>

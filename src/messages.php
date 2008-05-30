@@ -2,7 +2,7 @@
 /**
  * Contains the messages-class
  *
- * @version			$Id: messages.php 675 2008-05-05 21:58:56Z nasmussen $
+ * @version			$Id$
  * @package			Todolist
  * @subpackage	src
  * @author			Nils Asmussen <nils@script-solution.de>

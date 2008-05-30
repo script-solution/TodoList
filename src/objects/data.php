@@ -2,7 +2,7 @@
 /**
  * Contains the data-object-class
  *
- * @version			$Id: data.php 82 2007-11-30 21:18:56Z nasmussen $
+ * @version			$Id$
  * @package			todolist
  * @subpackage	src.objects
  * @author			Nils Asmussen <nils@script-solution.de>

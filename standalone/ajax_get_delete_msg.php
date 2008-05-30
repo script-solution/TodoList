@@ -2,7 +2,7 @@
 /**
  * Contains the standalone-class to get a delete-message
  *
- * @version			$Id: ajax_get_delete_msg.php 160 2007-12-10 22:56:29Z nasmussen $
+ * @version			$Id$
  * @package			todolist
  * @subpackage	standalone
  * @author			Nils Asmussen <nils@script-solution.de>

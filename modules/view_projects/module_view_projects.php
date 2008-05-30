@@ -2,7 +2,7 @@
 /**
  * Contains the view-projects-module
  *
- * @version			$Id: module_view_projects.php 475 2008-04-04 15:40:32Z nasmussen $
+ * @version			$Id$
  * @package			todolist
  * @subpackage	modules
  * @author			Nils Asmussen <nils@script-solution.de>

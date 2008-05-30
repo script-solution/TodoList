@@ -2,7 +2,7 @@
 /**
  * The file for the other actions than the frontend like for example popups or the activation-page
  *
- * @version			$Id: standalone.php 747 2008-05-24 15:12:03Z nasmussen $
+ * @version			$Id$
  * @package			todolist
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2007 Nils Asmussen

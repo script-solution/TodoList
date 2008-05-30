@@ -2,7 +2,7 @@
 /**
  * Contains the en-locale class for the todolist
  *
- * @version			$Id: en.php 320 2008-01-26 17:11:52Z nasmussen $
+ * @version			$Id$
  * @package			todolist
  * @subpackage	src.locale
  * @author			Nils Asmussen <nils@script-solution.de>

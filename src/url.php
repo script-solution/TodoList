@@ -2,7 +2,7 @@
 /**
  * Contains the url-class
  *
- * @version			$Id: url.php 675 2008-05-05 21:58:56Z nasmussen $
+ * @version			$Id$
  * @package			todolist
  * @subpackage	src
  * @author			Nils Asmussen <nils@script-solution.de>

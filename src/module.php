@@ -2,7 +2,7 @@
 /**
  * Contains the base-class for our modules
  *
- * @version			$Id: module.php 467 2008-04-04 12:59:02Z nasmussen $
+ * @version			$Id$
  * @package			todolist
  * @subpackage	src
  * @author			Nils Asmussen <nils@script-solution.de>

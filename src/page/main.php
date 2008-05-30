@@ -3,7 +3,7 @@
  * Contains the page-class which is used to display the whole frontend except the
  * popups and so on.
  *
- * @version			$Id: main.php 675 2008-05-05 21:58:56Z nasmussen $
+ * @version			$Id$
  * @package			todolist
  * @subpackage	src.page
  * @author			Nils Asmussen <nils@script-solution.de>
