@@ -1,0 +1,93 @@
+{include "header.htm"}
+{include "delete_message.htm"}
+
+{if action_result < 1}
+{if module_error == false}
+<script type="text/javascript">
+<!--
+function showDeleteMessage()
+{
+	var ids = PLIB_getDeleteIds('project_');
+	if(ids == '')
+		return;
+
+	var url = 'standalone.php?action=ajax_get_delete_msg&ids=' + ids + '&loc=view_projects';
+	var onfinished = function(text) {
+		PLIB_replaceContent('delete_message_box',text);
+		PLIB_getElement('delete_message_box').style.display = 'block';
+		window.scrollTo(0,0);
+	};
+	myAjax.sendGetRequest(url,onfinished);
+}
+//-->
+</script>
+
+<table width="100%" align="center" cellpadding="0" cellspacing="0">
+	<tr>
+		<td class="tl_tbl_top_left"></td>
+		<td class="tl_tbl_top"></td>
+		<td class="tl_tbl_top_right"></td>
+	</tr>
+	<tr>
+		<td class="tl_tbl_left"></td>
+		<td>
+		<table width="100%" cellpadding="2" cellspacing="1">
+			<tr>
+				<td height="22" align="center" colspan="5" class="tl_topic">Projekte</td>
+			</tr>
+			<tr>
+				<td width="36%" class="tl_coldesc">Titel</td>
+				<td width="20%" class="tl_coldesc" align="center">Abk&uuml;rzung</td>
+				<td width="20%" class="tl_coldesc" align="center">Start</td>
+				<td width="12%" class="tl_coldesc" align="center">Editieren</td>
+				<td width="12%" class="tl_coldesc" align="center">L&ouml;schen</td>
+			</tr>
+			{if num == 0}
+			<tr>
+				<td colspan="5" align="center" class="tl_main">Es wurden keine Projekte gefunden</td>
+			</tr>
+			{endif}
+			{loop projects as index => project}
+			<tr>
+				<td class="tl_main">{project:title}</td>
+				<td class="tl_main" align="center">{project:shortcut}</td>
+				<td class="tl_main" align="center">{project:start}</td>
+				<td class="tl_main" align="center">
+				<a class="tl_main" href="{url.simple_url('edit_project','&amp;$URL_MODE=edit&amp;$URL_ID='~project:id)}">Editieren</a>
+				</td>
+				<td class="tl_main" align="center"
+					onclick="var cb = document.getElementById('project_{index}'); cb.checked = cb.checked ? false : true;">
+				<input type="checkbox" id="project_{index}" class="bs_checkbox" name="delete[]" value="{project:id}"
+							 onclick="this.checked = this.checked ? false : true;" />
+				</td>
+			</tr>
+			{endloop}
+		</table>
+		</td>
+		<td class="tl_tbl_right"></td>
+	</tr>
+	<tr>
+		<td class="tl_tbl_bottom_left"></td>
+		<td class="tl_tbl_bottom"></td>
+		<td class="tl_tbl_bottom_right"></td>
+	</tr>
+</table>
+<table width="100%" align="center" cellpadding="0" cellspacing="0">
+	<tr>
+		<td width="30%" class="tl_body">&nbsp;</td>
+		<td width="40%" class="tl_body" align="center">
+		<input type="button" value="L&ouml;schen" onclick="showDeleteMessage();" />
+		</td>
+		<td width="30%" class="tl_body" align="right">
+		<a class="tl_body" href="javascript:invert_selection('project_');">Markierung umkehren</a>
+		</td>
+	</tr>
+</table>
+<br />
+
+<a class="tl_button_big" href="{url.simple_url('edit_project','&amp;$URL_MODE=add')}">Projekt hinzuf&uuml;gen</a>
+<br clear="all" />
+{endif}
+{endif}
+
+{include "footer.htm"}

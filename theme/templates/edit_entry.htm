@@ -1,0 +1,133 @@
+{include "header.htm"}
+
+{if action_result < 1}
+{if module_error == false}
+<form method="post" action="{target_url}">
+<input type="hidden" name="action_type" value="{action_type}" />
+<table width="100%" align="center" cellpadding="0" cellspacing="0">
+	<tr>
+		<td class="tl_tbl_top_left"></td>
+		<td class="tl_tbl_top"></td>
+		<td class="tl_tbl_top_right"></td>
+	</tr>
+	<tr>
+		<td class="tl_tbl_left"></td>
+		<td>
+		<table width="100%" cellpadding="2" cellspacing="1">
+			<tr>
+				<td height="22" align="center" colspan="2" class="tl_topic">{form_title}</td>
+			</tr>
+			{if not_multiple_edit}
+			<tr>
+				<td width="30%" class="tl_coldesc">Titel *:</td>
+				<td width="70%" class="tl_main">{form.get_textbox('entry_title',def_title,90,255)}</td>
+			</tr>
+			{else}
+			<tr>
+				<td width="30%" class="tl_coldesc">Gew&auml;hlte Eintr&auml;ge:</td>
+				<td width="70%" class="tl_main">{selected_entries}</td>
+			</tr>
+			{endif}
+			<tr>
+				<td width="30%" class="tl_coldesc">
+				{if not_multiple_edit}
+				Start-Version *:
+				{else}
+				{form.get_checkbox('use_start_version',0,1,'Start-Version')}:
+				{endif}
+				</td>
+				<td width="70%" class="tl_main">{start_version_combo}</td>
+			</tr>
+			<tr>
+				<td width="30%" class="tl_coldesc">
+				{if not_multiple_edit}
+				Fixed-Version:
+				{else}
+				{form.get_checkbox('use_fixed_version',0,1,'Fixed-Version')}:
+				{endif}
+				</td>
+				<td width="70%" class="tl_main">{fixed_version_combo}</td>
+			</tr>
+			<tr>
+				<td width="30%" class="tl_coldesc">
+				{if not_multiple_edit}
+				Kategorie *:
+				{else}
+				{form.get_checkbox('use_category',0,1,'Kategorie')}:
+				{endif}
+				</td>
+				<td width="70%" class="tl_main">{category_combo}</td>
+			</tr>
+			<tr>
+				<td width="30%" class="tl_coldesc">
+				{if not_multiple_edit}
+				Typ *:
+				{else}
+				{form.get_checkbox('use_type',0,1,'Typ')}:
+				{endif}
+				</td>
+				<td width="70%" class="tl_main">{type_combo}</td>
+			</tr>
+			<tr>
+				<td width="30%" class="tl_coldesc">
+				{if not_multiple_edit}
+				Geplante Umsetzung *:
+				{else}
+				{form.get_checkbox('use_priority',0,1,'Geplante Umsetzung')}:
+				{endif}
+				</td>
+				<td width="70%" class="tl_main">
+				{priority_combo}
+				<div class="tl_desc">In welcher Version wird der Eintrag voraussichtlich umgesetzt sein?</div>
+				</td>
+			</tr>
+			<tr>
+				<td width="30%" class="tl_coldesc">
+				{if not_multiple_edit}
+				Status *:
+				{else}
+				{form.get_checkbox('use_status',0,1,'Status')}:
+				{endif}
+				</td>
+				<td width="70%" class="tl_main">{status_combo}</td>
+			</tr>
+			{if not_multiple_edit}
+			<tr>
+				<td width="30%" class="tl_coldesc">Link:</td>
+				<td width="70%" class="tl_main">
+				{form.get_textbox('entry_info_link',def_info_link,90,255)}
+				<div class="tl_desc">F&uuml;r weiterf&uuml;hrende Informationen o.&auml;. kannst Du hier einen Link angeben.</div>
+				</td>
+			</tr>
+			<tr>
+				<td width="30%" class="tl_coldesc">Beschreibung:</td>
+				<td width="70%" class="tl_main">
+				{form.get_textarea('entry_description',def_description,'90%',200)}
+				</td>
+			</tr>
+			{endif}
+			{if mode == 'edit'}
+			<tr>
+				<td width="30%" class="tl_coldesc">Datum der letzten &Auml;nderung aktualisieren:</td>
+				<td width="70%" class="tl_main">{form.get_radio_yesno('change_lastchange_date',1)}</td>
+			</tr>
+			{endif}
+		</table>
+		</td>
+		<td class="tl_tbl_right"></td>
+	</tr>
+	<tr>
+		<td class="tl_tbl_bottom_left"></td>
+		<td class="tl_tbl_bottom"></td>
+		<td class="tl_tbl_bottom_right"></td>
+	</tr>
+</table>
+<center>
+	<input type="button" value="Zur&uuml;ck" onclick="document.location.href='{back_url}'" />
+	<input type="submit" name="submit" value="{submit_title}" />
+</center>
+</form>
+{endif}
+{endif}
+
+{include "footer.htm"}

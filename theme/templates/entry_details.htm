@@ -1,0 +1,75 @@
+{include "header.htm"}
+
+{if action_result < 1}
+{if module_error == false}
+<table width="100%" align="center" cellpadding="0" cellspacing="0">
+	<tr>
+		<td class="tl_tbl_top_left"></td>
+		<td class="tl_tbl_top"></td>
+		<td class="tl_tbl_top_right"></td>
+	</tr>
+	<tr>
+		<td class="tl_tbl_left"></td>
+		<td>
+		<table width="100%" cellpadding="2" cellspacing="1">
+			<tr>
+				<td height="22" align="center" colspan="4" class="tl_topic">Eintrags Details</td>
+			</tr>
+			<tr>
+				<td width="25%" class="tl_coldesc" align="right">Titel:</td>
+				<td width="75%" colspan="3" class="tl_main">{title}</td>
+			</tr>
+			<tr>
+				<td width="25%" class="tl_coldesc" align="right">Projekt:</td>
+				<td width="25%" class="tl_main">{project_name} :: {category_name}</td>
+				<td width="25%" class="tl_coldesc" align="right">Status:</td>
+				<td width="25%" class="{status_class}">{status}</td>
+			</tr>
+			<tr>
+				<td width="25%" class="tl_coldesc" align="right">Typ:</td>
+				<td width="25%" class="tl_main">{type}</td>
+				<td width="25%" class="tl_coldesc" align="right">Priorit&auml;t:</td>
+				<td width="25%" class="tl_main">{priority}</td>
+			</tr>
+			<tr>
+				<td width="25%" class="tl_coldesc" align="right">Start-Datum:</td>
+				<td width="25%" class="tl_main">{start_date}</td>
+				<td width="25%" class="tl_coldesc" align="right">Start-Version:</td>
+				<td width="25%" class="tl_main">{start_version}</td>
+			</tr>
+			<tr>
+				<td width="25%" class="tl_coldesc" align="right">Fixed-Datum:</td>
+				<td width="25%" class="tl_main">{fixed_date}</td>
+				<td width="25%" class="tl_coldesc" align="right">Fixed-Version:</td>
+				<td width="25%" class="tl_main">{fixed_version}</td>
+			</tr>
+			<tr>
+				<td width="25%" class="tl_coldesc" align="right">Letzte &Auml;nderung:</td>
+				<td width="75%" colspan="3" class="tl_main">{changed_date}</td>
+			</tr>
+			<tr>
+				<td width="25%" class="tl_coldesc" align="right" valign="top">Beschreibung:</td>
+				<td width="75%" colspan="3" class="tl_main">{description}</td>
+			</tr>
+			<tr>
+				<td width="25%" class="tl_coldesc" align="right">Weiterf&uuml;hrender Link:</td>
+				<td width="75%" colspan="3" class="tl_main">{info_link}</td>
+			</tr>
+		</table>
+		</td>
+		<td class="tl_tbl_right"></td>
+	</tr>
+	<tr>
+		<td class="tl_tbl_bottom_left"></td>
+		<td class="tl_tbl_bottom"></td>
+		<td class="tl_tbl_bottom_right"></td>
+	</tr>
+</table>
+<br />
+<a class="tl_button_big" href="{url.simple_url('edit_entry','&amp;$URL_MODE=edit&amp;$URL_IDS='~id)}">Eintrag editieren</a>
+<a class="tl_button_big" href="{url.simple_url(-1)}">Zur&uuml;ck</a>
+<br clear="all" />
+{endif}
+{endif}
+
+{include "footer.htm"}

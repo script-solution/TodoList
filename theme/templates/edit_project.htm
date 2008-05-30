@@ -1,0 +1,69 @@
+{include "header.htm"}
+
+{if action_result < 1}
+{if module_error == false}
+<form method="post" action="{target_url}">
+<input type="hidden" name="action_type" value="{action_type}" />
+<table width="100%" align="center" cellpadding="0" cellspacing="0">
+	<tr>
+		<td class="tl_tbl_top_left"></td>
+		<td class="tl_tbl_top"></td>
+		<td class="tl_tbl_top_right"></td>
+	</tr>
+	<tr>
+		<td class="tl_tbl_left"></td>
+		<td>
+		<table width="100%" cellpadding="2" cellspacing="1">
+			<tr>
+				<td height="22" align="center" colspan="2" class="tl_topic">{form_title}</td>
+			</tr>
+			<tr>
+				<td width="30%" class="tl_coldesc">Titel:</td>
+				<td width="70%" class="tl_main">{form.get_textbox('project_name',def_name,40,255)}</td>
+			</tr>
+			<tr>
+				<td width="30%" class="tl_coldesc">Abk&uuml;rzung:</td>
+				<td width="70%" class="tl_main">{form.get_textbox('project_name_short',def_name_short,8,10)}
+				</td>
+			</tr>
+			<tr>
+				<td width="30%" class="tl_coldesc">Start:</td>
+				<td width="70%" class="tl_main">{form.get_date_chooser('start_',def_start,false)}</td>
+			</tr>
+			{if mode == 'edit'}
+			<tr>
+				<td width="30%" class="tl_coldesc">Versionen:</td>
+				<td width="70%" class="tl_main">
+				{versions}
+				<input type="button" value="Version hinzuf&uuml;gen" style="margin-top: 3px;"
+					   onclick="document.location.href = '{add_version_url}';" />
+				</td>
+			</tr>
+			<tr>
+				<td width="30%" class="tl_coldesc">Kategorien:</td>
+				<td width="70%" class="tl_main">
+				{categories}
+				<input type="button" value="Kategorie hinzuf&uuml;gen" style="margin-top: 3px;"
+					   onclick="document.location.href = '{add_category_url}';" />
+				</td>
+			</tr>
+			{endif}
+		</table>
+		</td>
+		<td class="tl_tbl_right"></td>
+	</tr>
+	<tr>
+		<td class="tl_tbl_bottom_left"></td>
+		<td class="tl_tbl_bottom"></td>
+		<td class="tl_tbl_bottom_right"></td>
+	</tr>
+</table>
+<center>
+	<input type="button" value="Zur&uuml;ck" onclick="document.location.href='{url.simple_url('view_projects')}'" />
+	<input type="submit" name="submit" value="{submit_title}" />
+</center>
+</form>
+{endif}
+{endif}
+
+{include "footer.htm"}

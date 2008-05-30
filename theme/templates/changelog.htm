@@ -1,0 +1,50 @@
+{include "header.htm"}
+
+{if module_error == false}
+<table width="100%" align="center" cellpadding="0" cellspacing="0">
+	<tr>
+		<td class="tl_tbl_top_left"></td>
+		<td class="tl_tbl_top"></td>
+		<td class="tl_tbl_top_right"></td>
+	</tr>
+	<tr>
+		<td class="tl_tbl_left"></td>
+		<td>
+		<table width="100%" cellpadding="2" cellspacing="1">
+			<tr>
+				<td colspan="2" height="22" align="center" class="tl_topic">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td width="30%" class="tl_topic">
+						<a class="tl_topic" href="{url.simple_url('changelog','&amp;$URL_MODE=export')}">Exportieren</a>
+						</td>
+						<td width="40%" class="tl_topic" align="center">Changelog - {title}</td>
+						<td width="30%" class="tl_topic">&nbsp;</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			{loop entries as entry}
+			{if entry:show_version}
+			<tr>
+				<td colspan="2" class="tl_coldesc" style="font-size: 11pt;">{entry:product_version}</td>
+			</tr>
+			{endif}
+			<tr>
+				<td class="tl_main" width="15%">{entry:date}</td>
+				<td class="tl_main" width="85%">{entry:type} {entry:title}</td>
+			</tr>
+			{endloop}
+		</table>
+		</td>
+		<td class="tl_tbl_right"></td>
+	</tr>
+	<tr>
+		<td class="tl_tbl_bottom_left"></td>
+		<td class="tl_tbl_bottom"></td>
+		<td class="tl_tbl_bottom_right"></td>
+	</tr>
+</table>
+{endif}
+
+{include "footer.htm"}

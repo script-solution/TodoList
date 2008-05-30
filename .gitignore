@@ -1,0 +1,4 @@
+cache/
+config/mysql.php
+*.sublime-project
+*.sublime-workspace

@@ -1,0 +1,67 @@
+{if page}
+<table id="page_split" width="100%" cellpadding="0" cellspacing="0" summary="page split">
+	<tr>
+		<!-- START -->
+		<td class="tl_body" align="center" width="40">
+		{if page > 1}
+		<a class="tl_body" href="{first_url}">
+		<img title="{locale.lang('firstpage')}" src="{first_image}" border="0" alt="" />
+		</a>
+		{else}
+		<img src="{first_image_dis}" title="{locale.lang('notavailable')}" alt="" />
+		{endif}
+		</td>
+		
+		<!-- PREVIOUS -->
+		<td class="tl_body" align="center" width="20">
+		{if page > 1}
+		<a class="tl_body" href="{prev_url}">
+		<img title="{locale.lang('back')}" src="{prev_image}" border="0" alt="" />
+		</a>
+		{else}
+		<img src="{prev_image_dis}" title="{locale.lang('notavailable')}" alt="" />
+		{endif}
+		</td>
+		
+		<!-- PAGES -->
+		<td class="tl_body" align="center">
+		{locale.lang('gotopage')}:&nbsp;&nbsp;&nbsp;
+		{loop numbers as number}
+		{if number:number == page}
+		<span class="tdl_pageno tdl_pagecurrent">{number:number}</span>
+		{else}
+		{if number:link}
+		<span class="tdl_pageno"><a class="tl_body" href="{number:link}">{number:number}</a></span>
+		{else}
+		{number:number}
+		{endif}
+		{endif}
+		{endloop}
+		&nbsp;&nbsp;&nbsp;
+		( {locale.lang('viewing')}: {start_item} - {end_item} , {locale.lang('total')}: {total_items} )
+		</td>
+		
+		<!-- NEXT -->
+		<td class="tl_body" align="center" width="20">
+		{if page < total_pages}
+		<a class="tl_body" href="{next_url}">
+		<img title="{locale.lang('forward')}" src="{next_image}" border="0" alt="" />
+		</a>
+		{else}
+		<img src="{next_image_dis}" title="{locale.lang('notavailable')}" alt="" />
+		{endif}
+		</td>
+		
+		<!-- LAST -->
+		<td class="tl_body" align="center" width="40">
+		{if page < total_pages}
+		<a class="tl_body" href="{last_url}">
+		<img title="{locale.lang('lastpage')}" src="{last_image}" border="0" alt="" />
+		</a>
+		{else}
+		<img src="{last_image_dis}" title="{locale.lang('notavailable')}" alt="" />
+		{endif}
+		</td>
+	</tr>
+</table>
+{endif}

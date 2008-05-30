@@ -1,0 +1,16 @@
+<?php
+##########################################
+define('TDL_MYSQL_HOST','host');
+define('TDL_MYSQL_LOGIN','login');
+define('TDL_MYSQL_PASSWORD','password');
+define('TDL_MYSQL_DATABASE','dbname');
+##########################################
+
+############## MySQL-Tables ############
+define('TDL_TB_CATEGORIES','tl_categories');
+define('TDL_TB_CONFIG','tl_config');
+define('TDL_TB_ENTRIES','tl_entries');
+define('TDL_TB_PROJECTS','tl_projects');
+define('TDL_TB_VERSIONS','tl_project_versions');
+##########################################
+?>
