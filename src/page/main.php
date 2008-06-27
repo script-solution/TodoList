@@ -194,7 +194,7 @@ final class TDL_Page_Main extends TDL_Document
 		);
 		
 		// show footer
-		$this->_module->tpl->set_template('footer.htm',0);
+		$this->_module->tpl->set_template('footer.htm');
 		$this->_module->tpl->add_variables(array(
 			'version' => TDL_VERSION,
 			'time' => $this->get_script_time(),

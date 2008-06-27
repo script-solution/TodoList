@@ -73,7 +73,7 @@ if(is_file('install/.htaccess'))
 		 .' file will not be displayed althought it exists.');
 }
 
-$this->tpl->set_template('header.htm',0);
+$this->tpl->set_template('header.htm');
 $this->tpl->add_variables(array(
 	'show_lang_choose' => $step < 3,
 	'target_url' => $_SERVER['PHP_SELF'],
@@ -87,10 +87,10 @@ echo $this->tpl->parse_template();
 // are we finished?
 if($step == 4)
 {
-	$this->tpl->set_template('finish.htm',0);
+	$this->tpl->set_template('finish.htm');
 	echo $this->tpl->parse_template();
 	
-	$this->tpl->set_template('footer.htm',0);
+	$this->tpl->set_template('footer.htm');
 	echo $this->tpl->parse_template();
 	
 	session_destroy();
@@ -98,7 +98,7 @@ if($step == 4)
 	return;
 }
 
-$this->tpl->set_template('top.htm',0);
+$this->tpl->set_template('top.htm');
 $this->tpl->add_variables(array(
 	'target_url' => $_SERVER['PHP_SELF'].'?step='.$step.'&amp;lang='.$lang,
 	'step' => $step
@@ -115,7 +115,7 @@ if(!$step_result[0])
 		$errors .= '<li>'.$value.'</li>'."\n";
 	$errors .= '</ul>'."\n";
 
-	$this->tpl->set_template('errors.htm',0);
+	$this->tpl->set_template('errors.htm');
 	$this->tpl->add_variables(array(
 		'errors' => $errors
 	));
@@ -123,7 +123,7 @@ if(!$step_result[0])
 }
 
 // top
-$this->tpl->set_template('content.htm',0);
+$this->tpl->set_template('content.htm');
 $this->tpl->add_variables(array(
 	'title' => $LANG['step'.$step]
 ));
@@ -157,7 +157,7 @@ if($step == 1)
 else if($step == 2)
 {
 	$prefix = $_SESSION['BS11_install']['table_prefix'];
-	$this->tpl->set_template('step4.htm',0);
+	$this->tpl->set_template('step4.htm');
 	$this->tpl->add_variables(array(
 		'prefix' => $prefix
 	));
@@ -243,21 +243,21 @@ else if($step == 3)
 	else
 		BS_add_to_log_failed($LOG);
 	
-	$this->tpl->set_template('step5.htm',0);
+	$this->tpl->set_template('step5.htm');
 	$this->tpl->add_variables(array(
 		'log' => $LOG
 	));
 	echo $this->tpl->parse_template();
 }
 
-$this->tpl->set_template('content.htm',5);
+$this->tpl->set_template('content.htm');
 echo $this->tpl->parse_template();
 
 $lang = $this->input->get_var('lang','get',PLIB_Input::STRING);
 $step = $this->input->get_var('step','get',PLIB_Input::INTEGER);
 BS_display_navigation('bottom',$step,$lang);
 
-$this->tpl->set_template('footer.htm',0);
+$this->tpl->set_template('footer.htm');
 echo $this->tpl->parse_template();
 
 ob_end_flush();

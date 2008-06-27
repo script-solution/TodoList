@@ -123,7 +123,7 @@ function BS_display_navigation($loc,$step,$lang)
 			$show_refresh = true;
 	}
 
-	$this->tpl->set_template('navigation.htm',0);
+	$this->tpl->set_template('navigation.htm');
 	$this->tpl->add_variables(array(
 		'loc' => $loc,
 		'show_refresh' => $show_refresh,
@@ -237,7 +237,7 @@ function BS_display_config($title,$name,$cond,$default = "admin",$size = 20,$max
 	if($description != '')
 		$title .= '<div class="bs_desc">'.$description.'</div>';
 
-	$this->tpl->set_template('content.htm',2);
+	$this->tpl->set_template('content.htm');
 	$this->tpl->add_variables(array(
 		'title' => $title,
 		'name' => $name,
@@ -254,7 +254,7 @@ function BS_display_config($title,$name,$cond,$default = "admin",$size = 20,$max
  */
 function BS_display_separator()
 {
-	$this->tpl->set_template('content.htm',4);
+	$this->tpl->set_template('content.htm');
 	echo $this->tpl->parse_template();
 }
 
@@ -277,7 +277,7 @@ function BS_display_status($title,$check,$in_ok = 0,$in_nok = 0,$title_out = 0,$
 	if($description != '')
 		$title .= '<br /><span style="font-size: 7pt; font-weight: normal;">'.$description.'</span>';
 
-	$this->tpl->set_template('content.htm',1);
+	$this->tpl->set_template('content.htm');
 	$this->tpl->add_variables(array(
 		'title' => $title,
 		'status' => ($title_out === 0) ? ($check ? $ok : $notok) : $title_out,
