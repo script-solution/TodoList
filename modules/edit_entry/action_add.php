@@ -19,15 +19,20 @@ class TDL_Action_edit_entry_add extends PLIB_Actions_Base
 {
 	public function perform_action()
 	{
-		$title = $this->input->get_var('entry_title','post',PLIB_Input::STRING);
-		$description = $this->input->get_var('entry_description','post',PLIB_Input::STRING);
-		$entry_info_link = $this->input->get_var('entry_info_link','post',PLIB_Input::STRING);
-		$category = $this->input->get_var('category','post',PLIB_Input::INTEGER);
-		$start_version = $this->input->get_var('start_version','post',PLIB_Input::STRING);
-		$fixed_version = $this->input->get_var('fixed_version','post',PLIB_Input::STRING);
-		$status = $this->input->correct_var('status','post',PLIB_Input::STRING,array('open','running','fixed','not_tested'),'open');
-		$type = $this->input->correct_var('type','post',PLIB_Input::STRING,array('bug','feature','improvement','test'),'bug');
-		$priority = $this->input->correct_var('priority','post',PLIB_Input::STRING,array('current','next','anytime'),'anytime');
+		$input = PLIB_Props::get()->input();
+		$db = PLIB_Props::get()->db();
+		$url = PLIB_Props::get()->url();
+		$functions = PLIB_Props::get()->functions();
+
+		$title = $input->get_var('entry_title','post',PLIB_Input::STRING);
+		$description = $input->get_var('entry_description','post',PLIB_Input::STRING);
+		$entry_info_link = $input->get_var('entry_info_link','post',PLIB_Input::STRING);
+		$category = $input->get_var('category','post',PLIB_Input::INTEGER);
+		$start_version = $input->get_var('start_version','post',PLIB_Input::STRING);
+		$fixed_version = $input->get_var('fixed_version','post',PLIB_Input::STRING);
+		$status = $input->correct_var('status','post',PLIB_Input::STRING,array('open','running','fixed','not_tested'),'open');
+		$type = $input->correct_var('type','post',PLIB_Input::STRING,array('bug','feature','improvement','test'),'bug');
+		$priority = $input->correct_var('priority','post',PLIB_Input::STRING,array('current','next','anytime'),'anytime');
 		
 		@list($start_project_id,$start_version_id) = explode(',',$start_version);
 		$time = time();
@@ -69,7 +74,7 @@ class TDL_Action_edit_entry_add extends PLIB_Actions_Base
 		$entry->create();
 		
 		// update config
-		$this->db->sql_update(TDL_TB_CONFIG,' WHERE is_selected = 1',array(
+		$db->sql_update(TDL_TB_CONFIG,' WHERE is_selected = 1',array(
 			'last_start_version' => $start_version_id,
 			'last_fixed_version' => $fixed_version_id,
 			'last_category' => $category,
@@ -78,9 +83,9 @@ class TDL_Action_edit_entry_add extends PLIB_Actions_Base
 			'last_status' => $status,
 		));
 		
-		$this->add_link('Zur&uuml;ck',$this->url->get_URL(-1));
+		$this->add_link('Zur&uuml;ck',$url->get_URL(-1));
 		$this->set_success_msg('Der Eintrag wurde erfolgreich erstellt!');
-		$this->set_redirect(true,$this->functions->get_entry_base_url());
+		$this->set_redirect(true,$functions->get_entry_base_url());
 		$this->set_action_performed(true);
 		
 		return '';

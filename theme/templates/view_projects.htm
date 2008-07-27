@@ -11,7 +11,7 @@ function showDeleteMessage()
 	if(ids == '')
 		return;
 
-	var url = 'standalone.php?action=ajax_get_delete_msg&ids=' + ids + '&loc=view_projects';
+	var url = 'index.php?action=ajax_delmsg&ids=' + ids + '&loc=view_projects';
 	var onfinished = function(text) {
 		PLIB_replaceContent('delete_message_box',text);
 		PLIB_getElement('delete_message_box').style.display = 'block';

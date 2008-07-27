@@ -4,26 +4,28 @@
  */
 function BS_transfer_to_session()
 {
-	$step_submit = $this->input->get_var('step_submit','post',PLIB_Input::INTEGER);
+		$input = PLIB_Props::get()->input();
+
+	$step_submit = $input->get_var('step_submit','post',PLIB_Input::INTEGER);
 	if($step_submit === null)
 		return;
 
 	switch($step_submit)
 	{
 		case 1:
-			$_SESSION['BS11_install']['host'] = $this->input->get_var('host','post',PLIB_Input::STRING);
-			$_SESSION['BS11_install']['login'] = $this->input->get_var('login','post',PLIB_Input::STRING);
-			$_SESSION['BS11_install']['password'] = $this->input->get_var('password','post',PLIB_Input::STRING);
-			$_SESSION['BS11_install']['database'] = $this->input->get_var('database','post',PLIB_Input::STRING);
+			$_SESSION['BS11_install']['host'] = $input->get_var('host','post',PLIB_Input::STRING);
+			$_SESSION['BS11_install']['login'] = $input->get_var('login','post',PLIB_Input::STRING);
+			$_SESSION['BS11_install']['password'] = $input->get_var('password','post',PLIB_Input::STRING);
+			$_SESSION['BS11_install']['database'] = $input->get_var('database','post',PLIB_Input::STRING);
 
-			$_SESSION['BS11_install']['admin_login'] = $this->input->get_var('admin_login','post',PLIB_Input::STRING);
-			$_SESSION['BS11_install']['admin_pw'] = $this->input->get_var('admin_pw','post',PLIB_Input::STRING);
-			$_SESSION['BS11_install']['admin_email'] = $this->input->get_var('admin_email','post',PLIB_Input::STRING);
-			$_SESSION['BS11_install']['board_url'] = $this->input->get_var('board_url','post',PLIB_Input::STRING);
+			$_SESSION['BS11_install']['admin_login'] = $input->get_var('admin_login','post',PLIB_Input::STRING);
+			$_SESSION['BS11_install']['admin_pw'] = $input->get_var('admin_pw','post',PLIB_Input::STRING);
+			$_SESSION['BS11_install']['admin_email'] = $input->get_var('admin_email','post',PLIB_Input::STRING);
+			$_SESSION['BS11_install']['board_url'] = $input->get_var('board_url','post',PLIB_Input::STRING);
 			break;
 
 		case 2:
-			$_SESSION['BS11_install']['table_prefix'] = $this->input->get_var('table_prefix','post',PLIB_Input::STRING);
+			$_SESSION['BS11_install']['table_prefix'] = $input->get_var('table_prefix','post',PLIB_Input::STRING);
 			break;
 	}
 }
@@ -114,6 +116,8 @@ function BS_check_current_step($step,&$check)
  */
 function BS_display_navigation($loc,$step,$lang)
 {
+		$tpl = PLIB_Props::get()->tpl();
+
 	$show_refresh = false;
 
 	switch($step)
@@ -123,15 +127,15 @@ function BS_display_navigation($loc,$step,$lang)
 			$show_refresh = true;
 	}
 
-	$this->tpl->set_template('navigation.htm');
-	$this->tpl->add_variables(array(
+	$tpl->set_template('navigation.htm');
+	$tpl->add_variables(array(
 		'loc' => $loc,
 		'show_refresh' => $show_refresh,
 		'back_url' => $_SERVER['PHP_SELF'].'?step='.($step - 1).'&amp;lang='.$lang,
 		'back_disabled' => $step == 1 || $step > 3 ? ' disabled="disabled"' : '',
 		'forward_url' => $_SERVER['PHP_SELF'].'?step='.$step.'&amp;forward=1&amp;lang='.$lang
 	));
-	echo $this->tpl->parse_template();
+	echo $tpl->parse_template();
 }
 
 /**
@@ -234,11 +238,13 @@ function BS_get_board_path()
  */
 function BS_display_config($title,$name,$cond,$default = "admin",$size = 20,$maxlength = 20,$description = '')
 {
+		$tpl = PLIB_Props::get()->tpl();
+
 	if($description != '')
 		$title .= '<div class="bs_desc">'.$description.'</div>';
 
-	$this->tpl->set_template('content.htm');
-	$this->tpl->add_variables(array(
+	$tpl->set_template('content.htm');
+	$tpl->add_variables(array(
 		'title' => $title,
 		'name' => $name,
 		'size' => $size,
@@ -246,7 +252,7 @@ function BS_display_config($title,$name,$cond,$default = "admin",$size = 20,$max
 		'value' => (isset($_SESSION['BS11_install'][$name]) ? $_SESSION['BS11_install'][$name] : $default),
 		'image' => $cond ? 'ok' : 'failed'
 	));
-	echo $this->tpl->parse_template();
+	echo $tpl->parse_template();
 }
 
 /**
@@ -254,8 +260,10 @@ function BS_display_config($title,$name,$cond,$default = "admin",$size = 20,$max
  */
 function BS_display_separator()
 {
-	$this->tpl->set_template('content.htm');
-	echo $this->tpl->parse_template();
+		$tpl = PLIB_Props::get()->tpl();
+
+	$tpl->set_template('content.htm');
+	echo $tpl->parse_template();
 }
 
 /**
@@ -271,19 +279,21 @@ function BS_display_separator()
  */
 function BS_display_status($title,$check,$in_ok = 0,$in_nok = 0,$title_out = 0,$description = '',$failed_img = 'failed')
 {
+		$tpl = PLIB_Props::get()->tpl();
+
 	$ok = ($in_ok === 0) ? $LANG['ok'] : $in_ok;
 	$notok = ($in_nok === 0) ? $LANG['notok'] : $in_nok;
 
 	if($description != '')
 		$title .= '<br /><span style="font-size: 7pt; font-weight: normal;">'.$description.'</span>';
 
-	$this->tpl->set_template('content.htm');
-	$this->tpl->add_variables(array(
+	$tpl->set_template('content.htm');
+	$tpl->add_variables(array(
 		'title' => $title,
 		'status' => ($title_out === 0) ? ($check ? $ok : $notok) : $title_out,
 		'image' => $check ? 'ok' : $failed_img
 	));
-	echo $this->tpl->parse_template();
+	echo $tpl->parse_template();
 }
 
 /**

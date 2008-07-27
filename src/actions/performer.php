@@ -20,9 +20,11 @@ class TDL_Actions_Performer extends PLIB_Actions_Performer
 {
 	public function get_action_type()
 	{
-		$action_type = $this->input->get_var('action_type','post',PLIB_Input::INTEGER);
+		$input = PLIB_Props::get()->input();
+
+		$action_type = $input->get_var('action_type','post',PLIB_Input::INTEGER);
 		if($action_type === null)
-			$action_type = $this->input->get_predef(TDL_URL_AT,'get');
+			$action_type = $input->get_predef(TDL_URL_AT,'get');
 
 		return $action_type;
 	}

@@ -24,7 +24,7 @@ function TDL_autoloader($item)
 		$item = str_replace('_','/',$item);
 		$item = PLIB_String::strtolower($item);
 		$item .= '.php';
-		$path = PLIB_Path::inner().'src/'.$item;
+		$path = PLIB_Path::server_app().'src/'.$item;
 		if(is_file($path))
 		{
 			include($path);

@@ -19,11 +19,14 @@ class TDL_Action_edit_project_add_project extends PLIB_Actions_Base
 {
 	public function perform_action()
 	{
-		$project_name = $this->input->get_var('project_name','post',PLIB_Input::STRING);
-		$project_name_short = $this->input->get_var('project_name_short','post',PLIB_Input::STRING);
-		$start_day = $this->input->get_var('start_day','post',PLIB_Input::INTEGER);
-		$start_month = $this->input->get_var('start_month','post',PLIB_Input::INTEGER);
-		$start_year = $this->input->get_var('start_year','post',PLIB_Input::INTEGER);
+		$input = PLIB_Props::get()->input();
+		$url = PLIB_Props::get()->url();
+
+		$project_name = $input->get_var('project_name','post',PLIB_Input::STRING);
+		$project_name_short = $input->get_var('project_name_short','post',PLIB_Input::STRING);
+		$start_day = $input->get_var('start_day','post',PLIB_Input::INTEGER);
+		$start_month = $input->get_var('start_month','post',PLIB_Input::INTEGER);
+		$start_year = $input->get_var('start_year','post',PLIB_Input::INTEGER);
 		
 		$start = mktime(0,0,0,$start_month,$start_day,$start_year);
 		
@@ -41,7 +44,7 @@ class TDL_Action_edit_project_add_project extends PLIB_Actions_Base
 		$this->set_success_msg('Das Projekt wurde erfolgreich hinzugef&uuml;gt');
 		$this->set_redirect(
 			true,
-			$this->url->get_URL('edit_project','&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$id)
+			$url->get_URL('edit_project','&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$id)
 		);
 		$this->set_action_performed(true);
 	

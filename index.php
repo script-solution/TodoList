@@ -69,6 +69,7 @@ function TDL_synchronize_path($path1,$path2)
 $path = TDL_synchronize_path(__FILE__,$_SERVER['PHP_SELF']);
 
 include_once($path.'config/userdef.php');
+include_once($path.'config/mysql.php');
 
 // define libpath for init.php
 define('PLIB_PATH',TDL_LIB_PATH);
@@ -77,13 +78,30 @@ define('PLIB_PATH',TDL_LIB_PATH);
 include_once(TDL_LIB_PATH.'init.php');
 
 // set the path
-PLIB_Path::set_inner($path);
+PLIB_Path::set_server_app($path);
+PLIB_Path::set_client_app($path);
 PLIB_Path::set_outer(TDL_FOLDER_URL.'/');
 
+include_once(PLIB_Path::server_app().'src/props.php');
+
 // init the autoloader
-include_once(PLIB_Path::inner().'src/autoloader.php');
+include_once(PLIB_Path::server_app().'src/autoloader.php');
 PLIB_AutoLoader::register_loader('TDL_autoloader');
 
+// set the accessor and loader for the todolist
+$accessor = new TDL_PropAccessor();
+$accessor->set_loader(new TDL_PropLoader());
+PLIB_Props::set_accessor($accessor);
+
+// start profiler
+$profiler = PLIB_Props::get()->profiler();
+$profiler->start();
+
+// init user
+$user = PLIB_Props::get()->user();
+$user->init();
+
 // ok, now show the page
-new TDL_Page_Main();
+$page = new TDL_Page();
+echo $page->render();
 ?>

@@ -19,7 +19,10 @@ class TDL_Action_view_projects_delete extends PLIB_Actions_Base
 {
 	public function perform_action()
 	{
-		$id_str = $this->input->get_predef(TDL_URL_IDS,'get');
+		$input = PLIB_Props::get()->input();
+		$url = PLIB_Props::get()->url();
+
+		$id_str = $input->get_predef(TDL_URL_IDS,'get');
 		$ids = PLIB_Array_Utils::advanced_explode(',',$id_str);
 		if(!PLIB_Array_Utils::is_numeric($ids) || count($ids) == 0)
 			return TDL_GENERAL_ERROR;
@@ -36,7 +39,7 @@ class TDL_Action_view_projects_delete extends PLIB_Actions_Base
 		}
 		
 		$this->set_success_msg('Die Projekte wurden erfolgreich gel&ouml;scht');
-		$this->set_redirect(true,$this->url->get_URL('view_projects'));
+		$this->set_redirect(true,$url->get_URL('view_projects'));
 		$this->set_action_performed(true);
 	
 		return '';

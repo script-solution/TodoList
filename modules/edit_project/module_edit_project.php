@@ -15,41 +15,76 @@
  * 
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class TDL_Module_edit_project extends TDL_Module
+final class TDL_Module_edit_project extends TDL_Module
 {
-	public function get_actions()
+	/**
+	 * @see PLIB_Module::init($doc)
+	 * 
+	 * @param TDL_Page $doc
+	 */
+	public function init($doc)
 	{
-		return array(
-			TDL_ACTION_ADD_PROJECT => 'add_project',
-			TDL_ACTION_EDIT_PROJECT => 'edit_project',
-			TDL_ACTION_ADD_CATEGORY => 'add_category',
-			TDL_ACTION_DELETE_CATEGORY => 'delete_category',
-			TDL_ACTION_ADD_VERSION => 'add_version',
-			TDL_ACTION_DELETE_VERSION => 'delete_version'
-		);
+		parent::init($doc);
+		
+		$input = PLIB_Props::get()->input();
+		$url = PLIB_Props::get()->url();
+		
+		$doc->add_action(TDL_ACTION_ADD_PROJECT,'add_project');
+		$doc->add_action(TDL_ACTION_EDIT_PROJECT,'edit_project');
+		$doc->add_action(TDL_ACTION_ADD_CATEGORY,'add_category');
+		$doc->add_action(TDL_ACTION_DELETE_CATEGORY,'delete_category');
+		$doc->add_action(TDL_ACTION_ADD_VERSION,'add_version');
+		$doc->add_action(TDL_ACTION_DELETE_VERSION,'delete_version');
+
+		$mode = $input->correct_var(TDL_URL_MODE,'get',PLIB_Input::STRING,array('add','edit'),'add');
+		if($mode == 'edit')
+		{
+			$id = (int)$input->get_var(TDL_URL_ID,'get',PLIB_Input::STRING);
+			$murl = $url->get_URL(0,'&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$id);
+			$title = 'Projekt editieren';
+		}
+		else
+		{
+			$murl = $url->get_URL(0,'&amp;'.TDL_URL_MODE.'=add');
+			$title = 'Neues Projekt';
+		}
+		
+		$doc->add_breadcrumb('Projekte',$url->get_URL('view_projects'));
+		$doc->add_breadcrumb($title,$murl);
 	}
 	
+	/**
+	 * @see PLIB_Module::run()
+	 */
 	public function run()
 	{
-		$mode = $this->input->correct_var(TDL_URL_MODE,'get',PLIB_Input::STRING,array('add','edit'),'add');
+		$input = PLIB_Props::get()->input();
+		$db = PLIB_Props::get()->db();
+		$url = PLIB_Props::get()->url();
+		$cats = PLIB_Props::get()->cats();
+		$tpl = PLIB_Props::get()->tpl();
+		$versions = PLIB_Props::get()->versions();
+		$functions = PLIB_Props::get()->functions();
+
+		$mode = $input->correct_var(TDL_URL_MODE,'get',PLIB_Input::STRING,array('add','edit'),'add');
 		
 		if($mode == 'edit')
 		{
-			$id = $this->input->get_predef(TDL_URL_ID,'get');
+			$id = $input->get_predef(TDL_URL_ID,'get');
 			if($id === null)
 			{
-				$this->_report_error();
+				$this->report_error();
 				return;
 			}
 			
-			$data = $this->db->sql_fetch('SELECT * FROM '.TDL_TB_PROJECTS.' WHERE id = '.$id);
+			$data = $db->sql_fetch('SELECT * FROM '.TDL_TB_PROJECTS.' WHERE id = '.$id);
 			if($data['id'] == '')
 			{
-				$this->_report_error();
+				$this->report_error();
 				return;
 			}
 			
-			$target_url = $this->url->get_URL(0,'&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$id);
+			$target_url = $url->get_URL(0,'&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$id);
 			$form_title = 'Projekt editieren';
 			$submit_title = 'Speichern';
 			$action_type = TDL_ACTION_EDIT_PROJECT;
@@ -62,31 +97,31 @@ class TDL_Module_edit_project extends TDL_Module
 				'project_start' => ''
 			);
 			
-			$target_url = $this->url->get_URL(0,'&amp;'.TDL_URL_MODE.'=add');
+			$target_url = $url->get_URL(0,'&amp;'.TDL_URL_MODE.'=add');
 			$form_title = 'Neues Projekt';
 			$submit_title = 'Absenden';
 			$action_type = TDL_ACTION_ADD_PROJECT;
 		}
 		
-		$this->_request_formular();
+		$this->request_formular();
 		
-		$versions = '';
-		$rows = $mode == 'edit' ? $this->versions->get_elements_with(array('project_id' => $id)) : array();
-		usort($rows,array($this->functions,'sort_versions_by_name_callback'));
+		$tplversions = '';
+		$rows = $mode == 'edit' ? $versions->get_elements_with(array('project_id' => $id)) : array();
+		usort($rows,array($functions,'sort_versions_by_name_callback'));
 		if(count($rows) == 0)
-			$versions = '<i>Keine</i><br />';
+			$tplversions = '<i>Keine</i><br />';
 		else
 		{
 			foreach($rows as $row)
 			{
-				$versions .= $this->_get_input_delete_field(
+				$tplversions .= $this->_get_input_delete_field(
 					$target_url,$row['id'],'version',$row['version_name'],TDL_ACTION_DELETE_VERSION
 				);
 			}
 		}
 		
 		$categories = '';
-		$rows = $mode == 'edit' ? $this->cats->get_elements_with(array('project_id' => $id)) : array();
+		$rows = $mode == 'edit' ? $cats->get_elements_with(array('project_id' => $id)) : array();
 		if(count($rows) == 0)
 			$categories = '<i>Keine</i><br />';
 		else
@@ -99,14 +134,14 @@ class TDL_Module_edit_project extends TDL_Module
 			}
 		}
 		
-		$this->tpl->add_variables(array(
+		$tpl->add_variables(array(
 			'mode' => $mode,
 			'target_url' => $target_url,
 			'action_type' => $action_type,
 			'def_name' => $data['project_name'],
 			'def_name_short' => $data['project_name_short'],
 			'def_start' => $data['project_start'],
-			'versions' => $versions,
+			'versions' => $tplversions,
 			'categories' => $categories,
 			'form_title' => $form_title,
 			'submit_title' => $submit_title,
@@ -125,7 +160,7 @@ class TDL_Module_edit_project extends TDL_Module
 	 * @param int $action_type the action-type for the delete-action
 	 * @return string the html-code
 	 */
-	public function _get_input_delete_field($target_url,$id,$name,$value,$action_type)
+	private function _get_input_delete_field($target_url,$id,$name,$value,$action_type)
 	{
 		$result = '<input type="text" name="'.$name.'['.$id.']" size="30" maxlength="50"';
 		$result .= ' value="'.$value.'" style="margin-bottom: 3px;" />&nbsp;';
@@ -133,29 +168,6 @@ class TDL_Module_edit_project extends TDL_Module
 		$result .= $target_url.'&amp;'.TDL_URL_AT.'='.$action_type;
 		$result .= '&amp;'.TDL_URL_SID.'='.$id.'\';" style="margin-bottom: 3px;" /><br />';
 		return $result;
-	}
-	
-	public function get_location()
-	{
-		$mode = $this->input->correct_var(TDL_URL_MODE,'get',PLIB_Input::STRING,array('add','edit'),'add');
-		if($mode == 'edit')
-		{
-			$id = (int)$this->input->get_var(TDL_URL_ID,'get',PLIB_Input::STRING);
-			$url = $this->url->get_URL(0,'&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$id);
-			$title = 'Projekt editieren';
-		}
-		else
-		{
-			$url = $this->url->get_URL(0,'&amp;'.TDL_URL_MODE.'=add');
-			$title = 'Neues Projekt';
-		}
-		
-		$location = array(
-			'Projekte' => $this->url->get_URL('view_projects'),
-			$title => $url
-		);
-		
-		return $location;
 	}
 }
 ?>

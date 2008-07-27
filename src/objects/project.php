@@ -129,12 +129,15 @@ class TDL_Objects_Project extends TDL_Objects_Data
 	
 	public function delete()
 	{
+		$functions = PLIB_Props::get()->functions();
+		$db = PLIB_Props::get()->db();
+
 		parent::delete();
 		
-		$this->functions->select_project(0);
-		$this->db->sql_qry('DELETE FROM '.TDL_TB_ENTRIES.' WHERE project_id = '.$this->get_id());
-		$this->db->sql_qry('DELETE FROM '.TDL_TB_VERSIONS.' WHERE project_id = '.$this->get_id());
-		$this->db->sql_qry('DELETE FROM '.TDL_TB_CATEGORIES.' WHERE project_id = '.$this->get_id());
+		$functions->select_project(0);
+		$db->sql_qry('DELETE FROM '.TDL_TB_ENTRIES.' WHERE project_id = '.$this->get_id());
+		$db->sql_qry('DELETE FROM '.TDL_TB_VERSIONS.' WHERE project_id = '.$this->get_id());
+		$db->sql_qry('DELETE FROM '.TDL_TB_CATEGORIES.' WHERE project_id = '.$this->get_id());
 	}
 	
 	public function check($type = 'create')
@@ -153,8 +156,10 @@ class TDL_Objects_Project extends TDL_Objects_Data
 	
 	protected function field_name($field)
 	{
-		if($this->locale->contains_lang('project_fields_'.$field))
-			return $this->locale->lang('project_fields_'.$field);
+		$locale = PLIB_Props::get()->locale();
+
+		if($locale->contains_lang('project_fields_'.$field))
+			return $locale->lang('project_fields_'.$field);
 		
 		return $field;
 	}

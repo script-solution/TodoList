@@ -19,15 +19,21 @@ class TDL_Action_edit_project_edit_project extends PLIB_Actions_Base
 {
 	public function perform_action()
 	{
-		$pid = $this->input->get_predef(TDL_URL_ID,'get');
+		$input = PLIB_Props::get()->input();
+		$db = PLIB_Props::get()->db();
+		$cats = PLIB_Props::get()->cats();
+		$url = PLIB_Props::get()->url();
+		$versions = PLIB_Props::get()->versions();
+
+		$pid = $input->get_predef(TDL_URL_ID,'get');
 		if($pid == null)
 			return TDL_GENERAL_ERROR;
 		
-		$project_name = $this->input->get_var('project_name','post',PLIB_Input::STRING);
-		$project_name_short = $this->input->get_var('project_name_short','post',PLIB_Input::STRING);
-		$start_day = $this->input->get_var('start_day','post',PLIB_Input::INTEGER);
-		$start_month = $this->input->get_var('start_month','post',PLIB_Input::INTEGER);
-		$start_year = $this->input->get_var('start_year','post',PLIB_Input::INTEGER);
+		$project_name = $input->get_var('project_name','post',PLIB_Input::STRING);
+		$project_name_short = $input->get_var('project_name_short','post',PLIB_Input::STRING);
+		$start_day = $input->get_var('start_day','post',PLIB_Input::INTEGER);
+		$start_month = $input->get_var('start_month','post',PLIB_Input::INTEGER);
+		$start_year = $input->get_var('start_year','post',PLIB_Input::INTEGER);
 		
 		$start = mktime(0,0,0,$start_month,$start_day,$start_year);
 		
@@ -42,30 +48,30 @@ class TDL_Action_edit_project_edit_project extends PLIB_Actions_Base
 		
 		$project->update();
 		
-		$versions = $this->input->get_var('version','post');
-		if(is_array($versions))
+		$nversions = $input->get_var('version','post');
+		if(is_array($nversions))
 		{
-			foreach($versions as $id => $version_name)
+			foreach($nversions as $id => $version_name)
 			{
-				$this->db->sql_qry('UPDATE '.TDL_TB_VERSIONS." SET version_name = '".$version_name."' WHERE id = ".$id);
-				$this->versions->set_element_field($id,'version_name',$version_name);
+				$db->sql_qry('UPDATE '.TDL_TB_VERSIONS." SET version_name = '".$version_name."' WHERE id = ".$id);
+				$versions->set_element_field($id,'version_name',$version_name);
 			}
 		}
 		
-		$categories = $this->input->get_var('category','post');
+		$categories = $input->get_var('category','post');
 		if(is_array($categories))
 		{
 			foreach($categories as $id => $category_name)
 			{
-				$this->db->sql_qry('UPDATE '.TDL_TB_CATEGORIES." SET category_name = '".$category_name."' WHERE id = ".$id);
-				$this->cats->set_element_field($id,'category_name',$category_name);
+				$db->sql_qry('UPDATE '.TDL_TB_CATEGORIES." SET category_name = '".$category_name."' WHERE id = ".$id);
+				$cats->set_element_field($id,'category_name',$category_name);
 			}
 		}
 		
 		$this->set_success_msg('Das Projekt wurde erfolgreich editiert');
 		$this->set_redirect(
 			true,
-			$this->url->get_URL('edit_project','&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$pid)
+			$url->get_URL('edit_project','&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$pid)
 		);
 		$this->set_show_status_page(false);
 		$this->set_action_performed(true);

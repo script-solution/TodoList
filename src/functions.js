@@ -65,7 +65,7 @@ function toggleSearch(cookie_name,prefix)
 			break;
 		
 		oldStatus = tr.style.display;
-		tr.style.display = oldStatus == 'none' ? (document.all && !window.opera ? 'block' : 'table-row') : 'none';
+		tr.style.display = oldStatus == 'none' ? (Browser.isIE ? 'block' : 'table-row') : 'none';
 	}
 	
 	setCookie(cookie_name,oldStatus == 'none' ? "1" : "0",3600 * 24 * 30);
@@ -102,7 +102,7 @@ function performListAction(base_url,comboID,checkBoxPrefix)
 				document.location.href = base_url + 'action=change_status&ids=' + ids;
 				break;
 			case 'delete':
-				var url = 'standalone.php?action=ajax_get_delete_msg&ids=' + ids + '&loc=view_entries';
+				var url = 'index.php?action=ajax_delmsg&ids=' + ids + '&loc=view_entries';
 				var onfinished = function(text) {
 					PLIB_replaceContent('delete_message_box',text);
 					PLIB_getElement('delete_message_box').style.display = 'block';

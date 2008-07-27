@@ -19,7 +19,9 @@ class TDL_Action_view_entries_delete extends PLIB_Actions_Base
 {
 	public function perform_action()
 	{
-		$id_str = $this->input->get_predef(TDL_URL_IDS,'get');
+		$input = PLIB_Props::get()->input();
+
+		$id_str = $input->get_predef(TDL_URL_IDS,'get');
 		$ids = PLIB_Array_Utils::advanced_explode(',',$id_str);
 		if(!PLIB_Array_Utils::is_numeric($ids) || count($ids) == 0)
 			return TDL_GENERAL_ERROR;

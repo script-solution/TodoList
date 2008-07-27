@@ -18,7 +18,7 @@
  *
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_FullObject extends PLIB_Object
+abstract class PLIB_Object extends PLIB_Object
 {
 	/**
 	 * The db-connection class

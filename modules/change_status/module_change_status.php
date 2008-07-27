@@ -15,27 +15,47 @@
  * 
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class TDL_Module_change_status extends TDL_Module
+final class TDL_Module_change_status extends TDL_Module
 {
-	public function get_actions()
+	/**
+	 * @see PLIB_Module::init($doc)
+	 * 
+	 * @param TDL_Page $doc
+	 */
+	public function init($doc)
 	{
-		return array(
-			TDL_ACTION_CHANGE_STATUS => 'default'
-		);
+		parent::init($doc);
+		
+		$input = PLIB_Props::get()->input();
+		$url = PLIB_Props::get()->url();
+		
+		$doc->add_action(TDL_ACTION_CHANGE_STATUS,'default');
+
+		$id_str = $input->get_predef(TDL_URL_IDS,'get');
+		$doc->add_breadcrumb('Status &auml;ndern',$url->get_URL(0,'&amp;'.TDL_URL_IDS.'='.$id_str));
 	}
 	
+	/**
+	 * @see PLIB_Module::run()
+	 */
 	public function run()
 	{
-		$id_str = $this->input->get_predef(TDL_URL_IDS,'get');
+		$input = PLIB_Props::get()->input();
+		$db = PLIB_Props::get()->db();
+		$functions = PLIB_Props::get()->functions();
+		$versions = PLIB_Props::get()->versions();
+		$tpl = PLIB_Props::get()->tpl();
+
+		$id_str = $input->get_predef(TDL_URL_IDS,'get');
 		$ids = PLIB_Array_Utils::advanced_explode(',',$id_str);
 		
 		if(!PLIB_Array_Utils::is_numeric($ids))
 		{
-			$this->_report_error();
+			$this->report_error();
 			return;
 		}
 		
-		$this->_request_formular();
+		$this->request_formular();
 		
 		$status_options = array(
 			'open' => 'Offen',
@@ -47,21 +67,21 @@ class TDL_Module_change_status extends TDL_Module
 		$projects = array();		
 		$id_str = PLIB_Array_Utils::advanced_implode(',',$ids);
 		$entry_string = '<ul>'."\n";
-		$qry = $this->db->sql_qry('SELECT id,project_id,entry_title,entry_status FROM '.TDL_TB_ENTRIES.'
+		$qry = $db->sql_qry('SELECT id,project_id,entry_title,entry_status FROM '.TDL_TB_ENTRIES.'
 												 WHERE id IN ('.$id_str.')');
-		while($data = $this->db->sql_fetch_assoc($qry))
+		while($data = $db->sql_fetch_assoc($qry))
 		{
 			if(!isset($projects[$data['project_id']]))
 				$projects[$data['project_id']] = true;
 			
 			$entry_string .= '	<li>'.$data['entry_title'].'<span style="padding-left: 10px; font-size: 9px;">';
-			$entry_string .= '['.$this->functions->get_status_text($data['entry_status']).']</span></li>'."\n";
+			$entry_string .= '['.$functions->get_status_text($data['entry_status']).']</span></li>'."\n";
 		}
 		$entry_string .= '</ul>'."\n";
 		
 		$version_options = array('&nbsp;');
-		$rows = $this->versions->get_elements();
-		usort($rows,array($this->functions,'sort_versions_by_name_callback'));
+		$rows = $versions->get_elements();
+		usort($rows,array($functions,'sort_versions_by_name_callback'));
 		foreach($rows as $row)
 		{
 			if(isset($projects[$row['project_id']]))
@@ -71,7 +91,7 @@ class TDL_Module_change_status extends TDL_Module
 		$def_version = key($version_options);
 		reset($version_options);
 		
-		$this->tpl->add_variables(array(
+		$tpl->add_variables(array(
 			'ids' => $id_str,
 			'action_type' => TDL_ACTION_CHANGE_STATUS,
 			'status' => $status_options,
@@ -79,17 +99,6 @@ class TDL_Module_change_status extends TDL_Module
 			'def_version' => $def_version,
 			'entries' => $entry_string,
 		));
-	}
-	
-	public function get_location()
-	{
-		$id_str = $this->input->get_predef(TDL_URL_IDS,'get');
-		
-		$location = array(
-			'Status &auml;ndern' => $this->url->get_URL(0,'&amp;'.TDL_URL_IDS.'='.$id_str)
-		);
-		
-		return $location;
 	}
 }
 ?>

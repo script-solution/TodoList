@@ -379,6 +379,8 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 	
 	public function check($type = 'create')
 	{
+		$functions = PLIB_Props::get()->functions();
+
 		$this->clear_errors();
 		
 		if($type != 'create')
@@ -387,7 +389,7 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 		// check project-id
 		if($this->get_project_id() !== null)
 		{
-			if(!$this->functions->check_project($this->get_project_id()))
+			if(!$functions->check_project($this->get_project_id()))
 				$this->add_invalid_field_error('project_id');
 		}
 		
@@ -395,7 +397,7 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 		if($this->check_field_for('entry_category','id',$type == 'create'))
 		{
 			if($this->get_entry_category() !== null &&
-				!$this->functions->check_category($this->get_entry_category()))
+				!$functions->check_category($this->get_entry_category()))
 				$this->add_invalid_field_error('entry_category');
 		}
 		
@@ -432,7 +434,7 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 		// check fixed-version
 		if($this->get_entry_fixed_version())
 		{
-			if(!$this->functions->check_version($this->get_entry_fixed_version()))
+			if(!$functions->check_version($this->get_entry_fixed_version()))
 				$this->add_invalid_field_error('entry_fixed_version');
 			
 			$this->check_field_for('entry_fixed_date','notempty',true);
@@ -443,7 +445,9 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 	
 	protected function field_name($field)
 	{
-		return $this->locale->lang('entry_fields_'.$field);
+		$locale = PLIB_Props::get()->locale();
+
+		return $locale->lang('entry_fields_'.$field);
 	}
 }
 ?>

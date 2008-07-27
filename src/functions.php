@@ -15,7 +15,7 @@
  *
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class TDL_Functions extends PLIB_FullObject
+class TDL_Functions extends PLIB_Object
 {
 	/**
 	 * Selects the project with given id
@@ -24,17 +24,19 @@ class TDL_Functions extends PLIB_FullObject
 	 */
 	public function select_project($id)
 	{
-		$this->db->sql_qry('UPDATE '.TDL_TB_CONFIG.' SET is_selected = 0 WHERE is_selected = 1');
+		$db = PLIB_Props::get()->db();
+
+		$db->sql_qry('UPDATE '.TDL_TB_CONFIG.' SET is_selected = 0 WHERE is_selected = 1');
 		
-		if(!$this->db->sql_num(TDL_TB_CONFIG,'*',' WHERE project_id = '.$id))
+		if(!$db->sql_num(TDL_TB_CONFIG,'*',' WHERE project_id = '.$id))
 		{
-			$this->db->sql_insert(TDL_TB_CONFIG,array(
+			$db->sql_insert(TDL_TB_CONFIG,array(
 				'project_id' => $id,
 				'is_selected' => 1
 			));
 		}
 		else
-			$this->db->sql_qry('UPDATE '.TDL_TB_CONFIG.' SET is_selected = 1 WHERE project_id = '.$id);
+			$db->sql_qry('UPDATE '.TDL_TB_CONFIG.' SET is_selected = 1 WHERE project_id = '.$id);
 	}
 	
 	/**
@@ -48,19 +50,22 @@ class TDL_Functions extends PLIB_FullObject
 	 */
 	public function add_entry_delete_message($ids,$table,$field,$yes_url,$no_url)
 	{
+		$db = PLIB_Props::get()->db();
+		$tpl = PLIB_Props::get()->tpl();
+
 		$entries = array();
 		$sql = PLIB_StringHelper::get_default_delete_sql($ids,$table,$field);
-		$del_qry = $this->db->sql_qry($sql);
-		while($data = $this->db->sql_fetch_assoc($del_qry))
+		$del_qry = $db->sql_qry($sql);
+		while($data = $db->sql_fetch_assoc($del_qry))
 			$entries[] = $data[$field];
-		$this->db->sql_free($del_qry);
+		$db->sql_free($del_qry);
 		
 		$entry_string = '<ul>'."\n";
 		foreach($entries as $entry)
 			$entry_string .= '	<li>'.$entry.'</li>'."\n";
 		$entry_string .= '</ul>'."\n";
 		
-		$this->tpl->add_variables(array(
+		$tpl->add_variables(array(
 			'delete_message' => 'M&ouml;chtest Du die folgenden Eintr&auml;ge wirklich l&ouml;schen?',
 			'entries' => $entry_string,
 			'yes_url' => $yes_url,
@@ -80,13 +85,15 @@ class TDL_Functions extends PLIB_FullObject
 	 */
 	public function get_order_column($title,$order_value,$def_ascdesc,$order,$url)
 	{
+		$user = PLIB_Props::get()->user();
+
 		if($order == $order_value)
 		{
 			$result = $title.' <a class="tl_coldesc" href="'.$url.TDL_URL_ORDER.'='.$order_value.'&amp;'.TDL_URL_AD.'=ASC">';
-			$result .= '<img src="'.$this->user->get_theme_item_path('images/asc.gif').'" alt="ASC" border="0" />';
+			$result .= '<img src="'.$user->get_theme_item_path('images/asc.gif').'" alt="ASC" border="0" />';
 			$result .= '</a> ';
 			$result .= '<a class="tl_coldesc" href="'.$url.TDL_URL_ORDER.'='.$order_value.'&amp;'.TDL_URL_AD.'=DESC">';
-			$result .= '<img src="'.$this->user->get_theme_item_path('images/desc.gif').'" alt="DESC" border="0" />';
+			$result .= '<img src="'.$user->get_theme_item_path('images/desc.gif').'" alt="DESC" border="0" />';
 			$result .= '</a>';
 		}
 		else
@@ -105,23 +112,26 @@ class TDL_Functions extends PLIB_FullObject
 	 */
 	public function get_entry_base_url()
 	{
-		$s_keyword = $this->input->get_predef(TDL_URL_S_KEYWORD,'get');
-		$s_from_changed_date = $this->input->get_predef(TDL_URL_S_FROM_CHANGED_DATE,'get');
-		$s_to_changed_date = $this->input->get_predef(TDL_URL_S_TO_CHANGED_DATE,'get');
-		$s_from_start_date = $this->input->get_predef(TDL_URL_S_FROM_START_DATE,'get');
-		$s_to_start_date = $this->input->get_predef(TDL_URL_S_TO_START_DATE,'get');
-		$s_from_fixed_date = $this->input->get_predef(TDL_URL_S_FROM_FIXED_DATE,'get');
-		$s_to_fixed_date = $this->input->get_predef(TDL_URL_S_TO_FIXED_DATE,'get');
-		$s_type = $this->input->get_predef(TDL_URL_S_TYPE,'get','');
-		$s_priority = $this->input->get_predef(TDL_URL_S_PRIORITY,'get','');
-		$s_status = $this->input->get_predef(TDL_URL_S_STATUS,'get','');
-		$s_category = $this->input->get_predef(TDL_URL_S_CATEGORY,'get');
+		$input = PLIB_Props::get()->input();
+		$url = PLIB_Props::get()->url();
+
+		$s_keyword = $input->get_predef(TDL_URL_S_KEYWORD,'get');
+		$s_from_changed_date = $input->get_predef(TDL_URL_S_FROM_CHANGED_DATE,'get');
+		$s_to_changed_date = $input->get_predef(TDL_URL_S_TO_CHANGED_DATE,'get');
+		$s_from_start_date = $input->get_predef(TDL_URL_S_FROM_START_DATE,'get');
+		$s_to_start_date = $input->get_predef(TDL_URL_S_TO_START_DATE,'get');
+		$s_from_fixed_date = $input->get_predef(TDL_URL_S_FROM_FIXED_DATE,'get');
+		$s_to_fixed_date = $input->get_predef(TDL_URL_S_TO_FIXED_DATE,'get');
+		$s_type = $input->get_predef(TDL_URL_S_TYPE,'get','');
+		$s_priority = $input->get_predef(TDL_URL_S_PRIORITY,'get','');
+		$s_status = $input->get_predef(TDL_URL_S_STATUS,'get','');
+		$s_category = $input->get_predef(TDL_URL_S_CATEGORY,'get');
 		
-		$site = $this->input->get_predef(TDL_URL_SITE,'get');
-		$order = $this->input->get_predef(TDL_URL_ORDER,'get','changed');
-		$ad = $this->input->get_predef(TDL_URL_AD,'get','DESC');
+		$site = $input->get_predef(TDL_URL_SITE,'get');
+		$order = $input->get_predef(TDL_URL_ORDER,'get','changed');
+		$ad = $input->get_predef(TDL_URL_AD,'get','DESC');
 		
-		$base_url = $this->url->get_URL(-1);
+		$base_url = $url->get_URL(-1);
 		$base_url .= '?'.TDL_URL_S_KEYWORD.'='.$s_keyword;
 		$base_url .= '&amp;'.TDL_URL_S_CATEGORY.'='.$s_category;
 		$base_url .= '&amp;'.TDL_URL_S_PRIORITY.'='.$s_priority;
@@ -146,8 +156,10 @@ class TDL_Functions extends PLIB_FullObject
 	 */
 	public function get_current_url()
 	{
-		$query_string = $this->input->get_var('QUERY_STRING','server',PLIB_Input::STRING);
-		$url = $this->input->get_var('PHP_SELF','server',PLIB_Input::STRING);
+		$input = PLIB_Props::get()->input();
+
+		$query_string = $input->get_var('QUERY_STRING','server',PLIB_Input::STRING);
+		$url = $input->get_var('PHP_SELF','server',PLIB_Input::STRING);
 		if($query_string != '')
 			$url .= '?'.$query_string;
 		$url = str_replace('&','&amp;',$url);
@@ -162,10 +174,12 @@ class TDL_Functions extends PLIB_FullObject
 	 */
 	public function check_category($id)
 	{
+		$cats = PLIB_Props::get()->cats();
+
 		if(!is_numeric($id))
 			return false;
 		
-		return $this->cats->element_exists_with(array('id' => $id));
+		return $cats->element_exists_with(array('id' => $id));
 	}
 	
 	/**
@@ -176,10 +190,12 @@ class TDL_Functions extends PLIB_FullObject
 	 */
 	public function check_project($id)
 	{
+		$versions = PLIB_Props::get()->versions();
+
 		if(!is_numeric($id))
 			return false;
 		
-		return $this->versions->element_exists_with(array('project_id' => $id));
+		return $versions->element_exists_with(array('project_id' => $id));
 	}
 	
 	/**
@@ -190,10 +206,12 @@ class TDL_Functions extends PLIB_FullObject
 	 */
 	public function check_version($version_id)
 	{
+		$versions = PLIB_Props::get()->versions();
+
 		if(!is_numeric($version_id))
 			return false;
 		
-		return $this->versions->element_exists_with(array('id' => $version_id));
+		return $versions->element_exists_with(array('id' => $version_id));
 	}
 	
 	/**
@@ -292,6 +310,9 @@ class TDL_Functions extends PLIB_FullObject
 	 */
 	public function add_pagination($pagination,$url)
 	{
+		$tpl = PLIB_Props::get()->tpl();
+		$user = PLIB_Props::get()->user();
+
 		if(!($pagination instanceof PLIB_Pagination))
 			PLIB_Helper::def_error('instance','pagination','PLIB_Pagination',$pagination);
 		
@@ -321,32 +342,32 @@ class TDL_Functions extends PLIB_FullObject
 			$end_item = $start_item + $pagination->get_per_page() - 1;
 			$end_item = ($end_item > $pagination->get_num()) ? $pagination->get_num() : $end_item;
 			
-			$this->tpl->set_template('page_split.htm');
-			$this->tpl->add_array('numbers',$tnumbers);
-			$this->tpl->add_variables(array(
+			$tpl->set_template('page_split.htm');
+			$tpl->add_array('numbers',$tnumbers);
+			$tpl->add_variables(array(
 				'page' => $page,
 				'total_pages' => $pagination->get_page_count(),
 				'start_item' => $start_item,
 				'end_item' => $end_item,
 				'total_items' => $pagination->get_num(),
 				'prev_url' => str_replace('{d}',$page - 1,$url),
-				'prev_image' => $this->user->get_theme_item_path('images/navigation/prev.gif'),
-				'prev_image_dis' => $this->user->get_theme_item_path(
+				'prev_image' => $user->get_theme_item_path('images/navigation/prev.gif'),
+				'prev_image_dis' => $user->get_theme_item_path(
 					'images/navigation/prev_disabled.gif'),
 				'next_url' => str_replace('{d}',$page + 1,$url),
-				'next_image' => $this->user->get_theme_item_path('images/navigation/next.gif'),
-				'next_image_dis' => $this->user->get_theme_item_path(
+				'next_image' => $user->get_theme_item_path('images/navigation/next.gif'),
+				'next_image_dis' => $user->get_theme_item_path(
 					'images/navigation/next_disabled.gif'),
 				'first_url' => str_replace('{d}',1,$url),
-				'first_image' => $this->user->get_theme_item_path('images/navigation/jmp_to_start.gif'),
-				'first_image_dis' => $this->user->get_theme_item_path(
+				'first_image' => $user->get_theme_item_path('images/navigation/jmp_to_start.gif'),
+				'first_image_dis' => $user->get_theme_item_path(
 					'images/navigation/jmp_to_start_disabled.gif'),
 				'last_url' => str_replace('{d}',$pagination->get_page_count(),$url),
-				'last_image' => $this->user->get_theme_item_path('images/navigation/jmp_to_end.gif'),
-				'last_image_dis' => $this->user->get_theme_item_path(
+				'last_image' => $user->get_theme_item_path('images/navigation/jmp_to_end.gif'),
+				'last_image_dis' => $user->get_theme_item_path(
 					'images/navigation/jmp_to_end_disabled.gif')
 			));
-			$this->tpl->restore_template();
+			$tpl->restore_template();
 		}
 	}
 
@@ -381,7 +402,9 @@ class TDL_Functions extends PLIB_FullObject
 	 */
 	public function add_delete_info($ids,$sql,$field,$yes_url,$no_url,$lang_entry)
 	{
-		$message = sprintf($this->locale->lang($lang_entry),$this->get_delete_items($ids,$sql,$field));
+		$locale = PLIB_Props::get()->locale();
+
+		$message = sprintf($locale->lang($lang_entry),$this->get_delete_items($ids,$sql,$field));
 		$this->add_delete_message($message,$yes_url,$no_url);
 	}
 	
@@ -395,6 +418,9 @@ class TDL_Functions extends PLIB_FullObject
 	 */
 	public function get_delete_items($ids,$sql,$field)
 	{
+		$db = PLIB_Props::get()->db();
+		$locale = PLIB_Props::get()->locale();
+
 		if(!is_array($ids) || count($ids) == 0)
 			PLIB_Helper::def_error('array>0','ids',$ids);
 
@@ -406,14 +432,14 @@ class TDL_Functions extends PLIB_FullObject
 
 		$text = '';
 		$num = count($ids);
-		$del_qry = $this->db->sql_qry($sql);
-		for($i = 0;$data = $this->db->sql_fetch_assoc($del_qry);$i++)
+		$del_qry = $db->sql_qry($sql);
+		for($i = 0;$data = $db->sql_fetch_assoc($del_qry);$i++)
 		{
 			$text .= '"'.$data[$field].'"';
 			if($i < $num - 2)
 				$text .= ', ';
 			else if($i == $num - 2)
-				$text .= ' '.$this->locale->lang('and').' ';
+				$text .= ' '.$locale->lang('and').' ';
 		}
 		
 		return $text;
@@ -428,16 +454,18 @@ class TDL_Functions extends PLIB_FullObject
 	 */
 	public function add_delete_message($message,$yes_url,$no_url)
 	{
-		$this->tpl->set_template('delete_message.htm');
-		$this->tpl->add_variables(array(
+		$tpl = PLIB_Props::get()->tpl();
+
+		$tpl->set_template('delete_message.htm');
+		$tpl->add_variables(array(
 			'delete_message' => $message,
 			'yes_url' => $yes_url,
 			'no_url' => $no_url
 		));
-		$this->tpl->restore_template();
+		$tpl->restore_template();
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

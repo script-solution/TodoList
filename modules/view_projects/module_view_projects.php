@@ -15,26 +15,40 @@
  * 
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class TDL_Module_view_projects extends TDL_Module
+final class TDL_Module_view_projects extends TDL_Module
 {
-	public function get_actions()
+	/**
+	 * @see PLIB_Module::init($doc)
+	 * 
+	 * @param TDL_Page $doc
+	 */
+	public function init($doc)
 	{
-		return array(
-			TDL_ACTION_DELETE_PROJECTS => 'delete'
-		);
+		parent::init($doc);
+		
+		$url = PLIB_Props::get()->url();
+		
+		$doc->add_action(TDL_ACTION_DELETE_PROJECTS,'delete');
+		$doc->add_breadcrumb('Projekte',$url->get_URL('view_projects'));
 	}
 	
+	/**
+	 * @see PLIB_Module::run()
+	 */
 	public function run()
 	{
-		$num = $this->db->sql_num(TDL_TB_PROJECTS,'id','');
+		$db = PLIB_Props::get()->db();
+		$tpl = PLIB_Props::get()->tpl();
+
+		$num = $db->sql_num(TDL_TB_PROJECTS,'id','');
 		
-		$this->tpl->add_variables(array(
+		$tpl->add_variables(array(
 			'num' => $num
 		));
 		
 		$projects = array();
-		$qry = $this->db->sql_qry('SELECT * FROM '.TDL_TB_PROJECTS.' ORDER BY id DESC');
-		for($i = 0;$data = $this->db->sql_fetch_assoc($qry);$i++)
+		$qry = $db->sql_qry('SELECT * FROM '.TDL_TB_PROJECTS.' ORDER BY id DESC');
+		for($i = 0;$data = $db->sql_fetch_assoc($qry);$i++)
 		{
 			$projects[] = array(
 				'title' => $data['project_name'],
@@ -44,20 +58,12 @@ class TDL_Module_view_projects extends TDL_Module
 				'id' => $data['id']
 			);
 		}
-		$this->db->sql_free($qry);
+		$db->sql_free($qry);
 		
-		$this->tpl->add_array('projects',$projects);
-		$this->tpl->add_variables(array(
+		$tpl->add_array('projects',$projects);
+		$tpl->add_variables(array(
 			'index' => $i
 		));
-	}
-	
-	public function get_location()
-	{
-		$location = array(
-			'Projekte' => $this->url->get_URL('view_projects')
-		);
-		return $location;
 	}
 }
 ?>

@@ -19,15 +19,18 @@ class TDL_Action_change_status_default extends PLIB_Actions_Base
 {
 	public function perform_action()
 	{
-		$id_str = $this->input->get_predef(TDL_URL_IDS,'get');
+		$input = PLIB_Props::get()->input();
+		$url = PLIB_Props::get()->url();
+
+		$id_str = $input->get_predef(TDL_URL_IDS,'get');
 		$ids = PLIB_Array_Utils::advanced_explode(',',$id_str);
 		if(!PLIB_Array_Utils::is_numeric($ids) || count($ids) == 0)
 			return TDL_GENERAL_ERROR;
 		
 		// read variables from post
-		$status = $this->input->correct_var('status','post',PLIB_Input::STRING,
+		$status = $input->correct_var('status','post',PLIB_Input::STRING,
 			array('open','fixed','running','not_tested'),'open');
-		$fixed_version = $this->input->get_var('fixed_version','post',PLIB_Input::STRING);
+		$fixed_version = $input->get_var('fixed_version','post',PLIB_Input::STRING);
 		
 		if($status == 'fixed')
 		{
@@ -61,7 +64,7 @@ class TDL_Action_change_status_default extends PLIB_Actions_Base
 		$this->set_show_status_page(false);
 		$this->set_success_msg('Der Status der Eintr&auml;ge wurde erfolgreich ge&auml;ndert');
 		$this->set_action_performed(true);
-		$this->set_redirect(true,$this->url->get_URL(-1));
+		$this->set_redirect(true,$url->get_URL(-1));
 	
 		return '';
 	}

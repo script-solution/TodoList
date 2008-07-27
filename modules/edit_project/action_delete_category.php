@@ -19,19 +19,24 @@ class TDL_Action_edit_project_delete_category extends PLIB_Actions_Base
 {
 	public function perform_action()
 	{
-		$id = $this->input->get_predef(TDL_URL_SID,'get');
+		$input = PLIB_Props::get()->input();
+		$db = PLIB_Props::get()->db();
+		$cats = PLIB_Props::get()->cats();
+		$url = PLIB_Props::get()->url();
+
+		$id = $input->get_predef(TDL_URL_SID,'get');
 		if($id == null)
 			return TDL_GENERAL_ERROR;
 		
-		$this->db->sql_qry('DELETE FROM '.TDL_TB_CATEGORIES.' WHERE id = '.$id);
-		$this->db->sql_qry('UPDATE '.TDL_TB_ENTRIES.' SET entry_category = 0 WHERE entry_category = '.$id);
-		$this->cats->remove_element($id);
+		$db->sql_qry('DELETE FROM '.TDL_TB_CATEGORIES.' WHERE id = '.$id);
+		$db->sql_qry('UPDATE '.TDL_TB_ENTRIES.' SET entry_category = 0 WHERE entry_category = '.$id);
+		$cats->remove_element($id);
 	
-		$pid = $this->input->get_predef(TDL_URL_ID,'get');
+		$pid = $input->get_predef(TDL_URL_ID,'get');
 		$this->set_success_msg('Die Kategorie wurde erfolgreich gel&ouml;scht');
 		$this->set_redirect(
 			true,
-			$this->url->get_URL('edit_project','&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$pid)
+			$url->get_URL('edit_project','&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$pid)
 		);
 		$this->set_show_status_page(false);
 		$this->set_action_performed(true);
