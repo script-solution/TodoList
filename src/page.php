@@ -22,7 +22,7 @@ final class TDL_Page extends PLIB_Page
 	/**
 	 * The current module
 	 *
-	 * @var BS_ACP_Module
+	 * @var TDL_Module
 	 */
 	private $_module;
 
