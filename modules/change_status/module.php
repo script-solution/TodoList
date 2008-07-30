@@ -27,13 +27,12 @@ final class TDL_Module_change_status extends TDL_Module
 		parent::init($doc);
 		
 		$input = FWS_Props::get()->input();
-		$url = FWS_Props::get()->url();
 		$renderer = $doc->use_default_renderer();
 		
 		$renderer->add_action(TDL_ACTION_CHANGE_STATUS,'default');
 
 		$id_str = $input->get_predef(TDL_URL_IDS,'get');
-		$renderer->add_breadcrumb('Status &auml;ndern',$url->get_URL(0,'&amp;'.TDL_URL_IDS.'='.$id_str));
+		$renderer->add_breadcrumb('Status &auml;ndern',TDL_URL::get_url(0,'&amp;'.TDL_URL_IDS.'='.$id_str));
 	}
 	
 	/**

@@ -27,7 +27,6 @@ final class TDL_Module_edit_project extends TDL_Module
 		parent::init($doc);
 		
 		$input = FWS_Props::get()->input();
-		$url = FWS_Props::get()->url();
 		$renderer = $doc->use_default_renderer();
 		
 		$renderer->add_action(TDL_ACTION_ADD_PROJECT,'add_project');
@@ -41,16 +40,16 @@ final class TDL_Module_edit_project extends TDL_Module
 		if($mode == 'edit')
 		{
 			$id = (int)$input->get_var(TDL_URL_ID,'get',FWS_Input::STRING);
-			$murl = $url->get_URL(0,'&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$id);
+			$murl = TDL_URL::get_url(0,'&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$id);
 			$title = 'Projekt editieren';
 		}
 		else
 		{
-			$murl = $url->get_URL(0,'&amp;'.TDL_URL_MODE.'=add');
+			$murl = TDL_URL::get_url(0,'&amp;'.TDL_URL_MODE.'=add');
 			$title = 'Neues Projekt';
 		}
 		
-		$renderer->add_breadcrumb('Projekte',$url->get_URL('view_projects'));
+		$renderer->add_breadcrumb('Projekte',TDL_URL::get_url('view_projects'));
 		$renderer->add_breadcrumb($title,$murl);
 	}
 	
@@ -61,7 +60,6 @@ final class TDL_Module_edit_project extends TDL_Module
 	{
 		$input = FWS_Props::get()->input();
 		$db = FWS_Props::get()->db();
-		$url = FWS_Props::get()->url();
 		$cats = FWS_Props::get()->cats();
 		$tpl = FWS_Props::get()->tpl();
 		$versions = FWS_Props::get()->versions();
@@ -85,7 +83,7 @@ final class TDL_Module_edit_project extends TDL_Module
 				return;
 			}
 			
-			$target_url = $url->get_URL(0,'&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$id);
+			$target_url = TDL_URL::get_url(0,'&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$id);
 			$form_title = 'Projekt editieren';
 			$submit_title = 'Speichern';
 			$action_type = TDL_ACTION_EDIT_PROJECT;
@@ -98,7 +96,7 @@ final class TDL_Module_edit_project extends TDL_Module
 				'project_start' => ''
 			);
 			
-			$target_url = $url->get_URL(0,'&amp;'.TDL_URL_MODE.'=add');
+			$target_url = TDL_URL::get_url(0,'&amp;'.TDL_URL_MODE.'=add');
 			$form_title = 'Neues Projekt';
 			$submit_title = 'Absenden';
 			$action_type = TDL_ACTION_ADD_PROJECT;

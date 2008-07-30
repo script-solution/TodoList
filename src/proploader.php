@@ -90,14 +90,6 @@ final class TDL_PropLoader extends FWS_PropLoader
 	{
 		return new TDL_Functions();
 	}
-
-	/**
-	 * @return TDL_URL the url-class
-	 */
-	protected function url()
-	{
-		return new TDL_URL();
-	}
 	
 	/**
 	 * @return TDL_Locale_EN the locale

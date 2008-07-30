@@ -36,14 +36,6 @@ final class TDL_PropAccessor extends FWS_PropAccessor
 	}
 	
 	/**
-	 * @return TDL_URL the url-class
-	 */
-	public function url()
-	{
-		return $this->get('url');
-	}
-	
-	/**
 	 * @return TDL_Functions the functions
 	 */
 	public function functions()

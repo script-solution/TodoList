@@ -28,7 +28,6 @@ final class TDL_Module_edit_entry extends TDL_Module
 		
 		$input = FWS_Props::get()->input();
 		$functions = FWS_Props::get()->functions();
-		$url = FWS_Props::get()->url();
 		$renderer = $doc->use_default_renderer();
 		
 		$renderer->add_action(TDL_ACTION_EDIT_ENTRY,'edit');
@@ -44,7 +43,7 @@ final class TDL_Module_edit_entry extends TDL_Module
 		}
 		else
 		{
-			$murl = $url->get_URL(0,'&amp;'.TDL_URL_MODE.'=add');
+			$murl = TDL_URL::get_url(0,'&amp;'.TDL_URL_MODE.'=add');
 			$title = 'Neuer Eintrag';
 		}
 		

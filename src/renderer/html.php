@@ -26,14 +26,13 @@ class TDL_Renderer_HTML extends FWS_Document_Renderer_HTML_Default
 	{
 		parent::__construct();
 		
-		$url = FWS_Props::get()->url();
 		$tpl = FWS_Props::get()->tpl();
 		
 		$tpl->set_path('theme/templates/');
 		$tpl->set_cache_folder(FWS_Path::server_app().'cache/');
 		
 		// add the home-breadcrumb
-		$this->add_breadcrumb('Todo-Liste',$url->get_url('view_entries'));
+		$this->add_breadcrumb('Todo-Liste',TDL_URL::get_url('view_entries'));
 		
 		$this->_action_perf->set_prefix('TDL_Action_');
 		
@@ -62,14 +61,13 @@ class TDL_Renderer_HTML extends FWS_Document_Renderer_HTML_Default
 	}
 
 	/**
-	 * @see FWS_Page::before_render()
+	 * @see FWS_Document_Renderer_HTML_Default::before_render()
 	 */
 	protected final function before_render()
 	{
 		$tpl = FWS_Props::get()->tpl();
 		$msgs = FWS_Props::get()->msgs();
 		$locale = FWS_Props::get()->locale();
-		$url = FWS_Props::get()->url();
 		$doc = FWS_Props::get()->doc();
 		
 		// add redirect information
@@ -91,6 +89,7 @@ class TDL_Renderer_HTML extends FWS_Document_Renderer_HTML_Default
 		$js = FWS_Javascript::get_instance();
 		$js->set_cache_folder('cache/');
 		$tpl->add_global_ref('js',$js);
+		$url = new TDL_URL();
 		$tpl->add_global_ref('url',$url);
 		$tpl->add_global_ref('locale',$locale);
 		
@@ -105,7 +104,7 @@ class TDL_Renderer_HTML extends FWS_Document_Renderer_HTML_Default
 	}
 
 	/**
-	 * @see FWS_Page::header()
+	 * @see FWS_Document_Renderer_HTML_Default::header()
 	 */
 	protected function header()
 	{
@@ -148,7 +147,7 @@ class TDL_Renderer_HTML extends FWS_Document_Renderer_HTML_Default
 	}
 
 	/**
-	 * @see FWS_Page::footer()
+	 * @see FWS_Document_Renderer_HTML_Default::footer()
 	 */
 	protected function footer()
 	{

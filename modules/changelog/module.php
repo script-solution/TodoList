@@ -26,7 +26,6 @@ final class TDL_Module_changelog extends TDL_Module
 	{
 		parent::init($doc);
 		
-		$url = FWS_Props::get()->url();
 		$input = FWS_Props::get()->input();
 		$renderer = $doc->use_default_renderer();
 		
@@ -34,7 +33,7 @@ final class TDL_Module_changelog extends TDL_Module
 		if($mode == 'export')
 			$doc->use_raw_renderer();
 		
-		$renderer->add_breadcrumb('Changelog',$url->get_URL('changelog'));
+		$renderer->add_breadcrumb('Changelog',TDL_URL::get_url('changelog'));
 	}
 	
 	/**

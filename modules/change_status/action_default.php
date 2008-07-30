@@ -20,8 +20,6 @@ class TDL_Action_change_status_default extends FWS_Actions_Base
 	public function perform_action()
 	{
 		$input = FWS_Props::get()->input();
-		$url = FWS_Props::get()->url();
-
 		$id_str = $input->get_predef(TDL_URL_IDS,'get');
 		$ids = FWS_Array_Utils::advanced_explode(',',$id_str);
 		if(!FWS_Array_Utils::is_numeric($ids) || count($ids) == 0)
@@ -64,7 +62,7 @@ class TDL_Action_change_status_default extends FWS_Actions_Base
 		$this->set_show_status_page(false);
 		$this->set_success_msg('Der Status der Eintr&auml;ge wurde erfolgreich ge&auml;ndert');
 		$this->set_action_performed(true);
-		$this->set_redirect(true,$url->get_URL(-1));
+		$this->set_redirect(true,TDL_URL::get_url(-1));
 	
 		return '';
 	}

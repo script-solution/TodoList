@@ -26,11 +26,9 @@ final class TDL_Module_view_projects extends TDL_Module
 	{
 		parent::init($doc);
 		
-		$url = FWS_Props::get()->url();
-		
 		$renderer = $doc->use_default_renderer();
 		$renderer->add_action(TDL_ACTION_DELETE_PROJECTS,'delete');
-		$renderer->add_breadcrumb('Projekte',$url->get_URL('view_projects'));
+		$renderer->add_breadcrumb('Projekte',TDL_URL::get_url('view_projects'));
 	}
 	
 	/**

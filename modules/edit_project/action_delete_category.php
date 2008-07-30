@@ -22,8 +22,6 @@ class TDL_Action_edit_project_delete_category extends FWS_Actions_Base
 		$input = FWS_Props::get()->input();
 		$db = FWS_Props::get()->db();
 		$cats = FWS_Props::get()->cats();
-		$url = FWS_Props::get()->url();
-
 		$id = $input->get_predef(TDL_URL_SID,'get');
 		if($id == null)
 			return TDL_GENERAL_ERROR;
@@ -36,7 +34,7 @@ class TDL_Action_edit_project_delete_category extends FWS_Actions_Base
 		$this->set_success_msg('Die Kategorie wurde erfolgreich gel&ouml;scht');
 		$this->set_redirect(
 			true,
-			$url->get_URL('edit_project','&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$pid)
+			TDL_URL::get_url('edit_project','&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$pid)
 		);
 		$this->set_show_status_page(false);
 		$this->set_action_performed(true);

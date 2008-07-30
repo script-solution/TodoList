@@ -38,7 +38,6 @@ final class TDL_Module_ajax_delmsg extends TDL_Module
 	public function run()
 	{
 		$input = FWS_Props::get()->input();
-		$url = FWS_Props::get()->url();
 		$functions = FWS_Props::get()->functions();
 
 		$id_str = $input->get_var('ids','get',FWS_Input::STRING);
@@ -58,17 +57,17 @@ final class TDL_Module_ajax_delmsg extends TDL_Module
 				case 'view_projects':
 					$table = TDL_TB_PROJECTS;
 					$field = 'project_name';
-					$yes_url = $url->get_file_url(
-						'index.php','&amp;'.TDL_URL_ACTION.'=view_projects&amp;'
-							.TDL_URL_AT.'='.TDL_ACTION_DELETE_PROJECTS.'&amp;'.TDL_URL_IDS.'='.implode(',',$ids)
+					$yes_url = TDL_URL::get_url(
+						'view_projects','&amp;'.TDL_URL_AT.'='.TDL_ACTION_DELETE_PROJECTS
+							.'&amp;'.TDL_URL_IDS.'='.implode(',',$ids)
 					);
 					break;
 				
 				case 'view_entries':
 					$table = TDL_TB_ENTRIES;
 					$field = 'entry_title';
-					$yes_url = $url->get_file_url(
-						'index.php','&amp;'.TDL_URL_AT.'='.TDL_ACTION_DELETE_ENTRIES.'&amp;'.TDL_URL_IDS.'='.implode(',',$ids)
+					$yes_url = TDL_URL::get_url(
+						-1,'&amp;'.TDL_URL_AT.'='.TDL_ACTION_DELETE_ENTRIES.'&amp;'.TDL_URL_IDS.'='.implode(',',$ids)
 					);
 					break;
 			}

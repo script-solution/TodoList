@@ -113,8 +113,6 @@ class TDL_Functions extends FWS_Object
 	public function get_entry_base_url()
 	{
 		$input = FWS_Props::get()->input();
-		$url = FWS_Props::get()->url();
-
 		$s_keyword = $input->get_predef(TDL_URL_S_KEYWORD,'get');
 		$s_from_changed_date = $input->get_predef(TDL_URL_S_FROM_CHANGED_DATE,'get');
 		$s_to_changed_date = $input->get_predef(TDL_URL_S_TO_CHANGED_DATE,'get');
@@ -131,7 +129,7 @@ class TDL_Functions extends FWS_Object
 		$order = $input->get_predef(TDL_URL_ORDER,'get','changed');
 		$ad = $input->get_predef(TDL_URL_AD,'get','DESC');
 		
-		$base_url = $url->get_URL(-1);
+		$base_url = TDL_URL::get_url(-1);
 		$base_url .= '?'.TDL_URL_S_KEYWORD.'='.$s_keyword;
 		$base_url .= '&amp;'.TDL_URL_S_CATEGORY.'='.$s_category;
 		$base_url .= '&amp;'.TDL_URL_S_PRIORITY.'='.$s_priority;

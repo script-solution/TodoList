@@ -40,7 +40,6 @@ final class TDL_Module_view_entries extends TDL_Module
 		$cfg = FWS_Props::get()->cfg();
 		$cats = FWS_Props::get()->cats();
 		$versions = FWS_Props::get()->versions();
-		$url = FWS_Props::get()->url();
 		$db = FWS_Props::get()->db();
 		$tpl = FWS_Props::get()->tpl();
 		$user = FWS_Props::get()->user();
@@ -167,7 +166,7 @@ final class TDL_Module_view_entries extends TDL_Module
 		
 		$order = $input->get_predef(TDL_URL_ORDER,'get','changed');
 		
-		$base_url = $url->get_URL(-1);
+		$base_url = TDL_URL::get_url(-1);
 		$base_url .= '?'.TDL_URL_S_KEYWORD.'='.$s_keyword;
 		$base_url .= '&amp;'.TDL_URL_S_CATEGORY.'='.$s_category;
 		$base_url .= '&amp;'.TDL_URL_S_PRIORITY.'='.$s_priority;
@@ -281,7 +280,7 @@ final class TDL_Module_view_entries extends TDL_Module
 			
 			$image = $data['entry_description'] != '' ? 'details_available' : 'details_not_available';
 			$img_title = $data['entry_description'] != '' ? 'Details anzeigen' : 'Details anzeigen (Keine Beschreibung vorhanden)';
-			$details_url = $url->get_URL('entry_details','&amp;'.TDL_URL_ID.'='.$data['id']);
+			$details_url = TDL_URL::get_url('entry_details','&amp;'.TDL_URL_ID.'='.$data['id']);
 			$title = '<a class="tl_main" href="'.$details_url.'">';
 			$title .= '<img src="'.$user->get_theme_item_path('images/'.$image.'.gif').'" border="0" title="'.$img_title.'" align="top"';
 			$title .= ' alt="'.$img_title.'" /></a>&nbsp;'.$data['entry_title'];

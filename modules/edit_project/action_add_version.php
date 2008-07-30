@@ -22,8 +22,6 @@ class TDL_Action_edit_project_add_version extends FWS_Actions_Base
 		$input = FWS_Props::get()->input();
 		$db = FWS_Props::get()->db();
 		$versions = FWS_Props::get()->versions();
-		$url = FWS_Props::get()->url();
-
 		$pid = $input->get_predef(TDL_URL_ID,'get');
 		if($pid == null)
 			return TDL_GENERAL_ERROR;
@@ -38,7 +36,7 @@ class TDL_Action_edit_project_add_version extends FWS_Actions_Base
 		$this->set_success_msg('Die Version wurde erfolgreich hinzugef&uuml;gt');
 		$this->set_redirect(
 			true,
-			$url->get_URL('edit_project','&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$pid)
+			TDL_URL::get_url('edit_project','&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$pid)
 		);
 		$this->set_show_status_page(false);
 		$this->set_action_performed(true);

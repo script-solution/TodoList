@@ -27,11 +27,10 @@ final class TDL_Module_entry_details extends TDL_Module
 		parent::init($doc);
 		
 		$input = FWS_Props::get()->input();
-		$url = FWS_Props::get()->url();
 		$renderer = $doc->use_default_renderer();
 		
 		$id = $input->get_predef(TDL_URL_ID,'get');
-		$renderer->add_breadcrumb('Eintrags Details',$url->get_URL(0,'&amp;'.TDL_URL_ID.'='.$id));
+		$renderer->add_breadcrumb('Eintrags Details',TDL_URL::get_url(0,'&amp;'.TDL_URL_ID.'='.$id));
 	}
 	
 	/**
