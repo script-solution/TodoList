@@ -20,15 +20,16 @@ final class TDL_Module_ajax_delmsg extends TDL_Module
 	/**
 	 * @see PLIB_Module::init($doc)
 	 * 
-	 * @param TDL_Page $doc
+	 * @param TDL_Document $doc
 	 */
 	public function init($doc)
 	{
 		parent::init($doc);
+		$renderer = $doc->use_default_renderer();
 		
-		$doc->set_show_header(false);
-		$doc->set_show_footer(false);
-		$doc->set_template('delete_message.htm');
+		$renderer->set_show_header(false);
+		$renderer->set_show_footer(false);
+		$renderer->set_template('delete_message.htm');
 	}
 	
 	/**

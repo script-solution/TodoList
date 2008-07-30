@@ -20,19 +20,19 @@
 final class TDL_PropAccessor extends PLIB_PropAccessor
 {
 	/**
+	 * @return TDL_Document the document
+	 */
+	public function doc()
+	{
+		return $this->get('doc');
+	}
+	
+	/**
 	 * @return PLIB_MySQL the db-connection-class
 	 */
 	public function db()
 	{
 		return $this->get('db');
-	}
-	
-	/**
-	 * @return TDL_Messages the messages-container
-	 */
-	public function msgs()
-	{
-		return $this->get('msgs');
 	}
 	
 	/**

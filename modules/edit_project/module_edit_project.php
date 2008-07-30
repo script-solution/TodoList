@@ -20,7 +20,7 @@ final class TDL_Module_edit_project extends TDL_Module
 	/**
 	 * @see PLIB_Module::init($doc)
 	 * 
-	 * @param TDL_Page $doc
+	 * @param TDL_Document $doc
 	 */
 	public function init($doc)
 	{
@@ -28,13 +28,14 @@ final class TDL_Module_edit_project extends TDL_Module
 		
 		$input = PLIB_Props::get()->input();
 		$url = PLIB_Props::get()->url();
+		$renderer = $doc->use_default_renderer();
 		
-		$doc->add_action(TDL_ACTION_ADD_PROJECT,'add_project');
-		$doc->add_action(TDL_ACTION_EDIT_PROJECT,'edit_project');
-		$doc->add_action(TDL_ACTION_ADD_CATEGORY,'add_category');
-		$doc->add_action(TDL_ACTION_DELETE_CATEGORY,'delete_category');
-		$doc->add_action(TDL_ACTION_ADD_VERSION,'add_version');
-		$doc->add_action(TDL_ACTION_DELETE_VERSION,'delete_version');
+		$renderer->add_action(TDL_ACTION_ADD_PROJECT,'add_project');
+		$renderer->add_action(TDL_ACTION_EDIT_PROJECT,'edit_project');
+		$renderer->add_action(TDL_ACTION_ADD_CATEGORY,'add_category');
+		$renderer->add_action(TDL_ACTION_DELETE_CATEGORY,'delete_category');
+		$renderer->add_action(TDL_ACTION_ADD_VERSION,'add_version');
+		$renderer->add_action(TDL_ACTION_DELETE_VERSION,'delete_version');
 
 		$mode = $input->correct_var(TDL_URL_MODE,'get',PLIB_Input::STRING,array('add','edit'),'add');
 		if($mode == 'edit')
@@ -49,8 +50,8 @@ final class TDL_Module_edit_project extends TDL_Module
 			$title = 'Neues Projekt';
 		}
 		
-		$doc->add_breadcrumb('Projekte',$url->get_URL('view_projects'));
-		$doc->add_breadcrumb($title,$murl);
+		$renderer->add_breadcrumb('Projekte',$url->get_URL('view_projects'));
+		$renderer->add_breadcrumb($title,$murl);
 	}
 	
 	/**

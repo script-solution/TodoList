@@ -20,7 +20,7 @@ final class TDL_Module_change_status extends TDL_Module
 	/**
 	 * @see PLIB_Module::init($doc)
 	 * 
-	 * @param TDL_Page $doc
+	 * @param TDL_Document $doc
 	 */
 	public function init($doc)
 	{
@@ -28,11 +28,12 @@ final class TDL_Module_change_status extends TDL_Module
 		
 		$input = PLIB_Props::get()->input();
 		$url = PLIB_Props::get()->url();
+		$renderer = $doc->use_default_renderer();
 		
-		$doc->add_action(TDL_ACTION_CHANGE_STATUS,'default');
+		$renderer->add_action(TDL_ACTION_CHANGE_STATUS,'default');
 
 		$id_str = $input->get_predef(TDL_URL_IDS,'get');
-		$doc->add_breadcrumb('Status &auml;ndern',$url->get_URL(0,'&amp;'.TDL_URL_IDS.'='.$id_str));
+		$renderer->add_breadcrumb('Status &auml;ndern',$url->get_URL(0,'&amp;'.TDL_URL_IDS.'='.$id_str));
 	}
 	
 	/**

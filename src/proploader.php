@@ -20,6 +20,14 @@
 final class TDL_PropLoader extends PLIB_PropLoader
 {
 	/**
+	 * @return TDL_Document the document
+	 */
+	protected function doc()
+	{
+		return new TDL_Document();
+	}
+	
+	/**
 	 * @return PLIB_MySQL the db-connection-class
 	 */
 	protected function db()
@@ -28,14 +36,6 @@ final class TDL_PropLoader extends PLIB_PropLoader
 		$c->connect(TDL_MYSQL_HOST,TDL_MYSQL_LOGIN,TDL_MYSQL_PASSWORD,TDL_MYSQL_DATABASE);
 		$c->init(TDL_DB_CHARSET);
 		return $c;
-	}
-	
-	/**
-	 * @return TDL_Messages the messages-container
-	 */
-	protected function msgs()
-	{
-		return new TDL_Messages();
 	}
 	
 	/**

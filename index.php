@@ -102,6 +102,6 @@ $user = PLIB_Props::get()->user();
 $user->init();
 
 // ok, now show the page
-$page = new TDL_Page();
-echo $page->render();
+$doc = PLIB_Props::get()->doc();
+echo $doc->render();
 ?>

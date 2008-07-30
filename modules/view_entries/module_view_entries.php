@@ -20,13 +20,14 @@ final class TDL_Module_view_entries extends TDL_Module
 	/**
 	 * @see PLIB_Module::init($doc)
 	 * 
-	 * @param TDL_Page $doc
+	 * @param TDL_Document $doc
 	 */
 	public function init($doc)
 	{
 		parent::init($doc);
 		
-		$doc->add_action(TDL_ACTION_DELETE_ENTRIES,'delete');
+		$renderer = $doc->use_default_renderer();
+		$renderer->add_action(TDL_ACTION_DELETE_ENTRIES,'delete');
 	}
 	
 	/**

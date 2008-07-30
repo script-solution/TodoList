@@ -20,7 +20,7 @@ final class TDL_Module_view_projects extends TDL_Module
 	/**
 	 * @see PLIB_Module::init($doc)
 	 * 
-	 * @param TDL_Page $doc
+	 * @param TDL_Document $doc
 	 */
 	public function init($doc)
 	{
@@ -28,8 +28,9 @@ final class TDL_Module_view_projects extends TDL_Module
 		
 		$url = PLIB_Props::get()->url();
 		
-		$doc->add_action(TDL_ACTION_DELETE_PROJECTS,'delete');
-		$doc->add_breadcrumb('Projekte',$url->get_URL('view_projects'));
+		$renderer = $doc->use_default_renderer();
+		$renderer->add_action(TDL_ACTION_DELETE_PROJECTS,'delete');
+		$renderer->add_breadcrumb('Projekte',$url->get_URL('view_projects'));
 	}
 	
 	/**

@@ -20,7 +20,7 @@ final class TDL_Module_changelog extends TDL_Module
 	/**
 	 * @see PLIB_Module::init($doc)
 	 * 
-	 * @param TDL_Page $doc
+	 * @param TDL_Document $doc
 	 */
 	public function init($doc)
 	{
@@ -28,12 +28,13 @@ final class TDL_Module_changelog extends TDL_Module
 		
 		$url = PLIB_Props::get()->url();
 		$input = PLIB_Props::get()->input();
+		$renderer = $doc->use_default_renderer();
 		
 		$mode = $input->get_predef(TDL_URL_MODE,'get');
 		if($mode == 'export')
-			$doc->set_output_enabled(false);
+			$doc->use_raw_renderer();
 		
-		$doc->add_breadcrumb('Changelog',$url->get_URL('changelog'));
+		$renderer->add_breadcrumb('Changelog',$url->get_URL('changelog'));
 	}
 	
 	/**
@@ -156,9 +157,10 @@ final class TDL_Module_changelog extends TDL_Module
 		}
 		$db->sql_free($qry);
 		
-		// clear everything in the outputbuffer. we just want to send the changelog
-		header('Content-type: text/plain; charset='.TDL_HTML_CHARSET);
-		echo PLIB_StringHelper::htmlspecialchars_back($text);
+		// set result to renderer
+		$doc = PLIB_Props::get()->doc();
+		$doc->set_mimetype('text/plain');
+		$doc->use_raw_renderer()->set_content(PLIB_StringHelper::htmlspecialchars_back($text));
 	}
 }
 ?>

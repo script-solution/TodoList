@@ -20,7 +20,7 @@ final class TDL_Module_edit_entry extends TDL_Module
 	/**
 	 * @see PLIB_Module::init($doc)
 	 * 
-	 * @param TDL_Page $doc
+	 * @param TDL_Document $doc
 	 */
 	public function init($doc)
 	{
@@ -29,9 +29,10 @@ final class TDL_Module_edit_entry extends TDL_Module
 		$input = PLIB_Props::get()->input();
 		$functions = PLIB_Props::get()->functions();
 		$url = PLIB_Props::get()->url();
+		$renderer = $doc->use_default_renderer();
 		
-		$doc->add_action(TDL_ACTION_EDIT_ENTRY,'edit');
-		$doc->add_action(TDL_ACTION_NEW_ENTRY,'add');
+		$renderer->add_action(TDL_ACTION_EDIT_ENTRY,'edit');
+		$renderer->add_action(TDL_ACTION_NEW_ENTRY,'add');
 
 		$mode = $input->correct_var(TDL_URL_MODE,'get',PLIB_Input::STRING,array('add','edit'),'add');
 		if($mode == 'edit')
@@ -47,7 +48,7 @@ final class TDL_Module_edit_entry extends TDL_Module
 			$title = 'Neuer Eintrag';
 		}
 		
-		$doc->add_breadcrumb($title,$murl);
+		$renderer->add_breadcrumb($title,$murl);
 	}
 	
 	/**
@@ -245,6 +246,7 @@ final class TDL_Module_edit_entry extends TDL_Module
 	{
 		$doc = PLIB_Props::get()->doc();
 		$input = PLIB_Props::get()->input();
+		$renderer = $doc->use_default_renderer();
 
 		$combo = new PLIB_HTML_ComboBox($name,null,null,$default);
 		$combo->set_options($options);
@@ -256,7 +258,7 @@ final class TDL_Module_edit_entry extends TDL_Module
 			);
 		}
 		
-		if($doc->get_action_result() === -1)
+		if($renderer->get_action_result() === -1)
 			$combo->set_value($input->get_var($name,'post'));
 		
 		return $combo->to_html();

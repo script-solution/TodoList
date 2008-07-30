@@ -20,7 +20,7 @@ final class TDL_Module_entry_details extends TDL_Module
 	/**
 	 * @see PLIB_Module::init($doc)
 	 * 
-	 * @param TDL_Page $doc
+	 * @param TDL_Document $doc
 	 */
 	public function init($doc)
 	{
@@ -28,9 +28,10 @@ final class TDL_Module_entry_details extends TDL_Module
 		
 		$input = PLIB_Props::get()->input();
 		$url = PLIB_Props::get()->url();
+		$renderer = $doc->use_default_renderer();
 		
 		$id = $input->get_predef(TDL_URL_ID,'get');
-		$doc->add_breadcrumb('Eintrags Details',$url->get_URL(0,'&amp;'.TDL_URL_ID.'='.$id));
+		$renderer->add_breadcrumb('Eintrags Details',$url->get_URL(0,'&amp;'.TDL_URL_ID.'='.$id));
 	}
 	
 	/**

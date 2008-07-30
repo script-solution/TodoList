@@ -1,61 +1,30 @@
 <?php
 /**
- * Contains the page-class
+ * Contains the html-renderer-class
  *
  * @version			$Id$
  * @package			Todolist
- * @subpackage	src
+ * @subpackage	src.renderer
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
  */
 
 /**
- * The page for the todolist
+ * The HTML-renderer for the todolist
  *
  * @package			Todolist
- * @subpackage	src
+ * @subpackage	src.renderer
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class TDL_Page extends PLIB_Page
+class TDL_Renderer_HTML extends PLIB_Document_Renderer_HTML_Default
 {
-	/**
-	 * The current module
-	 *
-	 * @var TDL_Module
-	 */
-	private $_module;
-
-	/**
-	 * The name of the current module
-	 *
-	 * @var string
-	 */
-	private $_module_name;
-
 	/**
 	 * Constructor
 	 */
 	public function __construct()
 	{
-		try
-		{
-			parent::__construct();
-	
-			$this->_module = $this->_load_module();
-		}
-		catch(PLIB_Exceptions_Critical $e)
-		{
-			echo $e;
-		}
-	}
-	
-	/**
-	 * @see BS_Page::before_start()
-	 */
-	protected function before_start()
-	{
-		parent::before_start();
+		parent::__construct();
 		
 		$url = PLIB_Props::get()->url();
 		$tpl = PLIB_Props::get()->tpl();
@@ -70,20 +39,22 @@ final class TDL_Page extends PLIB_Page
 		
 		$a = new TDL_Actions_ChangeSelProject(TDL_ACTION_CHANGE_SEL_PROJECT);
 		$this->_action_perf->add_action($a);
+	}
+	
+	/**
+	 * @see BS_Page::before_start()
+	 */
+	protected function before_start()
+	{
+		parent::before_start();
 		
-		// init the module
-		$this->_module->init($this);
-
-		// add actions of the current module
-		$this->_action_perf->add_actions($this->_module_name,$this->get_actions());
-		
-		$this->perform_actions();
+		$doc = PLIB_Props::get()->doc();
 		
 		// set the default template if not already done
 		$template = '';
 		if($this->get_template() === null)
 		{
-			$classname = get_class($this->_module);
+			$classname = get_class($doc->get_module());
 			$prefixlen = PLIB_String::strlen('TDL_Module_');
 			$template = PLIB_String::strtolower(PLIB_String::substr($classname,$prefixlen)).'.htm';
 			$this->set_template($template);
@@ -99,14 +70,15 @@ final class TDL_Page extends PLIB_Page
 		$msgs = PLIB_Props::get()->msgs();
 		$locale = PLIB_Props::get()->locale();
 		$url = PLIB_Props::get()->url();
+		$doc = PLIB_Props::get()->doc();
 		
 		// add redirect information
-		$redirect = $this->get_redirect();
+		$redirect = $doc->get_redirect();
 		if($redirect)
 			$tpl->add_array('redirect',$redirect,'inc_header.htm');
 		
 		// notify the template if an error has occurred
-		$tpl->add_global('module_error',$this->error_occurred());
+		$tpl->add_global('module_error',$doc->get_module()->error_occurred());
 		
 		// add global variables
 		$action_result = $this->get_action_result();
@@ -128,10 +100,8 @@ final class TDL_Page extends PLIB_Page
 		$tpl->add_allowed_method('locale','lang');
 		
 		// add messages
-		$msgs->add_messages();
-		
-		$this->set_charset(TDL_HTML_CHARSET);
-		$this->set_gzip(TDL_ENABLE_GZIP);
+		if($msgs->contains_msg())
+			$this->_handle_msgs($msgs);
 	}
 
 	/**
@@ -143,6 +113,8 @@ final class TDL_Page extends PLIB_Page
 		$cfg = PLIB_Props::get()->cfg();
 		$versions = PLIB_Props::get()->versions();
 		$functions = PLIB_Props::get()->functions();
+		
+		$this->perform_actions();
 		
 		// show page header
 		$tpl->set_template('header.htm');
@@ -167,24 +139,11 @@ final class TDL_Page extends PLIB_Page
 		
 		$tpl->set_template('navigation.htm');
 		$tpl->add_variables(array(
-			'location' => PLIB_Helper::generate_location($this,'tl_body'),
+			'location' => $this->get_breadcrumbs('tl_body'),
 			'change_selected_project_url' => $functions->get_current_url(),
 			'action_type' => TDL_ACTION_CHANGE_SEL_PROJECT,
 			'selected_project_combo' => $project_combo
 		));
-		$tpl->restore_template();
-	}
-
-	/**
-	 * @see PLIB_Page::content()
-	 */
-	protected final function content()
-	{
-		$tpl = PLIB_Props::get()->tpl();
-
-		// run the module
-		$tpl->set_template($this->get_template());
-		$this->_module->run();
 		$tpl->restore_template();
 	}
 
@@ -213,20 +172,6 @@ final class TDL_Page extends PLIB_Page
 		));
 		$tpl->restore_template();
 	}
-
-	/**
-	 * Loads the corresponding module
-	 *
-	 * @return BS_DBA_Module the loaded module
-	 */
-	private function _load_module()
-	{
-		$this->_module_name = PLIB_Helper::get_module_name(
-			'TDL_Module_',TDL_URL_ACTION,'view_entries'
-		);
-		$class = 'TDL_Module_'.$this->_module_name;
-		return new $class();
-	}
 	
 	/**
 	 * @see PLIB_Document::load_action_perf()
@@ -239,9 +184,28 @@ final class TDL_Page extends PLIB_Page
 		return $c;
 	}
 	
-	protected function get_print_vars()
+	/**
+	 * Handles the collected messages
+	 *
+	 * @param PLIB_Document_Messages $msgs the messages
+	 */
+	private function _handle_msgs($msgs)
 	{
-		return array_merge(parent::get_print_vars(),get_object_vars($this));
+		$tpl = PLIB_Props::get()->tpl();
+		$locale = PLIB_Props::get()->locale();
+
+		$amsgs = $msgs->get_all_messages();
+		$links = $msgs->get_links();
+		$tpl->set_template('messages.htm');
+		$tpl->add_array('errors',$amsgs[PLIB_Document_Messages::ERROR]);
+		$tpl->add_array('warnings',$amsgs[PLIB_Document_Messages::WARNING]);
+		$tpl->add_array('notices',$amsgs[PLIB_Document_Messages::NOTICE]);
+		$tpl->add_array('links',$links);
+		$tpl->add_variables(array(
+			'title' => $locale->lang('information'),
+			'messages' => $msgs->contains_error() || $msgs->contains_notice() || $msgs->contains_warning()
+		));
+		$tpl->restore_template();
 	}
 }
 ?>
