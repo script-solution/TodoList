@@ -15,7 +15,7 @@
  *
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class TDL_Module extends PLIB_Module
+abstract class TDL_Module extends FWS_Module
 {
 	
 }

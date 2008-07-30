@@ -18,7 +18,7 @@
 final class TDL_Module_edit_entry extends TDL_Module
 {
 	/**
-	 * @see PLIB_Module::init($doc)
+	 * @see FWS_Module::init($doc)
 	 * 
 	 * @param TDL_Document $doc
 	 */
@@ -26,21 +26,21 @@ final class TDL_Module_edit_entry extends TDL_Module
 	{
 		parent::init($doc);
 		
-		$input = PLIB_Props::get()->input();
-		$functions = PLIB_Props::get()->functions();
-		$url = PLIB_Props::get()->url();
+		$input = FWS_Props::get()->input();
+		$functions = FWS_Props::get()->functions();
+		$url = FWS_Props::get()->url();
 		$renderer = $doc->use_default_renderer();
 		
 		$renderer->add_action(TDL_ACTION_EDIT_ENTRY,'edit');
 		$renderer->add_action(TDL_ACTION_NEW_ENTRY,'add');
 
-		$mode = $input->correct_var(TDL_URL_MODE,'get',PLIB_Input::STRING,array('add','edit'),'add');
+		$mode = $input->correct_var(TDL_URL_MODE,'get',FWS_Input::STRING,array('add','edit'),'add');
 		if($mode == 'edit')
 		{
 			$id = $input->get_predef(TDL_URL_IDS,'get');
 			$murl = $functions->get_entry_base_url().'&amp;'.TDL_URL_ACTION.'=edit_entry&amp;'
 				.TDL_URL_MODE.'=edit&amp;'.TDL_URL_IDS.'='.$id;
-			$title = PLIB_String::substr_count($id,',') > 1 ? 'Eintr&auml;ge editieren' : 'Eintrag editieren';
+			$title = FWS_String::substr_count($id,',') > 1 ? 'Eintr&auml;ge editieren' : 'Eintrag editieren';
 		}
 		else
 		{
@@ -52,19 +52,19 @@ final class TDL_Module_edit_entry extends TDL_Module
 	}
 	
 	/**
-	 * @see PLIB_Module::run()
+	 * @see FWS_Module::run()
 	 */
 	public function run()
 	{
-		$input = PLIB_Props::get()->input();
-		$functions = PLIB_Props::get()->functions();
-		$cfg = PLIB_Props::get()->cfg();
-		$db = PLIB_Props::get()->db();
-		$versions = PLIB_Props::get()->versions();
-		$cats = PLIB_Props::get()->cats();
-		$tpl = PLIB_Props::get()->tpl();
+		$input = FWS_Props::get()->input();
+		$functions = FWS_Props::get()->functions();
+		$cfg = FWS_Props::get()->cfg();
+		$db = FWS_Props::get()->db();
+		$versions = FWS_Props::get()->versions();
+		$cats = FWS_Props::get()->cats();
+		$tpl = FWS_Props::get()->tpl();
 
-		$mode = $input->correct_var(TDL_URL_MODE,'get',PLIB_Input::STRING,array('add','edit'),'add');
+		$mode = $input->correct_var(TDL_URL_MODE,'get',FWS_Input::STRING,array('add','edit'),'add');
 		$id = $input->get_predef(TDL_URL_IDS,'get');
 		
 		if($id === null && $mode == 'edit')
@@ -95,8 +95,8 @@ final class TDL_Module_edit_entry extends TDL_Module
 		
 		if($mode == 'edit')
 		{
-			$ids = PLIB_Array_Utils::advanced_explode(',',$id);
-			if(!PLIB_Array_Utils::is_numeric($ids))
+			$ids = FWS_Array_Utils::advanced_explode(',',$id);
+			if(!FWS_Array_Utils::is_numeric($ids))
 			{
 				$this->report_error();
 				return;
@@ -244,11 +244,11 @@ final class TDL_Module_edit_entry extends TDL_Module
 	 */
 	public function _get_combobox($multiple,$name,$options,$default)
 	{
-		$doc = PLIB_Props::get()->doc();
-		$input = PLIB_Props::get()->input();
+		$doc = FWS_Props::get()->doc();
+		$input = FWS_Props::get()->input();
 		$renderer = $doc->use_default_renderer();
 
-		$combo = new PLIB_HTML_ComboBox($name,null,null,$default);
+		$combo = new FWS_HTML_ComboBox($name,null,null,$default);
 		$combo->set_options($options);
 		
 		if($multiple)

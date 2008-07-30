@@ -16,13 +16,13 @@
  *
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class TDL_Actions_Performer extends PLIB_Actions_Performer
+class TDL_Actions_Performer extends FWS_Actions_Performer
 {
 	public function get_action_type()
 	{
-		$input = PLIB_Props::get()->input();
+		$input = FWS_Props::get()->input();
 
-		$action_type = $input->get_var('action_type','post',PLIB_Input::INTEGER);
+		$action_type = $input->get_var('action_type','post',FWS_Input::INTEGER);
 		if($action_type === null)
 			$action_type = $input->get_predef(TDL_URL_AT,'get');
 

@@ -18,13 +18,13 @@
  */
 function TDL_autoloader($item)
 {
-	if(PLIB_String::starts_with($item,'TDL_'))
+	if(FWS_String::starts_with($item,'TDL_'))
 	{
-		$item = PLIB_String::substr($item,4);
+		$item = FWS_String::substr($item,4);
 		$item = str_replace('_','/',$item);
-		$item = PLIB_String::strtolower($item);
+		$item = FWS_String::strtolower($item);
 		$item .= '.php';
-		$path = PLIB_Path::server_app().'src/'.$item;
+		$path = FWS_Path::server_app().'src/'.$item;
 		if(is_file($path))
 		{
 			include($path);

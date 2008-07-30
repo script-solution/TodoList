@@ -30,8 +30,8 @@ if(!isset($_SESSION['BS11_install']))
 	);
 }
 
-$lang = $this->input->correct_var('lang','get',PLIB_Input::STRING,array('en','ger_du','ger_sie'),'ger_du');
-$step = $this->input->get_var('step','get',PLIB_Input::INTEGER);
+$lang = $this->input->correct_var('lang','get',FWS_Input::STRING,array('en','ger_du','ger_sie'),'ger_du');
+$step = $this->input->get_var('step','get',FWS_Input::INTEGER);
 if($step === null || $step < 1 || $step > 4)
 	$step = $this->input->set_var('step','get',1);
 
@@ -50,7 +50,7 @@ if($this->input->isset_var('back','post') && $step > 0)
 
 $check = array();
 $step_result = BS_check_current_step($step,$check);
-if($step_result[0] && ($this->input->isset_var('forward','post') || $this->input->get_var('forward','get',PLIB_Input::INTEGER) == 1))
+if($step_result[0] && ($this->input->isset_var('forward','post') || $this->input->get_var('forward','get',FWS_Input::INTEGER) == 1))
 {
 	header('Location: '.$_SERVER['PHP_SELF'].'?step='.($step + 1).'&lang='.$lang);
 	exit;
@@ -253,8 +253,8 @@ else if($step == 3)
 $this->tpl->set_template('content.htm');
 echo $this->tpl->parse_template();
 
-$lang = $this->input->get_var('lang','get',PLIB_Input::STRING);
-$step = $this->input->get_var('step','get',PLIB_Input::INTEGER);
+$lang = $this->input->get_var('lang','get',FWS_Input::STRING);
+$step = $this->input->get_var('step','get',FWS_Input::INTEGER);
 BS_display_navigation('bottom',$step,$lang);
 
 $this->tpl->set_template('footer.htm');

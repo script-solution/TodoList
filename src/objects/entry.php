@@ -379,7 +379,7 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 	
 	public function check($type = 'create')
 	{
-		$functions = PLIB_Props::get()->functions();
+		$functions = FWS_Props::get()->functions();
 
 		$this->clear_errors();
 		
@@ -445,7 +445,7 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 	
 	protected function field_name($field)
 	{
-		$locale = PLIB_Props::get()->locale();
+		$locale = FWS_Props::get()->locale();
 
 		return $locale->lang('entry_fields_'.$field);
 	}

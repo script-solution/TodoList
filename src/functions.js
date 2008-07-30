@@ -89,7 +89,7 @@ function performListAction(base_url,comboID,checkBoxPrefix)
 	var combo = document.getElementById(comboID);
 	if(combo != null)
 	{
-		var ids = PLIB_getDeleteIds(checkBoxPrefix);
+		var ids = FWS_getDeleteIds(checkBoxPrefix);
 		if(ids == '')
 			return;
 		
@@ -104,8 +104,8 @@ function performListAction(base_url,comboID,checkBoxPrefix)
 			case 'delete':
 				var url = 'index.php?action=ajax_delmsg&ids=' + ids + '&loc=view_entries';
 				var onfinished = function(text) {
-					PLIB_replaceContent('delete_message_box',text);
-					PLIB_getElement('delete_message_box').style.display = 'block';
+					FWS_replaceContent('delete_message_box',text);
+					FWS_getElement('delete_message_box').style.display = 'block';
 					window.scrollTo(0,0);
 				};
 				myAjax.sendGetRequest(url,onfinished);

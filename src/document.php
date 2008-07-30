@@ -17,10 +17,10 @@
  * @subpackage	src
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class TDL_Document extends PLIB_Document
+final class TDL_Document extends FWS_Document
 {
 	/**
-	 * @see PLIB_Document::use_default_renderer
+	 * @see FWS_Document::use_default_renderer
 	 *
 	 * @return TDL_Renderer_HTML
 	 */
@@ -36,7 +36,7 @@ final class TDL_Document extends PLIB_Document
 	}
 	
 	/**
-	 * @see PLIB_Document::prepare_rendering()
+	 * @see FWS_Document::prepare_rendering()
 	 */
 	protected function prepare_rendering()
 	{
@@ -51,13 +51,13 @@ final class TDL_Document extends PLIB_Document
 	}
 
 	/**
-	 * @see PLIB_Document::load_module()
+	 * @see FWS_Document::load_module()
 	 *
 	 * @return BS_DBA_Module
 	 */
 	protected function load_module()
 	{
-		$this->_module_name = PLIB_Helper::get_module_name(
+		$this->_module_name = FWS_Helper::get_module_name(
 			'TDL_Module_',TDL_URL_ACTION,'view_entries'
 		);
 		$class = 'TDL_Module_'.$this->_module_name;

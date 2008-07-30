@@ -15,7 +15,7 @@
  *
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class TDL_Functions extends PLIB_Object
+class TDL_Functions extends FWS_Object
 {
 	/**
 	 * Selects the project with given id
@@ -24,7 +24,7 @@ class TDL_Functions extends PLIB_Object
 	 */
 	public function select_project($id)
 	{
-		$db = PLIB_Props::get()->db();
+		$db = FWS_Props::get()->db();
 
 		$db->sql_qry('UPDATE '.TDL_TB_CONFIG.' SET is_selected = 0 WHERE is_selected = 1');
 		
@@ -50,11 +50,11 @@ class TDL_Functions extends PLIB_Object
 	 */
 	public function add_entry_delete_message($ids,$table,$field,$yes_url,$no_url)
 	{
-		$db = PLIB_Props::get()->db();
-		$tpl = PLIB_Props::get()->tpl();
+		$db = FWS_Props::get()->db();
+		$tpl = FWS_Props::get()->tpl();
 
 		$entries = array();
-		$sql = PLIB_StringHelper::get_default_delete_sql($ids,$table,$field);
+		$sql = FWS_StringHelper::get_default_delete_sql($ids,$table,$field);
 		$del_qry = $db->sql_qry($sql);
 		while($data = $db->sql_fetch_assoc($del_qry))
 			$entries[] = $data[$field];
@@ -85,7 +85,7 @@ class TDL_Functions extends PLIB_Object
 	 */
 	public function get_order_column($title,$order_value,$def_ascdesc,$order,$url)
 	{
-		$user = PLIB_Props::get()->user();
+		$user = FWS_Props::get()->user();
 
 		if($order == $order_value)
 		{
@@ -112,8 +112,8 @@ class TDL_Functions extends PLIB_Object
 	 */
 	public function get_entry_base_url()
 	{
-		$input = PLIB_Props::get()->input();
-		$url = PLIB_Props::get()->url();
+		$input = FWS_Props::get()->input();
+		$url = FWS_Props::get()->url();
 
 		$s_keyword = $input->get_predef(TDL_URL_S_KEYWORD,'get');
 		$s_from_changed_date = $input->get_predef(TDL_URL_S_FROM_CHANGED_DATE,'get');
@@ -156,10 +156,10 @@ class TDL_Functions extends PLIB_Object
 	 */
 	public function get_current_url()
 	{
-		$input = PLIB_Props::get()->input();
+		$input = FWS_Props::get()->input();
 
-		$query_string = $input->get_var('QUERY_STRING','server',PLIB_Input::STRING);
-		$url = $input->get_var('PHP_SELF','server',PLIB_Input::STRING);
+		$query_string = $input->get_var('QUERY_STRING','server',FWS_Input::STRING);
+		$url = $input->get_var('PHP_SELF','server',FWS_Input::STRING);
 		if($query_string != '')
 			$url .= '?'.$query_string;
 		$url = str_replace('&','&amp;',$url);
@@ -174,7 +174,7 @@ class TDL_Functions extends PLIB_Object
 	 */
 	public function check_category($id)
 	{
-		$cats = PLIB_Props::get()->cats();
+		$cats = FWS_Props::get()->cats();
 
 		if(!is_numeric($id))
 			return false;
@@ -190,7 +190,7 @@ class TDL_Functions extends PLIB_Object
 	 */
 	public function check_project($id)
 	{
-		$versions = PLIB_Props::get()->versions();
+		$versions = FWS_Props::get()->versions();
 
 		if(!is_numeric($id))
 			return false;
@@ -206,7 +206,7 @@ class TDL_Functions extends PLIB_Object
 	 */
 	public function check_version($version_id)
 	{
-		$versions = PLIB_Props::get()->versions();
+		$versions = FWS_Props::get()->versions();
 
 		if(!is_numeric($version_id))
 			return false;
@@ -304,20 +304,20 @@ class TDL_Functions extends PLIB_Object
 	/**
 	 * Generates the pagination from the given object
 	 *
-	 * @param PLIB_Pagination $pagination the PLIB_Pagination-object
+	 * @param FWS_Pagination $pagination the FWS_Pagination-object
 	 * @param string $url the URL containing {d} at the position where to put the page-number
 	 * @return string the result
 	 */
 	public function add_pagination($pagination,$url)
 	{
-		$tpl = PLIB_Props::get()->tpl();
-		$user = PLIB_Props::get()->user();
+		$tpl = FWS_Props::get()->tpl();
+		$user = FWS_Props::get()->user();
 
-		if(!($pagination instanceof PLIB_Pagination))
-			PLIB_Helper::def_error('instance','pagination','PLIB_Pagination',$pagination);
+		if(!($pagination instanceof FWS_Pagination))
+			FWS_Helper::def_error('instance','pagination','FWS_Pagination',$pagination);
 		
 		if(empty($url))
-			PLIB_Helper::def_error('empty','url',$url);
+			FWS_Helper::def_error('empty','url',$url);
 		
 		if($pagination->get_page_count() > 1)
 		{
@@ -386,7 +386,7 @@ class TDL_Functions extends PLIB_Object
 	 */
 	public function add_default_delete_info($ids,$table,$field,$yes_url,$no_url,$lang_entry)
 	{
-		$sql = PLIB_StringHelper::get_default_delete_sql($ids,$table,$field);
+		$sql = FWS_StringHelper::get_default_delete_sql($ids,$table,$field);
 		$this->add_delete_info($ids,$sql,$field,$yes_url,$no_url,$lang_entry);
 	}
 
@@ -402,7 +402,7 @@ class TDL_Functions extends PLIB_Object
 	 */
 	public function add_delete_info($ids,$sql,$field,$yes_url,$no_url,$lang_entry)
 	{
-		$locale = PLIB_Props::get()->locale();
+		$locale = FWS_Props::get()->locale();
 
 		$message = sprintf($locale->lang($lang_entry),$this->get_delete_items($ids,$sql,$field));
 		$this->add_delete_message($message,$yes_url,$no_url);
@@ -418,17 +418,17 @@ class TDL_Functions extends PLIB_Object
 	 */
 	public function get_delete_items($ids,$sql,$field)
 	{
-		$db = PLIB_Props::get()->db();
-		$locale = PLIB_Props::get()->locale();
+		$db = FWS_Props::get()->db();
+		$locale = FWS_Props::get()->locale();
 
 		if(!is_array($ids) || count($ids) == 0)
-			PLIB_Helper::def_error('array>0','ids',$ids);
+			FWS_Helper::def_error('array>0','ids',$ids);
 
 		if(empty($sql))
-			PLIB_Helper::def_error('notempty','sql',$sql);
+			FWS_Helper::def_error('notempty','sql',$sql);
 
 		if(empty($field))
-			PLIB_Helper::def_error('notempty','field',$field);
+			FWS_Helper::def_error('notempty','field',$field);
 
 		$text = '';
 		$num = count($ids);
@@ -454,7 +454,7 @@ class TDL_Functions extends PLIB_Object
 	 */
 	public function add_delete_message($message,$yes_url,$no_url)
 	{
-		$tpl = PLIB_Props::get()->tpl();
+		$tpl = FWS_Props::get()->tpl();
 
 		$tpl->set_template('delete_message.htm');
 		$tpl->add_variables(array(

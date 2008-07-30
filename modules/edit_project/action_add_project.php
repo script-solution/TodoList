@@ -15,18 +15,18 @@
  *
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class TDL_Action_edit_project_add_project extends PLIB_Actions_Base
+class TDL_Action_edit_project_add_project extends FWS_Actions_Base
 {
 	public function perform_action()
 	{
-		$input = PLIB_Props::get()->input();
-		$url = PLIB_Props::get()->url();
+		$input = FWS_Props::get()->input();
+		$url = FWS_Props::get()->url();
 
-		$project_name = $input->get_var('project_name','post',PLIB_Input::STRING);
-		$project_name_short = $input->get_var('project_name_short','post',PLIB_Input::STRING);
-		$start_day = $input->get_var('start_day','post',PLIB_Input::INTEGER);
-		$start_month = $input->get_var('start_month','post',PLIB_Input::INTEGER);
-		$start_year = $input->get_var('start_year','post',PLIB_Input::INTEGER);
+		$project_name = $input->get_var('project_name','post',FWS_Input::STRING);
+		$project_name_short = $input->get_var('project_name_short','post',FWS_Input::STRING);
+		$start_day = $input->get_var('start_day','post',FWS_Input::INTEGER);
+		$start_month = $input->get_var('start_month','post',FWS_Input::INTEGER);
+		$start_year = $input->get_var('start_year','post',FWS_Input::INTEGER);
 		
 		$start = mktime(0,0,0,$start_month,$start_day,$start_year);
 		

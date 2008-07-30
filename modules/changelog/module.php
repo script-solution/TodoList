@@ -18,7 +18,7 @@
 final class TDL_Module_changelog extends TDL_Module
 {
 	/**
-	 * @see PLIB_Module::init($doc)
+	 * @see FWS_Module::init($doc)
 	 * 
 	 * @param TDL_Document $doc
 	 */
@@ -26,8 +26,8 @@ final class TDL_Module_changelog extends TDL_Module
 	{
 		parent::init($doc);
 		
-		$url = PLIB_Props::get()->url();
-		$input = PLIB_Props::get()->input();
+		$url = FWS_Props::get()->url();
+		$input = FWS_Props::get()->input();
 		$renderer = $doc->use_default_renderer();
 		
 		$mode = $input->get_predef(TDL_URL_MODE,'get');
@@ -38,17 +38,17 @@ final class TDL_Module_changelog extends TDL_Module
 	}
 	
 	/**
-	 * @see PLIB_Module::run()
+	 * @see FWS_Module::run()
 	 */
 	public function run()
 	{
-		$input = PLIB_Props::get()->input();
-		$cfg = PLIB_Props::get()->cfg();
-		$versions = PLIB_Props::get()->versions();
-		$tpl = PLIB_Props::get()->tpl();
-		$db = PLIB_Props::get()->db();
-		$functions = PLIB_Props::get()->functions();
-		$user = PLIB_Props::get()->user();
+		$input = FWS_Props::get()->input();
+		$cfg = FWS_Props::get()->cfg();
+		$versions = FWS_Props::get()->versions();
+		$tpl = FWS_Props::get()->tpl();
+		$db = FWS_Props::get()->db();
+		$functions = FWS_Props::get()->functions();
+		$user = FWS_Props::get()->user();
 
 		$mode = $input->get_predef(TDL_URL_MODE,'get');
 		if($mode == 'export')
@@ -106,7 +106,7 @@ final class TDL_Module_changelog extends TDL_Module
 			
 			$tpldata['type'] = $type;
 			$tpldata['title'] = $data['entry_title'];
-			$tpldata['date'] = PLIB_Date::get_date($data['entry_fixed_date']);
+			$tpldata['date'] = FWS_Date::get_date($data['entry_fixed_date']);
 			
 			$entries[] = $tpldata;
 		}
@@ -120,9 +120,9 @@ final class TDL_Module_changelog extends TDL_Module
 	 */
 	private function _export()
 	{
-		$cfg = PLIB_Props::get()->cfg();
-		$db = PLIB_Props::get()->db();
-		$versions = PLIB_Props::get()->versions();
+		$cfg = FWS_Props::get()->cfg();
+		$db = FWS_Props::get()->db();
+		$versions = FWS_Props::get()->versions();
 
 		$text = '';
 		
@@ -158,9 +158,9 @@ final class TDL_Module_changelog extends TDL_Module
 		$db->sql_free($qry);
 		
 		// set result to renderer
-		$doc = PLIB_Props::get()->doc();
+		$doc = FWS_Props::get()->doc();
 		$doc->set_mimetype('text/plain');
-		$doc->use_raw_renderer()->set_content(PLIB_StringHelper::htmlspecialchars_back($text));
+		$doc->use_raw_renderer()->set_content(FWS_StringHelper::htmlspecialchars_back($text));
 	}
 }
 ?>

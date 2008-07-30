@@ -18,7 +18,7 @@
 final class TDL_Module_ajax_delmsg extends TDL_Module
 {
 	/**
-	 * @see PLIB_Module::init($doc)
+	 * @see FWS_Module::init($doc)
 	 * 
 	 * @param TDL_Document $doc
 	 */
@@ -33,16 +33,16 @@ final class TDL_Module_ajax_delmsg extends TDL_Module
 	}
 	
 	/**
-	 * @see PLIB_Module::run()
+	 * @see FWS_Module::run()
 	 */
 	public function run()
 	{
-		$input = PLIB_Props::get()->input();
-		$url = PLIB_Props::get()->url();
-		$functions = PLIB_Props::get()->functions();
+		$input = FWS_Props::get()->input();
+		$url = FWS_Props::get()->url();
+		$functions = FWS_Props::get()->functions();
 
-		$id_str = $input->get_var('ids','get',PLIB_Input::STRING);
-		$loc = $input->get_var('loc','get',PLIB_Input::STRING);
+		$id_str = $input->get_var('ids','get',FWS_Input::STRING);
+		$loc = $input->get_var('loc','get',FWS_Input::STRING);
 		
 		if(!$id_str || !$loc)
 		{
@@ -50,8 +50,8 @@ final class TDL_Module_ajax_delmsg extends TDL_Module
 			return;
 		}
 
-		$ids = PLIB_Array_Utils::advanced_explode(',',$id_str);
-		if(PLIB_Array_Utils::is_numeric($ids))
+		$ids = FWS_Array_Utils::advanced_explode(',',$id_str);
+		if(FWS_Array_Utils::is_numeric($ids))
 		{
 			switch($loc)
 			{
@@ -73,7 +73,7 @@ final class TDL_Module_ajax_delmsg extends TDL_Module
 					break;
 			}
 			
-			$no_url = 'javascript:PLIB_hideElement(\\\'delete_message_box\\\');';
+			$no_url = 'javascript:FWS_hideElement(\\\'delete_message_box\\\');';
 			$functions->add_entry_delete_message($ids,$table,$field,$yes_url,$no_url);
 		}
 	}

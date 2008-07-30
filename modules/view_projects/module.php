@@ -18,7 +18,7 @@
 final class TDL_Module_view_projects extends TDL_Module
 {
 	/**
-	 * @see PLIB_Module::init($doc)
+	 * @see FWS_Module::init($doc)
 	 * 
 	 * @param TDL_Document $doc
 	 */
@@ -26,7 +26,7 @@ final class TDL_Module_view_projects extends TDL_Module
 	{
 		parent::init($doc);
 		
-		$url = PLIB_Props::get()->url();
+		$url = FWS_Props::get()->url();
 		
 		$renderer = $doc->use_default_renderer();
 		$renderer->add_action(TDL_ACTION_DELETE_PROJECTS,'delete');
@@ -34,12 +34,12 @@ final class TDL_Module_view_projects extends TDL_Module
 	}
 	
 	/**
-	 * @see PLIB_Module::run()
+	 * @see FWS_Module::run()
 	 */
 	public function run()
 	{
-		$db = PLIB_Props::get()->db();
-		$tpl = PLIB_Props::get()->tpl();
+		$db = FWS_Props::get()->db();
+		$tpl = FWS_Props::get()->tpl();
 
 		$num = $db->sql_num(TDL_TB_PROJECTS,'id','');
 		
@@ -54,7 +54,7 @@ final class TDL_Module_view_projects extends TDL_Module
 			$projects[] = array(
 				'title' => $data['project_name'],
 				'shortcut' => $data['project_name_short'],
-				'start' => PLIB_Date::get_date($data['project_start'],false),
+				'start' => FWS_Date::get_date($data['project_start'],false),
 				'index' => $i,
 				'id' => $data['id']
 			);

@@ -17,7 +17,7 @@
  * @subpackage	src
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class TDL_PropAccessor extends PLIB_PropAccessor
+final class TDL_PropAccessor extends FWS_PropAccessor
 {
 	/**
 	 * @return TDL_Document the document
@@ -28,7 +28,7 @@ final class TDL_PropAccessor extends PLIB_PropAccessor
 	}
 	
 	/**
-	 * @return PLIB_MySQL the db-connection-class
+	 * @return FWS_MySQL the db-connection-class
 	 */
 	public function db()
 	{

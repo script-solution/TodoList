@@ -15,7 +15,7 @@
  * 
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class TDL_Objects_Data extends PLIB_Objects_Data
+abstract class TDL_Objects_Data extends FWS_Objects_Data
 {
 }
 ?>

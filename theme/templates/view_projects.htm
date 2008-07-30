@@ -7,14 +7,14 @@
 <!--
 function showDeleteMessage()
 {
-	var ids = PLIB_getDeleteIds('project_');
+	var ids = FWS_getDeleteIds('project_');
 	if(ids == '')
 		return;
 
 	var url = 'index.php?action=ajax_delmsg&ids=' + ids + '&loc=view_projects';
 	var onfinished = function(text) {
-		PLIB_replaceContent('delete_message_box',text);
-		PLIB_getElement('delete_message_box').style.display = 'block';
+		FWS_replaceContent('delete_message_box',text);
+		FWS_getElement('delete_message_box').style.display = 'block';
 		window.scrollTo(0,0);
 	};
 	myAjax.sendGetRequest(url,onfinished);

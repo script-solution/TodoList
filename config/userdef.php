@@ -15,7 +15,7 @@
 define('TDL_VERSION',								'TodoList v1.0');
 define('TDL_GENERAL_ERROR',					'Die Aktion ist fehlgeschlagen (Keine genaueren Informationen).');
 
-define('TDL_LIB_PATH',							'../PHPLib/');
+define('TDL_FWS_PATH',							'../PHPLib/');
 
 define('TDL_DB_CHARSET',						'latin1');
 

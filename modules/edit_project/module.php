@@ -18,7 +18,7 @@
 final class TDL_Module_edit_project extends TDL_Module
 {
 	/**
-	 * @see PLIB_Module::init($doc)
+	 * @see FWS_Module::init($doc)
 	 * 
 	 * @param TDL_Document $doc
 	 */
@@ -26,8 +26,8 @@ final class TDL_Module_edit_project extends TDL_Module
 	{
 		parent::init($doc);
 		
-		$input = PLIB_Props::get()->input();
-		$url = PLIB_Props::get()->url();
+		$input = FWS_Props::get()->input();
+		$url = FWS_Props::get()->url();
 		$renderer = $doc->use_default_renderer();
 		
 		$renderer->add_action(TDL_ACTION_ADD_PROJECT,'add_project');
@@ -37,10 +37,10 @@ final class TDL_Module_edit_project extends TDL_Module
 		$renderer->add_action(TDL_ACTION_ADD_VERSION,'add_version');
 		$renderer->add_action(TDL_ACTION_DELETE_VERSION,'delete_version');
 
-		$mode = $input->correct_var(TDL_URL_MODE,'get',PLIB_Input::STRING,array('add','edit'),'add');
+		$mode = $input->correct_var(TDL_URL_MODE,'get',FWS_Input::STRING,array('add','edit'),'add');
 		if($mode == 'edit')
 		{
-			$id = (int)$input->get_var(TDL_URL_ID,'get',PLIB_Input::STRING);
+			$id = (int)$input->get_var(TDL_URL_ID,'get',FWS_Input::STRING);
 			$murl = $url->get_URL(0,'&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$id);
 			$title = 'Projekt editieren';
 		}
@@ -55,19 +55,19 @@ final class TDL_Module_edit_project extends TDL_Module
 	}
 	
 	/**
-	 * @see PLIB_Module::run()
+	 * @see FWS_Module::run()
 	 */
 	public function run()
 	{
-		$input = PLIB_Props::get()->input();
-		$db = PLIB_Props::get()->db();
-		$url = PLIB_Props::get()->url();
-		$cats = PLIB_Props::get()->cats();
-		$tpl = PLIB_Props::get()->tpl();
-		$versions = PLIB_Props::get()->versions();
-		$functions = PLIB_Props::get()->functions();
+		$input = FWS_Props::get()->input();
+		$db = FWS_Props::get()->db();
+		$url = FWS_Props::get()->url();
+		$cats = FWS_Props::get()->cats();
+		$tpl = FWS_Props::get()->tpl();
+		$versions = FWS_Props::get()->versions();
+		$functions = FWS_Props::get()->functions();
 
-		$mode = $input->correct_var(TDL_URL_MODE,'get',PLIB_Input::STRING,array('add','edit'),'add');
+		$mode = $input->correct_var(TDL_URL_MODE,'get',FWS_Input::STRING,array('add','edit'),'add');
 		
 		if($mode == 'edit')
 		{

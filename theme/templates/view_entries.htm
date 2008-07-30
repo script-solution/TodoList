@@ -1,23 +1,23 @@
 {include "header.htm"}
 
 {if module_error == false}
-<script type="text/javascript" src="{js.get_file('js/calendar.js','lib')}"></script>
-<script type="text/javascript" src="{js.get_file('js/calendar_lang_en.js','lib')}"></script>
+<script type="text/javascript" src="{js.get_file('js/calendar.js','fws')}"></script>
+<script type="text/javascript" src="{js.get_file('js/calendar_lang_en.js','fws')}"></script>
 <script type="text/javascript">
 <!--
 var calNames = new Array('startfrom','startto','changedfrom','changedto','fixedfrom','fixedto');
 var cals = new Array();
 for(var i = 0;i < calNames.length;i++)
 {
-	cals[calNames[i]] = new PLIB_Calendar('{libpath}js/',calNames[i],function(date) {
-		var input = PLIB_getElement(this.inputId);
+	cals[calNames[i]] = new FWS_Calendar('{fwspath}js/',calNames[i],function(date) {
+		var input = FWS_getElement(this.inputId);
 		var val = this.get2Digits(date.getDate()) + ".";
 		val += this.get2Digits((date.getMonth() + 1)) + "." + date.getFullYear();
 		input.value = val;
 	});
 	
 	cals[calNames[i]].setStartUpFunction(function() {
-		var input = PLIB_getElement(this.inputId);
+		var input = FWS_getElement(this.inputId);
 		if(input.value != '')
 		{
 			var parts = input.value.split('.');
@@ -26,7 +26,7 @@ for(var i = 0;i < calNames.length;i++)
 		}
 	});
 	
-	//cals[calNames[i]].setCSSFile('{libpath}js/calendarstyle.css');
+	//cals[calNames[i]].setCSSFile('{fwspath}js/calendarstyle.css');
 }
 //-->
 </script>

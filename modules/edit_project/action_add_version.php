@@ -15,14 +15,14 @@
  *
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class TDL_Action_edit_project_add_version extends PLIB_Actions_Base
+class TDL_Action_edit_project_add_version extends FWS_Actions_Base
 {
 	public function perform_action()
 	{
-		$input = PLIB_Props::get()->input();
-		$db = PLIB_Props::get()->db();
-		$versions = PLIB_Props::get()->versions();
-		$url = PLIB_Props::get()->url();
+		$input = FWS_Props::get()->input();
+		$db = FWS_Props::get()->db();
+		$versions = FWS_Props::get()->versions();
+		$url = FWS_Props::get()->url();
 
 		$pid = $input->get_predef(TDL_URL_ID,'get');
 		if($pid == null)

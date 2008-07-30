@@ -18,7 +18,7 @@
 final class TDL_Module_change_status extends TDL_Module
 {
 	/**
-	 * @see PLIB_Module::init($doc)
+	 * @see FWS_Module::init($doc)
 	 * 
 	 * @param TDL_Document $doc
 	 */
@@ -26,8 +26,8 @@ final class TDL_Module_change_status extends TDL_Module
 	{
 		parent::init($doc);
 		
-		$input = PLIB_Props::get()->input();
-		$url = PLIB_Props::get()->url();
+		$input = FWS_Props::get()->input();
+		$url = FWS_Props::get()->url();
 		$renderer = $doc->use_default_renderer();
 		
 		$renderer->add_action(TDL_ACTION_CHANGE_STATUS,'default');
@@ -37,20 +37,20 @@ final class TDL_Module_change_status extends TDL_Module
 	}
 	
 	/**
-	 * @see PLIB_Module::run()
+	 * @see FWS_Module::run()
 	 */
 	public function run()
 	{
-		$input = PLIB_Props::get()->input();
-		$db = PLIB_Props::get()->db();
-		$functions = PLIB_Props::get()->functions();
-		$versions = PLIB_Props::get()->versions();
-		$tpl = PLIB_Props::get()->tpl();
+		$input = FWS_Props::get()->input();
+		$db = FWS_Props::get()->db();
+		$functions = FWS_Props::get()->functions();
+		$versions = FWS_Props::get()->versions();
+		$tpl = FWS_Props::get()->tpl();
 
 		$id_str = $input->get_predef(TDL_URL_IDS,'get');
-		$ids = PLIB_Array_Utils::advanced_explode(',',$id_str);
+		$ids = FWS_Array_Utils::advanced_explode(',',$id_str);
 		
-		if(!PLIB_Array_Utils::is_numeric($ids))
+		if(!FWS_Array_Utils::is_numeric($ids))
 		{
 			$this->report_error();
 			return;
@@ -66,7 +66,7 @@ final class TDL_Module_change_status extends TDL_Module
 		);
 
 		$projects = array();		
-		$id_str = PLIB_Array_Utils::advanced_implode(',',$ids);
+		$id_str = FWS_Array_Utils::advanced_implode(',',$ids);
 		$entry_string = '<ul>'."\n";
 		$qry = $db->sql_qry('SELECT id,project_id,entry_title,entry_status FROM '.TDL_TB_ENTRIES.'
 												 WHERE id IN ('.$id_str.')');

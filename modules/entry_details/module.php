@@ -18,7 +18,7 @@
 final class TDL_Module_entry_details extends TDL_Module
 {
 	/**
-	 * @see PLIB_Module::init($doc)
+	 * @see FWS_Module::init($doc)
 	 * 
 	 * @param TDL_Document $doc
 	 */
@@ -26,8 +26,8 @@ final class TDL_Module_entry_details extends TDL_Module
 	{
 		parent::init($doc);
 		
-		$input = PLIB_Props::get()->input();
-		$url = PLIB_Props::get()->url();
+		$input = FWS_Props::get()->input();
+		$url = FWS_Props::get()->url();
 		$renderer = $doc->use_default_renderer();
 		
 		$id = $input->get_predef(TDL_URL_ID,'get');
@@ -35,16 +35,16 @@ final class TDL_Module_entry_details extends TDL_Module
 	}
 	
 	/**
-	 * @see PLIB_Module::run()
+	 * @see FWS_Module::run()
 	 */
 	public function run()
 	{
-		$input = PLIB_Props::get()->input();
-		$db = PLIB_Props::get()->db();
-		$versions = PLIB_Props::get()->versions();
-		$functions = PLIB_Props::get()->functions();
-		$user = PLIB_Props::get()->user();
-		$tpl = PLIB_Props::get()->tpl();
+		$input = FWS_Props::get()->input();
+		$db = FWS_Props::get()->db();
+		$versions = FWS_Props::get()->versions();
+		$functions = FWS_Props::get()->functions();
+		$user = FWS_Props::get()->user();
+		$tpl = FWS_Props::get()->tpl();
 
 		$id = $input->get_predef(TDL_URL_ID,'get');
 		if($id == null)
@@ -69,7 +69,7 @@ final class TDL_Module_entry_details extends TDL_Module
 		$fixed_version = '-';
 		if($data['entry_fixed_date'] > 0)
 		{
-			$fixed_date = PLIB_Date::get_date($data['entry_fixed_date']);
+			$fixed_date = FWS_Date::get_date($data['entry_fixed_date']);
 			if($data['entry_fixed_version'] > 0)
 				$version = $versions->get_element($data['entry_fixed_version']);
 			else
@@ -107,11 +107,11 @@ final class TDL_Module_entry_details extends TDL_Module
 			'status' => $functions->get_status_text($data['entry_status']),
 			'status_class' => 'tl_status_'.$data['entry_status'],
 			'title' => $data['entry_title'],
-			'start_date' => PLIB_Date::get_date($data['entry_start_date']),
+			'start_date' => FWS_Date::get_date($data['entry_start_date']),
 			'start_version' => $start_version['version_name'],
 			'fixed_date' => $fixed_date,
 			'fixed_version' => $fixed_version,
-			'changed_date' => PLIB_Date::get_date($data['entry_changed_date']),
+			'changed_date' => FWS_Date::get_date($data['entry_changed_date']),
 			'description' => $desc,
 			'info_link' => $info_link
 		));

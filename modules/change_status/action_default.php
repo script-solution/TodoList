@@ -15,22 +15,22 @@
  *
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class TDL_Action_change_status_default extends PLIB_Actions_Base
+class TDL_Action_change_status_default extends FWS_Actions_Base
 {
 	public function perform_action()
 	{
-		$input = PLIB_Props::get()->input();
-		$url = PLIB_Props::get()->url();
+		$input = FWS_Props::get()->input();
+		$url = FWS_Props::get()->url();
 
 		$id_str = $input->get_predef(TDL_URL_IDS,'get');
-		$ids = PLIB_Array_Utils::advanced_explode(',',$id_str);
-		if(!PLIB_Array_Utils::is_numeric($ids) || count($ids) == 0)
+		$ids = FWS_Array_Utils::advanced_explode(',',$id_str);
+		if(!FWS_Array_Utils::is_numeric($ids) || count($ids) == 0)
 			return TDL_GENERAL_ERROR;
 		
 		// read variables from post
-		$status = $input->correct_var('status','post',PLIB_Input::STRING,
+		$status = $input->correct_var('status','post',FWS_Input::STRING,
 			array('open','fixed','running','not_tested'),'open');
-		$fixed_version = $input->get_var('fixed_version','post',PLIB_Input::STRING);
+		$fixed_version = $input->get_var('fixed_version','post',FWS_Input::STRING);
 		
 		if($status == 'fixed')
 		{

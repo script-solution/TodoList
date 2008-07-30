@@ -15,16 +15,16 @@
  *
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class TDL_Action_view_projects_delete extends PLIB_Actions_Base
+class TDL_Action_view_projects_delete extends FWS_Actions_Base
 {
 	public function perform_action()
 	{
-		$input = PLIB_Props::get()->input();
-		$url = PLIB_Props::get()->url();
+		$input = FWS_Props::get()->input();
+		$url = FWS_Props::get()->url();
 
 		$id_str = $input->get_predef(TDL_URL_IDS,'get');
-		$ids = PLIB_Array_Utils::advanced_explode(',',$id_str);
-		if(!PLIB_Array_Utils::is_numeric($ids) || count($ids) == 0)
+		$ids = FWS_Array_Utils::advanced_explode(',',$id_str);
+		if(!FWS_Array_Utils::is_numeric($ids) || count($ids) == 0)
 			return TDL_GENERAL_ERROR;
 		
 		foreach($ids as $id)

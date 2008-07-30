@@ -15,7 +15,7 @@
  *
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class TDL_URL extends PLIB_URL
+class TDL_URL extends FWS_URL
 {
 	/**
 	 * Constructor

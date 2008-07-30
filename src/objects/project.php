@@ -129,8 +129,8 @@ class TDL_Objects_Project extends TDL_Objects_Data
 	
 	public function delete()
 	{
-		$functions = PLIB_Props::get()->functions();
-		$db = PLIB_Props::get()->db();
+		$functions = FWS_Props::get()->functions();
+		$db = FWS_Props::get()->db();
 
 		parent::delete();
 		
@@ -156,7 +156,7 @@ class TDL_Objects_Project extends TDL_Objects_Data
 	
 	protected function field_name($field)
 	{
-		$locale = PLIB_Props::get()->locale();
+		$locale = FWS_Props::get()->locale();
 
 		if($locale->contains_lang('project_fields_'.$field))
 			return $locale->lang('project_fields_'.$field);

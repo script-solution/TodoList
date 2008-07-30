@@ -4,28 +4,28 @@
  */
 function BS_transfer_to_session()
 {
-		$input = PLIB_Props::get()->input();
+		$input = FWS_Props::get()->input();
 
-	$step_submit = $input->get_var('step_submit','post',PLIB_Input::INTEGER);
+	$step_submit = $input->get_var('step_submit','post',FWS_Input::INTEGER);
 	if($step_submit === null)
 		return;
 
 	switch($step_submit)
 	{
 		case 1:
-			$_SESSION['BS11_install']['host'] = $input->get_var('host','post',PLIB_Input::STRING);
-			$_SESSION['BS11_install']['login'] = $input->get_var('login','post',PLIB_Input::STRING);
-			$_SESSION['BS11_install']['password'] = $input->get_var('password','post',PLIB_Input::STRING);
-			$_SESSION['BS11_install']['database'] = $input->get_var('database','post',PLIB_Input::STRING);
+			$_SESSION['BS11_install']['host'] = $input->get_var('host','post',FWS_Input::STRING);
+			$_SESSION['BS11_install']['login'] = $input->get_var('login','post',FWS_Input::STRING);
+			$_SESSION['BS11_install']['password'] = $input->get_var('password','post',FWS_Input::STRING);
+			$_SESSION['BS11_install']['database'] = $input->get_var('database','post',FWS_Input::STRING);
 
-			$_SESSION['BS11_install']['admin_login'] = $input->get_var('admin_login','post',PLIB_Input::STRING);
-			$_SESSION['BS11_install']['admin_pw'] = $input->get_var('admin_pw','post',PLIB_Input::STRING);
-			$_SESSION['BS11_install']['admin_email'] = $input->get_var('admin_email','post',PLIB_Input::STRING);
-			$_SESSION['BS11_install']['board_url'] = $input->get_var('board_url','post',PLIB_Input::STRING);
+			$_SESSION['BS11_install']['admin_login'] = $input->get_var('admin_login','post',FWS_Input::STRING);
+			$_SESSION['BS11_install']['admin_pw'] = $input->get_var('admin_pw','post',FWS_Input::STRING);
+			$_SESSION['BS11_install']['admin_email'] = $input->get_var('admin_email','post',FWS_Input::STRING);
+			$_SESSION['BS11_install']['board_url'] = $input->get_var('board_url','post',FWS_Input::STRING);
 			break;
 
 		case 2:
-			$_SESSION['BS11_install']['table_prefix'] = $input->get_var('table_prefix','post',PLIB_Input::STRING);
+			$_SESSION['BS11_install']['table_prefix'] = $input->get_var('table_prefix','post',FWS_Input::STRING);
 			break;
 	}
 }
@@ -116,7 +116,7 @@ function BS_check_current_step($step,&$check)
  */
 function BS_display_navigation($loc,$step,$lang)
 {
-		$tpl = PLIB_Props::get()->tpl();
+		$tpl = FWS_Props::get()->tpl();
 
 	$show_refresh = false;
 
@@ -238,7 +238,7 @@ function BS_get_board_path()
  */
 function BS_display_config($title,$name,$cond,$default = "admin",$size = 20,$maxlength = 20,$description = '')
 {
-		$tpl = PLIB_Props::get()->tpl();
+		$tpl = FWS_Props::get()->tpl();
 
 	if($description != '')
 		$title .= '<div class="bs_desc">'.$description.'</div>';
@@ -260,7 +260,7 @@ function BS_display_config($title,$name,$cond,$default = "admin",$size = 20,$max
  */
 function BS_display_separator()
 {
-		$tpl = PLIB_Props::get()->tpl();
+		$tpl = FWS_Props::get()->tpl();
 
 	$tpl->set_template('content.htm');
 	echo $tpl->parse_template();
@@ -279,7 +279,7 @@ function BS_display_separator()
  */
 function BS_display_status($title,$check,$in_ok = 0,$in_nok = 0,$title_out = 0,$description = '',$failed_img = 'failed')
 {
-		$tpl = PLIB_Props::get()->tpl();
+		$tpl = FWS_Props::get()->tpl();
 
 	$ok = ($in_ok === 0) ? $LANG['ok'] : $in_ok;
 	$notok = ($in_nok === 0) ? $LANG['notok'] : $in_nok;

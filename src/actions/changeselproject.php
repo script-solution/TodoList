@@ -15,15 +15,15 @@
  *
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class TDL_Actions_ChangeSelProject extends PLIB_Actions_Base
+class TDL_Actions_ChangeSelProject extends FWS_Actions_Base
 {
 	public function perform_action()
 	{
-		$input = PLIB_Props::get()->input();
-		$versions = PLIB_Props::get()->versions();
-		$functions = PLIB_Props::get()->functions();
+		$input = FWS_Props::get()->input();
+		$versions = FWS_Props::get()->versions();
+		$functions = FWS_Props::get()->functions();
 
-		$id = $input->get_var('selected_project','post',PLIB_Input::INTEGER);
+		$id = $input->get_var('selected_project','post',FWS_Input::INTEGER);
 		if($id === null)
 			return TDL_GENERAL_ERROR;
 		

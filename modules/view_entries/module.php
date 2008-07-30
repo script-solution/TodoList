@@ -18,7 +18,7 @@
 final class TDL_Module_view_entries extends TDL_Module
 {
 	/**
-	 * @see PLIB_Module::init($doc)
+	 * @see FWS_Module::init($doc)
 	 * 
 	 * @param TDL_Document $doc
 	 */
@@ -31,19 +31,19 @@ final class TDL_Module_view_entries extends TDL_Module
 	}
 	
 	/**
-	 * @see PLIB_Module::run()
+	 * @see FWS_Module::run()
 	 */
 	public function run()
 	{
-		$input = PLIB_Props::get()->input();
-		$functions = PLIB_Props::get()->functions();
-		$cfg = PLIB_Props::get()->cfg();
-		$cats = PLIB_Props::get()->cats();
-		$versions = PLIB_Props::get()->versions();
-		$url = PLIB_Props::get()->url();
-		$db = PLIB_Props::get()->db();
-		$tpl = PLIB_Props::get()->tpl();
-		$user = PLIB_Props::get()->user();
+		$input = FWS_Props::get()->input();
+		$functions = FWS_Props::get()->functions();
+		$cfg = FWS_Props::get()->cfg();
+		$cats = FWS_Props::get()->cats();
+		$versions = FWS_Props::get()->versions();
+		$url = FWS_Props::get()->url();
+		$db = FWS_Props::get()->db();
+		$tpl = FWS_Props::get()->tpl();
+		$user = FWS_Props::get()->user();
 
 		$s_keyword = $input->get_predef(TDL_URL_S_KEYWORD,'get');
 		$s_from_changed_date = $input->get_predef(TDL_URL_S_FROM_CHANGED_DATE,'get');
@@ -72,7 +72,7 @@ final class TDL_Module_view_entries extends TDL_Module
 		if(!$functions->is_date($s_to_fixed_date))
 			$s_to_fixed_date = '';
 		
-		$form = new PLIB_HTML_Formular(false);
+		$form = new FWS_HTML_Formular(false);
 		$type_options = array(
 			'' => '- Alle -',
 			'bug' => 'Bug',
@@ -111,7 +111,7 @@ final class TDL_Module_view_entries extends TDL_Module
 		}
 		$s_category_combo = $form->get_combobox(TDL_URL_S_CATEGORY,$category_options,$s_category);
 		
-		$search_display_value = $input->get_var(TDL_COOKIE_PREFIX.'display_search_form','cookie',PLIB_Input::INT_BOOL);
+		$search_display_value = $input->get_var(TDL_COOKIE_PREFIX.'display_search_form','cookie',FWS_Input::INT_BOOL);
 		
 		$where = ' WHERE ';
 		if($cfg['project_id'] != 0)
@@ -160,10 +160,10 @@ final class TDL_Module_view_entries extends TDL_Module
 			$where .= ' e.entry_fixed_date <= '.mktime(0,0,0,$month,$day,$year).' AND ';
 		}
 		
-		if(PLIB_String::substr($where,-5) == ' AND ')
-			$where = PLIB_String::substr($where,0,-5);
+		if(FWS_String::substr($where,-5) == ' AND ')
+			$where = FWS_String::substr($where,0,-5);
 		else
-			$where = PLIB_String::substr($where,0,-7);
+			$where = FWS_String::substr($where,0,-7);
 		
 		$order = $input->get_predef(TDL_URL_ORDER,'get','changed');
 		
@@ -188,7 +188,7 @@ final class TDL_Module_view_entries extends TDL_Module
 		
 		$tpl->add_variables(array(
 			'num' => $num,
-			'search_target' => $input->get_var('PHP_SELF','server',PLIB_Input::STRING),
+			'search_target' => $input->get_var('PHP_SELF','server',FWS_Input::STRING),
 			'cookie_name' => TDL_COOKIE_PREFIX.'display_search_form',
 			'search_display_value' => $search_display_value == 1 ? 'table-row' : 'none',
 			's_keyword_param' => TDL_URL_S_KEYWORD,
@@ -241,7 +241,7 @@ final class TDL_Module_view_entries extends TDL_Module
 		
 		$limit = 20;
 		$page = $input->get_predef(TDL_URL_SITE,'get');
-		$pagination = new PLIB_Pagination($limit,$num,$page);
+		$pagination = new FWS_Pagination($limit,$num,$page);
 		
 		$entries = array();
 		$qry = $db->sql_qry(
@@ -260,13 +260,13 @@ final class TDL_Module_view_entries extends TDL_Module
 			$type .= '<img src="'.$user->get_theme_item_path('images/priority/'.$data['entry_priority'].'.png').'" align="top"';
 			$type .= ' alt="'.$priority_text.'" title="'.$priority_text.'" />';
 			
-			$start = PLIB_Date::get_date($data['entry_start_date']).' :: ';
+			$start = FWS_Date::get_date($data['entry_start_date']).' :: ';
 			$start_version = $versions->get_element($data['entry_start_version']);
 			$start .= $start_version['version_name'];
 			
 			if($data['entry_fixed_date'] > 0)
 			{
-				$fixed = PLIB_Date::get_date($data['entry_fixed_date']).' :: ';
+				$fixed = FWS_Date::get_date($data['entry_fixed_date']).' :: ';
 				if($data['entry_fixed_version'] > 0)
 					$fixed_version = $versions->get_element($data['entry_fixed_version']);
 				else

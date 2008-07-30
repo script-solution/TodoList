@@ -15,14 +15,14 @@
  *
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class TDL_Action_edit_project_delete_category extends PLIB_Actions_Base
+class TDL_Action_edit_project_delete_category extends FWS_Actions_Base
 {
 	public function perform_action()
 	{
-		$input = PLIB_Props::get()->input();
-		$db = PLIB_Props::get()->db();
-		$cats = PLIB_Props::get()->cats();
-		$url = PLIB_Props::get()->url();
+		$input = FWS_Props::get()->input();
+		$db = FWS_Props::get()->db();
+		$cats = FWS_Props::get()->cats();
+		$url = FWS_Props::get()->url();
 
 		$id = $input->get_predef(TDL_URL_SID,'get');
 		if($id == null)

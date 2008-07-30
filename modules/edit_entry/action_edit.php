@@ -15,19 +15,19 @@
  *
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class TDL_Action_edit_entry_edit extends PLIB_Actions_Base
+class TDL_Action_edit_entry_edit extends FWS_Actions_Base
 {
 	public function perform_action()
 	{
-		$input = PLIB_Props::get()->input();
-		$functions = PLIB_Props::get()->functions();
+		$input = FWS_Props::get()->input();
+		$functions = FWS_Props::get()->functions();
 
 		// check id
 		$id = $input->get_predef(TDL_URL_IDS,'get');
 		if($id == null)
 			return TDL_GENERAL_ERROR;
 		
-		$ids = PLIB_Array_Utils::advanced_explode(',',$id);
+		$ids = FWS_Array_Utils::advanced_explode(',',$id);
 		if(count($ids) == 0)
 			return TDL_GENERAL_ERROR;
 		
@@ -36,19 +36,19 @@ class TDL_Action_edit_entry_edit extends PLIB_Actions_Base
 		
 		if(!$multiple)
 		{
-			$title = $input->get_var('entry_title','post',PLIB_Input::STRING);
-			$description = $input->get_var('entry_description','post',PLIB_Input::STRING);
-			$info_link = $input->get_var('entry_info_link','post',PLIB_Input::STRING);
+			$title = $input->get_var('entry_title','post',FWS_Input::STRING);
+			$description = $input->get_var('entry_description','post',FWS_Input::STRING);
+			$info_link = $input->get_var('entry_info_link','post',FWS_Input::STRING);
 		}
 		
-		$category = $input->get_var('category','post',PLIB_Input::INTEGER);
-		$start_version = $input->get_var('start_version','post',PLIB_Input::STRING);
-		$fixed_version = $input->get_var('fixed_version','post',PLIB_Input::STRING);
-		$status = $input->correct_var('status','post',PLIB_Input::STRING,
+		$category = $input->get_var('category','post',FWS_Input::INTEGER);
+		$start_version = $input->get_var('start_version','post',FWS_Input::STRING);
+		$fixed_version = $input->get_var('fixed_version','post',FWS_Input::STRING);
+		$status = $input->correct_var('status','post',FWS_Input::STRING,
 			array('open','running','fixed','not_tested'),'open');
-		$type = $input->correct_var('type','post',PLIB_Input::STRING,
+		$type = $input->correct_var('type','post',FWS_Input::STRING,
 			array('bug','feature','improvement','test'),'bug');
-		$priority = $input->correct_var('priority','post',PLIB_Input::STRING,
+		$priority = $input->correct_var('priority','post',FWS_Input::STRING,
 			array('current','next','anytime'),'anytime');
 		
 		if($multiple)
@@ -105,7 +105,7 @@ class TDL_Action_edit_entry_edit extends PLIB_Actions_Base
 				$entry->set_entry_type($type);
 			if(!$multiple || $input->isset_var('use_priority','post'))
 				$entry->set_entry_priority($priority);
-			if(!$multiple || $input->get_var('change_lastchange_date','post',PLIB_Input::INT_BOOL) == 1)
+			if(!$multiple || $input->get_var('change_lastchange_date','post',FWS_Input::INT_BOOL) == 1)
 				$entry->set_entry_changed_date($time);
 
 			if(!$entry->check('update'))

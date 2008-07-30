@@ -15,7 +15,7 @@
  * 
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class TDL_Locale_EN extends PLIB_Locale_EN
+class TDL_Locale_EN extends FWS_Locale_EN
 {
 	/**
 	 * The default language-entries

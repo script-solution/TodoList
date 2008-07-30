@@ -15,24 +15,24 @@
  *
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class TDL_Action_edit_entry_add extends PLIB_Actions_Base
+class TDL_Action_edit_entry_add extends FWS_Actions_Base
 {
 	public function perform_action()
 	{
-		$input = PLIB_Props::get()->input();
-		$db = PLIB_Props::get()->db();
-		$url = PLIB_Props::get()->url();
-		$functions = PLIB_Props::get()->functions();
+		$input = FWS_Props::get()->input();
+		$db = FWS_Props::get()->db();
+		$url = FWS_Props::get()->url();
+		$functions = FWS_Props::get()->functions();
 
-		$title = $input->get_var('entry_title','post',PLIB_Input::STRING);
-		$description = $input->get_var('entry_description','post',PLIB_Input::STRING);
-		$entry_info_link = $input->get_var('entry_info_link','post',PLIB_Input::STRING);
-		$category = $input->get_var('category','post',PLIB_Input::INTEGER);
-		$start_version = $input->get_var('start_version','post',PLIB_Input::STRING);
-		$fixed_version = $input->get_var('fixed_version','post',PLIB_Input::STRING);
-		$status = $input->correct_var('status','post',PLIB_Input::STRING,array('open','running','fixed','not_tested'),'open');
-		$type = $input->correct_var('type','post',PLIB_Input::STRING,array('bug','feature','improvement','test'),'bug');
-		$priority = $input->correct_var('priority','post',PLIB_Input::STRING,array('current','next','anytime'),'anytime');
+		$title = $input->get_var('entry_title','post',FWS_Input::STRING);
+		$description = $input->get_var('entry_description','post',FWS_Input::STRING);
+		$entry_info_link = $input->get_var('entry_info_link','post',FWS_Input::STRING);
+		$category = $input->get_var('category','post',FWS_Input::INTEGER);
+		$start_version = $input->get_var('start_version','post',FWS_Input::STRING);
+		$fixed_version = $input->get_var('fixed_version','post',FWS_Input::STRING);
+		$status = $input->correct_var('status','post',FWS_Input::STRING,array('open','running','fixed','not_tested'),'open');
+		$type = $input->correct_var('type','post',FWS_Input::STRING,array('bug','feature','improvement','test'),'bug');
+		$priority = $input->correct_var('priority','post',FWS_Input::STRING,array('current','next','anytime'),'anytime');
 		
 		@list($start_project_id,$start_version_id) = explode(',',$start_version);
 		$time = time();
