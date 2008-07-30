@@ -2,7 +2,7 @@
 /**
  * Contains the entry-details-module
  *
- * @version			$Id$
+ * @version			$Id: module_entry_details.php 9 2008-07-30 10:45:07Z nasmussen $
  * @package			todolist
  * @subpackage	modules
  * @author			Nils Asmussen <nils@script-solution.de>
