@@ -2,7 +2,7 @@
 /**
  * Contains the view-entries-module
  *
- * @version			$Id: module_view_entries.php 9 2008-07-30 10:45:07Z nasmussen $
+ * @version			$Id$
  * @package			todolist
  * @subpackage	modules
  * @author			Nils Asmussen <nils@script-solution.de>

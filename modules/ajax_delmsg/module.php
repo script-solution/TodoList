@@ -2,7 +2,7 @@
 /**
  * Contains the module to get a delete-message
  *
- * @version			$Id: module_ajax_delmsg.php 9 2008-07-30 10:45:07Z nasmussen $
+ * @version			$Id$
  * @package			todolist
  * @subpackage	modules
  * @author			Nils Asmussen <nils@script-solution.de>
