@@ -82,6 +82,7 @@ class TDL_Action_edit_entry_add extends FWS_Actions_Base
 			'last_status' => $status,
 		));
 		
+		// TODO we have to get FWS_URL here
 		$this->add_link('Zur&uuml;ck',TDL_URL::get_url(-1));
 		$this->set_success_msg('Der Eintrag wurde erfolgreich erstellt!');
 		$this->set_redirect(true,$functions->get_entry_base_url());

@@ -49,6 +49,17 @@ final class TDL_Document extends FWS_Document
 		if($this->get_renderer() === null)
 			$this->use_default_renderer();
 	}
+	
+	/**
+	 * @see FWS_Document::finish()
+	 */
+	protected function finish()
+	{
+		parent::finish();
+		
+		$db = FWS_Props::get()->db();
+		$db->disconnect();
+	}
 
 	/**
 	 * @see FWS_Document::load_module()
@@ -64,9 +75,9 @@ final class TDL_Document extends FWS_Document
 		return new $class();
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
-		return array_merge(parent::get_print_vars(),get_object_vars($this));
+		return array_merge(parent::get_dump_vars(),get_object_vars($this));
 	}
 }
 ?>
