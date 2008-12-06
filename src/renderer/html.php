@@ -113,7 +113,7 @@ class TDL_Renderer_HTML extends FWS_Document_Renderer_HTML_Default
 		$versions = FWS_Props::get()->versions();
 		$functions = FWS_Props::get()->functions();
 		
-		$this->perform_actions();
+		$this->perform_action();
 		
 		// show page header
 		$tpl->set_template('header.htm');
