@@ -37,7 +37,7 @@ if($step === null || $step < 1 || $step > 4)
 
 $LANG = array();
 include_once('install/lang_'.$lang.'.php');
-$this->tpl->add_array('LANG',$LANG,true);
+$this->tpl->add_variable_ref('LANG',$LANG,true);
 
 BS_transfer_to_session();
 

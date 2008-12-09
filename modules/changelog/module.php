@@ -111,7 +111,7 @@ final class TDL_Module_changelog extends TDL_Module
 		}
 		$db->sql_free($qry);
 		
-		$tpl->add_array('entries',$entries);
+		$tpl->add_variable_ref('entries',$entries);
 	}
 	
 	/**

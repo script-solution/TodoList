@@ -306,7 +306,7 @@ final class TDL_Module_view_entries extends TDL_Module
 		}
 		$db->sql_free($qry);
 		
-		$tpl->add_array('entries',$entries);
+		$tpl->add_variable_ref('entries',$entries);
 		
 		$base_url .= TDL_URL_ORDER.'='.$order.'&amp;'.TDL_URL_AD.'='.$ad.'&amp;';
 		$functions->add_pagination(

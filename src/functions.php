@@ -341,7 +341,7 @@ class TDL_Functions extends FWS_Object
 			$end_item = ($end_item > $pagination->get_num()) ? $pagination->get_num() : $end_item;
 			
 			$tpl->set_template('page_split.htm');
-			$tpl->add_array('numbers',$tnumbers);
+			$tpl->add_variable_ref('numbers',$tnumbers);
 			$tpl->add_variables(array(
 				'page' => $page,
 				'total_pages' => $pagination->get_page_count(),

@@ -59,7 +59,7 @@ final class TDL_Module_view_projects extends TDL_Module
 		}
 		$db->sql_free($qry);
 		
-		$tpl->add_array('projects',$projects);
+		$tpl->add_variable_ref('projects',$projects);
 		$tpl->add_variables(array(
 			'index' => $i
 		));
