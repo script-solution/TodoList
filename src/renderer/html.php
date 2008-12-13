@@ -168,7 +168,7 @@ class TDL_Renderer_HTML extends FWS_Document_Renderer_HTML_Default
 		$tpl->add_variables(array(
 			'version' => TDL_VERSION,
 			'time' => $profiler->get_time(),
-			'queries' => $db->get_performed_query_num(),
+			'queries' => $db->get_query_count(),
 			'memory' => $mem
 		));
 		$tpl->restore_template();
