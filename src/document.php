@@ -68,7 +68,7 @@ final class TDL_Document extends FWS_Document
 	 */
 	protected function load_module()
 	{
-		$this->_module_name = FWS_Helper::get_module_name(
+		$this->_module_name = FWS_Document::load_module_def(
 			'TDL_Module_',TDL_URL_ACTION,'view_entries'
 		);
 		$class = 'TDL_Module_'.$this->_module_name;
