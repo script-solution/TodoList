@@ -26,6 +26,8 @@ class TDL_Renderer_HTML extends FWS_Document_Renderer_HTML_Default
 	{
 		parent::__construct();
 		
+		$this->set_action_performer(new TDL_Actions_Performer());
+		
 		$tpl = FWS_Props::get()->tpl();
 		
 		$tpl->set_path('theme/templates/');
@@ -170,17 +172,6 @@ class TDL_Renderer_HTML extends FWS_Document_Renderer_HTML_Default
 			'memory' => $mem
 		));
 		$tpl->restore_template();
-	}
-	
-	/**
-	 * @see FWS_Document::load_action_perf()
-	 *
-	 * @return TDL_Actions_Performer
-	 */
-	protected function load_action_perf()
-	{
-		$c = new TDL_Actions_Performer();
-		return $c;
 	}
 	
 	/**

@@ -11,14 +11,14 @@
  */
 
 /**
- * The action-performer. We overwrite it to provide a custom get_action_type()
+ * The action-performer. We overwrite it to provide a custom get_action_id()
  * method.
  *
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class TDL_Actions_Performer extends FWS_Actions_Performer
+class TDL_Actions_Performer extends FWS_Action_Performer
 {
-	public function get_action_type()
+	public function get_action_id()
 	{
 		$input = FWS_Props::get()->input();
 

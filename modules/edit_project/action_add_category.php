@@ -15,7 +15,7 @@
  *
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class TDL_Action_edit_project_add_category extends FWS_Actions_Base
+class TDL_Action_edit_project_add_category extends FWS_Action_Base
 {
 	public function perform_action()
 	{
