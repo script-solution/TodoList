@@ -52,7 +52,7 @@ final class TDL_Module_entry_details extends TDL_Module
 			return;
 		}
 		
-		$data = $db->sql_fetch(
+		$data = $db->get_row(
 			'SELECT e.*,c.category_name FROM '.TDL_TB_ENTRIES.' e
 			 LEFT JOIN '.TDL_TB_CATEGORIES.' c ON entry_category = c.id
 			 WHERE e.id = '.$id

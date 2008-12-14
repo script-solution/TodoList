@@ -5,7 +5,7 @@ include(ROOT_PATH.'src/mysql.php');
 $this->db = new TL_MySQL(MYSQL_HOST,MYSQL_LOGIN,MYSQL_PASSWORD,MYSQL_DATABASE);
 
 BS_add_to_log($LOG,'Creating Table "'.TDL_TB_CATEGORIES.'"...');
-$this->db->sql_qry("CREATE TABLE `".TDL_TB_CATEGORIES."` (
+$this->db->execute("CREATE TABLE `".TDL_TB_CATEGORIES."` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `project_id` int(10) unsigned NOT NULL default '0',
   `category_name` varchar(255) NOT NULL default '',
@@ -15,7 +15,7 @@ $this->db->sql_qry("CREATE TABLE `".TDL_TB_CATEGORIES."` (
 BS_add_to_log_success($LOG);
 
 BS_add_to_log($LOG,'Creating Table "'.TDL_TB_CONFIG.'"...');
-$this->db->sql_qry("CREATE TABLE `".TDL_TB_CONFIG."` (
+$this->db->execute("CREATE TABLE `".TDL_TB_CONFIG."` (
   `selected_project` int(10) unsigned NOT NULL default '0',
   `last_start_version` int(10) unsigned NOT NULL default '0',
   `last_fixed_version` int(10) unsigned NOT NULL default '0',
@@ -25,7 +25,7 @@ $this->db->sql_qry("CREATE TABLE `".TDL_TB_CONFIG."` (
   `last_status` enum('open','running','fixed') NOT NULL default 'open'
 ) TYPE=MyISAM;");
 
-$this->db->sql_qry("INSERT INTO `tl_config`
+$this->db->execute("INSERT INTO `tl_config`
 							(`selected_project`, `last_start_version`, `last_fixed_version`, `last_category`,
 							 `last_type`, `last_priority`, `last_status`)
 							VALUES
@@ -33,7 +33,7 @@ $this->db->sql_qry("INSERT INTO `tl_config`
 BS_add_to_log_success($LOG);
 
 BS_add_to_log($LOG,'Creating Table "'.TDL_TB_ENTRIES.'"...');
-$this->db->sql_qry("CREATE TABLE `".TDL_TB_ENTRIES."` (
+$this->db->execute("CREATE TABLE `".TDL_TB_ENTRIES."` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `project_id` int(10) unsigned NOT NULL default '0',
   `entry_title` text NOT NULL,
@@ -57,7 +57,7 @@ $this->db->sql_qry("CREATE TABLE `".TDL_TB_ENTRIES."` (
 BS_add_to_log_success($LOG);
 
 BS_add_to_log($LOG,'Creating Table "'.TDL_TB_VERSIONS.'"...');
-$this->db->sql_qry("CREATE TABLE `".TDL_TB_VERSIONS."` (
+$this->db->execute("CREATE TABLE `".TDL_TB_VERSIONS."` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `project_id` int(10) unsigned NOT NULL default '0',
   `version_name` varchar(100) NOT NULL default '',
@@ -67,7 +67,7 @@ $this->db->sql_qry("CREATE TABLE `".TDL_TB_VERSIONS."` (
 BS_add_to_log_success($LOG);
 
 BS_add_to_log($LOG,'Creating Table "'.TDL_TB_PROJECTS.'"...');
-$this->db->sql_qry("CREATE TABLE `".TDL_TB_PROJECTS."` (
+$this->db->execute("CREATE TABLE `".TDL_TB_PROJECTS."` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `project_name` varchar(255) NOT NULL default '',
   `project_name_short` varchar(10) NOT NULL default '',

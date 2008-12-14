@@ -26,17 +26,17 @@ class TDL_Functions extends FWS_Object
 	{
 		$db = FWS_Props::get()->db();
 
-		$db->sql_qry('UPDATE '.TDL_TB_CONFIG.' SET is_selected = 0 WHERE is_selected = 1');
+		$db->execute('UPDATE '.TDL_TB_CONFIG.' SET is_selected = 0 WHERE is_selected = 1');
 		
-		if(!$db->sql_num(TDL_TB_CONFIG,'*',' WHERE project_id = '.$id))
+		if(!$db->get_row_count(TDL_TB_CONFIG,'*',' WHERE project_id = '.$id))
 		{
-			$db->sql_insert(TDL_TB_CONFIG,array(
+			$db->insert(TDL_TB_CONFIG,array(
 				'project_id' => $id,
 				'is_selected' => 1
 			));
 		}
 		else
-			$db->sql_qry('UPDATE '.TDL_TB_CONFIG.' SET is_selected = 1 WHERE project_id = '.$id);
+			$db->execute('UPDATE '.TDL_TB_CONFIG.' SET is_selected = 1 WHERE project_id = '.$id);
 	}
 	
 	/**
@@ -55,10 +55,8 @@ class TDL_Functions extends FWS_Object
 
 		$entries = array();
 		$sql = FWS_StringHelper::get_default_delete_sql($ids,$table,$field);
-		$del_qry = $db->sql_qry($sql);
-		while($data = $db->sql_fetch_assoc($del_qry))
+		foreach($db->get_rows($sql) as $data)
 			$entries[] = $data[$field];
-		$db->sql_free($del_qry);
 		
 		$entry_string = '<ul>'."\n";
 		foreach($entries as $entry)
@@ -430,14 +428,15 @@ class TDL_Functions extends FWS_Object
 
 		$text = '';
 		$num = count($ids);
-		$del_qry = $db->sql_qry($sql);
-		for($i = 0;$data = $db->sql_fetch_assoc($del_qry);$i++)
+		$i = 0;
+		foreach($db->get_rows($sql) as $data)
 		{
 			$text .= '"'.$data[$field].'"';
 			if($i < $num - 2)
 				$text .= ', ';
 			else if($i == $num - 2)
 				$text .= ' '.$locale->lang('and').' ';
+			$i++;
 		}
 		
 		return $text;

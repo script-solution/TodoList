@@ -73,7 +73,7 @@ class TDL_Action_edit_entry_add extends FWS_Action_Base
 		$entry->create();
 		
 		// update config
-		$db->sql_update(TDL_TB_CONFIG,' WHERE is_selected = 1',array(
+		$db->update(TDL_TB_CONFIG,' WHERE is_selected = 1',array(
 			'last_start_version' => $start_version_id,
 			'last_fixed_version' => $fixed_version_id,
 			'last_category' => $category,

@@ -26,11 +26,11 @@ class TDL_Action_edit_project_add_version extends FWS_Action_Base
 		if($pid == null)
 			return TDL_GENERAL_ERROR;
 		
-		$db->sql_qry(
+		$db->execute(
 			'INSERT INTO '.TDL_TB_VERSIONS.' (version_name,project_id)
 			 VALUES (\'\','.$pid.')'
 		);
-		$id = $db->get_last_insert_id();
+		$id = $db->get_inserted_id();
 		$versions->add_element(array('id' => $id,'version_name' => '','project_id' => $pid),$id);
 		
 		$this->set_success_msg('Die Version wurde erfolgreich hinzugef&uuml;gt');

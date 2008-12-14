@@ -39,25 +39,24 @@ final class TDL_Module_view_projects extends TDL_Module
 		$db = FWS_Props::get()->db();
 		$tpl = FWS_Props::get()->tpl();
 
-		$num = $db->sql_num(TDL_TB_PROJECTS,'id','');
+		$num = $db->get_row_count(TDL_TB_PROJECTS,'id','');
 		
 		$tpl->add_variables(array(
 			'num' => $num
 		));
 		
 		$projects = array();
-		$qry = $db->sql_qry('SELECT * FROM '.TDL_TB_PROJECTS.' ORDER BY id DESC');
-		for($i = 0;$data = $db->sql_fetch_assoc($qry);$i++)
+		$i = 0;
+		foreach($db->get_rows('SELECT * FROM '.TDL_TB_PROJECTS.' ORDER BY id DESC') as $data)
 		{
 			$projects[] = array(
 				'title' => $data['project_name'],
 				'shortcut' => $data['project_name_short'],
 				'start' => FWS_Date::get_date($data['project_start'],false),
-				'index' => $i,
+				'index' => $i++,
 				'id' => $data['id']
 			);
 		}
-		$db->sql_free($qry);
 		
 		$tpl->add_variable_ref('projects',$projects);
 		$tpl->add_variables(array(

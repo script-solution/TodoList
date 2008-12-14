@@ -28,7 +28,7 @@ final class TDL_PropAccessor extends FWS_PropAccessor
 	}
 	
 	/**
-	 * @return FWS_MySQL the db-connection-class
+	 * @return FWS_DB_MySQL_Connection the db-connection-class
 	 */
 	public function db()
 	{

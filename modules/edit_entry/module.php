@@ -106,16 +106,15 @@ final class TDL_Module_edit_entry extends TDL_Module
 			{
 				$selected_entries = array();
 				$entries = '<ul>'."\n";
-				$qry = $db->sql_qry(
+				$rows = $db->get_rows(
 					'SELECT id,entry_title FROM '.TDL_TB_ENTRIES.' WHERE id IN ('.implode(',',$ids).')'
 				);
-				while($data = $db->sql_fetch_assoc($qry))
+				foreach($rows as $data)
 				{
 					$selected_entries[] = $data['id'];
 					$entries .= '<li>'.$data['entry_title'].'</li>'."\n";
 				}
 				$entries .= '</ul>'."\n";
-				$db->sql_free($qry);
 				
 				if(count($selected_entries) == 0)
 				{
@@ -134,7 +133,7 @@ final class TDL_Module_edit_entry extends TDL_Module
 					return;
 				}
 				
-				$data = $db->sql_fetch('SELECT * FROM '.TDL_TB_ENTRIES.' WHERE id = '.$id);
+				$data = $db->get_row('SELECT * FROM '.TDL_TB_ENTRIES.' WHERE id = '.$id);
 				if($data['id'] == '')
 				{
 					$this->report_error();

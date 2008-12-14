@@ -76,7 +76,7 @@ final class TDL_Module_edit_project extends TDL_Module
 				return;
 			}
 			
-			$data = $db->sql_fetch('SELECT * FROM '.TDL_TB_PROJECTS.' WHERE id = '.$id);
+			$data = $db->get_row('SELECT * FROM '.TDL_TB_PROJECTS.' WHERE id = '.$id);
 			if($data['id'] == '')
 			{
 				$this->report_error();

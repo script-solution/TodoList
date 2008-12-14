@@ -26,11 +26,11 @@ class TDL_Action_edit_project_add_category extends FWS_Action_Base
 		if($pid == null)
 			return TDL_GENERAL_ERROR;
 		
-		$db->sql_qry(
+		$db->execute(
 			'INSERT INTO '.TDL_TB_CATEGORIES.' (category_name,project_id)
 			 VALUES (\'\','.$pid.')'
 		);
-		$id = $db->get_last_insert_id();
+		$id = $db->get_inserted_id();
 		$cats->add_element(array('id' => $id,'category_name' => '','project_id' => $pid),$id);
 		
 		$this->set_success_msg('Die Kategorie wurde erfolgreich hinzugef&uuml;gt');

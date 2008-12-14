@@ -67,9 +67,11 @@ final class TDL_Module_change_status extends TDL_Module
 		$projects = array();		
 		$id_str = FWS_Array_Utils::advanced_implode(',',$ids);
 		$entry_string = '<ul>'."\n";
-		$qry = $db->sql_qry('SELECT id,project_id,entry_title,entry_status FROM '.TDL_TB_ENTRIES.'
-												 WHERE id IN ('.$id_str.')');
-		while($data = $db->sql_fetch_assoc($qry))
+		$rows = $db->get_rows(
+			'SELECT id,project_id,entry_title,entry_status FROM '.TDL_TB_ENTRIES.'
+			 WHERE id IN ('.$id_str.')'
+		);
+		foreach($rows as $data)
 		{
 			if(!isset($projects[$data['project_id']]))
 				$projects[$data['project_id']] = true;

@@ -180,7 +180,7 @@ final class TDL_Module_view_entries extends TDL_Module
 		$base_url .= '&amp;'.TDL_URL_S_TO_FIXED_DATE.'='.$s_to_fixed_date;
 		$base_url .= '&amp;';
 		
-		$num = $db->sql_num(TDL_TB_ENTRIES.' e','e.id',' LEFT JOIN '.TDL_TB_CATEGORIES.' c ON entry_category = c.id '.$where);
+		$num = $db->get_row_count(TDL_TB_ENTRIES.' e','e.id',' LEFT JOIN '.TDL_TB_CATEGORIES.' c ON entry_category = c.id '.$where);
 		
 		$site = $input->get_predef(TDL_URL_SITE,'get');
 		$order_url = $base_url.TDL_URL_SITE.'='.$site.'&amp;';
@@ -243,14 +243,15 @@ final class TDL_Module_view_entries extends TDL_Module
 		$pagination = new FWS_Pagination($limit,$num,$page);
 		
 		$entries = array();
-		$qry = $db->sql_qry(
+		$rows = $db->get_rows(
 			'SELECT e.*,c.category_name FROM '.TDL_TB_ENTRIES.' e
 			 LEFT JOIN '.TDL_TB_CATEGORIES.' c ON entry_category = c.id
 			 '.$where.'
 			 ORDER BY '.$sql_order.'
 			 LIMIT '.$pagination->get_start().','.$limit
 		);
-		for($i = 0;$data = $db->sql_fetch_assoc($qry);$i++)
+		$i = 0;
+		foreach($rows as $data)
 		{
 			$type_text = $functions->get_type_text($data['entry_type']);
 			$priority_text = $functions->get_priority_text($data['entry_priority']);
@@ -303,8 +304,8 @@ final class TDL_Module_view_entries extends TDL_Module
 				'status' => $functions->get_status_text($data['entry_status']),
 				'class' => 'tl_status_'.$data['entry_status']
 			);
+			$i++;
 		}
-		$db->sql_free($qry);
 		
 		$tpl->add_variable_ref('entries',$entries);
 		

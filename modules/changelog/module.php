@@ -73,7 +73,7 @@ final class TDL_Module_changelog extends TDL_Module
 		
 		$entries = array();
 		$last_version = '';
-		$qry = $db->sql_qry(
+		$rows = $db->get_rows(
 			'SELECT id,entry_title,project_id,entry_fixed_date,entry_start_version,
 							entry_fixed_version,entry_type,
 							IF(entry_fixed_version = 0,entry_start_version,entry_fixed_version) version
@@ -81,7 +81,7 @@ final class TDL_Module_changelog extends TDL_Module
 			 '.$where.'
 			 ORDER BY project_id DESC, version DESC, entry_fixed_date DESC'
 		);
-		while($data = $db->sql_fetch_assoc($qry))
+		foreach($rows as $data)
 		{
 			$tpldata = array();
 			$tpldata['show_version'] = false;
@@ -109,7 +109,6 @@ final class TDL_Module_changelog extends TDL_Module
 			
 			$entries[] = $tpldata;
 		}
-		$db->sql_free($qry);
 		
 		$tpl->add_variable_ref('entries',$entries);
 	}
@@ -130,7 +129,7 @@ final class TDL_Module_changelog extends TDL_Module
 			$where .= ' AND project_id = '.$cfg['project_id'];
 		
 		$last_version = '';
-		$qry = $db->sql_qry(
+		$rows = $db->get_rows(
 			'SELECT id,entry_title,project_id,entry_fixed_date,entry_start_version,
 							entry_fixed_version,entry_type,
 							IF(entry_fixed_version = 0,entry_start_version,entry_fixed_version) version
@@ -138,7 +137,7 @@ final class TDL_Module_changelog extends TDL_Module
 			 '.$where.'
 			 ORDER BY project_id DESC, version DESC, entry_fixed_date DESC'
 		);
-		while($data = $db->sql_fetch_assoc($qry))
+		foreach($rows as $data)
 		{
 			if($last_version != $data['version'])
 			{
@@ -154,7 +153,6 @@ final class TDL_Module_changelog extends TDL_Module
 			
 			$text .= '	['.$data['entry_type'].'] '.$data['entry_title']."\n";
 		}
-		$db->sql_free($qry);
 		
 		// set result to renderer
 		$doc = FWS_Props::get()->doc();

@@ -28,13 +28,23 @@ final class TDL_PropLoader extends FWS_PropLoader
 	}
 	
 	/**
-	 * @return FWS_MySQL the db-connection-class
+	 * @return FWS_DB_MySQL_Connection the db-connection-class
 	 */
 	protected function db()
 	{
-		$c = FWS_MySQL::get_instance();
-		$c->connect(TDL_MYSQL_HOST,TDL_MYSQL_LOGIN,TDL_MYSQL_PASSWORD,TDL_MYSQL_DATABASE);
-		$c->init(TDL_DB_CHARSET);
+		$c = new FWS_DB_MySQL_Connection();
+		$c->connect(TDL_MYSQL_HOST,TDL_MYSQL_LOGIN,TDL_MYSQL_PASSWORD);
+		$c->select_database(TDL_MYSQL_DATABASE);
+		$c->set_save_queries(false);
+		$c->set_escape_values(false);
+		
+		$version = $c->get_server_version();
+		if($version >= '4.1')
+		{
+			$c->execute('SET CHARACTER SET '.TDL_DB_CHARSET.';');
+			// we don't want to have any sql-modes
+			$c->execute('SET SESSION sql_mode="";');
+		}
 		return $c;
 	}
 	
@@ -106,7 +116,7 @@ final class TDL_PropLoader extends FWS_PropLoader
 	{
 		$db = FWS_Props::get()->db();
 
-		$cfg = $db->sql_fetch('SELECT * FROM '.TDL_TB_CONFIG.' WHERE is_selected = 1');
+		$cfg = $db->get_row('SELECT * FROM '.TDL_TB_CONFIG.' WHERE is_selected = 1');
 		if($cfg['project_id'] == '')
 		{
 			$cfg = array(
@@ -131,13 +141,12 @@ final class TDL_PropLoader extends FWS_PropLoader
 		$db = FWS_Props::get()->db();
 
 		$cats = new FWS_Array_2Dim();
-		$qry = $db->sql_qry(
+		$rows = $db->get_rows(
 			'SELECT * FROM '.TDL_TB_CATEGORIES.'
 			 ORDER by project_id DESC,id ASC'
 		);
-		while($data = $db->sql_fetch_assoc($qry))
+		foreach($rows as $data)
 			$cats->add_element($data,$data['id']);
-		$db->sql_free($qry);
 		return $cats;
 	}
 	
@@ -149,14 +158,13 @@ final class TDL_PropLoader extends FWS_PropLoader
 		$db = FWS_Props::get()->db();
 
 		$versions = new FWS_Array_2Dim();
-		$qry = $db->sql_qry(
+		$rows = $db->get_rows(
 			'SELECT *,v.id FROM '.TDL_TB_VERSIONS.' v
 			 LEFT JOIN '.TDL_TB_PROJECTS.' p ON v.project_id = p.id
 			 ORDER by p.id DESC,v.id DESC'
 		);
-		while($data = $db->sql_fetch_assoc($qry))
+		foreach($rows as $data)
 			$versions->add_element($data,$data['id']);
-		$db->sql_free($qry);
 		return $versions;
 	}
 }

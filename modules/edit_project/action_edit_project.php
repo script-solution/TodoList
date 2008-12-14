@@ -52,7 +52,7 @@ class TDL_Action_edit_project_edit_project extends FWS_Action_Base
 		{
 			foreach($nversions as $id => $version_name)
 			{
-				$db->sql_qry('UPDATE '.TDL_TB_VERSIONS." SET version_name = '".$version_name."' WHERE id = ".$id);
+				$db->execute('UPDATE '.TDL_TB_VERSIONS." SET version_name = '".$version_name."' WHERE id = ".$id);
 				$versions->set_element_field($id,'version_name',$version_name);
 			}
 		}
@@ -62,7 +62,7 @@ class TDL_Action_edit_project_edit_project extends FWS_Action_Base
 		{
 			foreach($categories as $id => $category_name)
 			{
-				$db->sql_qry('UPDATE '.TDL_TB_CATEGORIES." SET category_name = '".$category_name."' WHERE id = ".$id);
+				$db->execute('UPDATE '.TDL_TB_CATEGORIES." SET category_name = '".$category_name."' WHERE id = ".$id);
 				$cats->set_element_field($id,'category_name',$category_name);
 			}
 		}

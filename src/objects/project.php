@@ -135,9 +135,9 @@ class TDL_Objects_Project extends TDL_Objects_Data
 		parent::delete();
 		
 		$functions->select_project(0);
-		$db->sql_qry('DELETE FROM '.TDL_TB_ENTRIES.' WHERE project_id = '.$this->get_id());
-		$db->sql_qry('DELETE FROM '.TDL_TB_VERSIONS.' WHERE project_id = '.$this->get_id());
-		$db->sql_qry('DELETE FROM '.TDL_TB_CATEGORIES.' WHERE project_id = '.$this->get_id());
+		$db->execute('DELETE FROM '.TDL_TB_ENTRIES.' WHERE project_id = '.$this->get_id());
+		$db->execute('DELETE FROM '.TDL_TB_VERSIONS.' WHERE project_id = '.$this->get_id());
+		$db->execute('DELETE FROM '.TDL_TB_CATEGORIES.' WHERE project_id = '.$this->get_id());
 	}
 	
 	public function check($type = 'create')

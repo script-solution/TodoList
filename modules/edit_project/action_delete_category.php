@@ -26,8 +26,8 @@ class TDL_Action_edit_project_delete_category extends FWS_Action_Base
 		if($id == null)
 			return TDL_GENERAL_ERROR;
 		
-		$db->sql_qry('DELETE FROM '.TDL_TB_CATEGORIES.' WHERE id = '.$id);
-		$db->sql_qry('UPDATE '.TDL_TB_ENTRIES.' SET entry_category = 0 WHERE entry_category = '.$id);
+		$db->execute('DELETE FROM '.TDL_TB_CATEGORIES.' WHERE id = '.$id);
+		$db->execute('UPDATE '.TDL_TB_ENTRIES.' SET entry_category = 0 WHERE entry_category = '.$id);
 		$cats->remove_element($id);
 	
 		$pid = $input->get_predef(TDL_URL_ID,'get');

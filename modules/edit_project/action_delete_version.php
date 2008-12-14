@@ -26,9 +26,9 @@ class TDL_Action_edit_project_delete_version extends FWS_Action_Base
 		if($id == null)
 			return TDL_GENERAL_ERROR;
 		
-		$db->sql_qry('DELETE FROM '.TDL_TB_VERSIONS.' WHERE id = '.$id);
-		$db->sql_qry('UPDATE '.TDL_TB_ENTRIES.' SET entry_start_version = 0 WHERE entry_start_version = '.$id);
-		$db->sql_qry('UPDATE '.TDL_TB_ENTRIES.' SET entry_fixed_version = 0 WHERE entry_fixed_version = '.$id);
+		$db->execute('DELETE FROM '.TDL_TB_VERSIONS.' WHERE id = '.$id);
+		$db->execute('UPDATE '.TDL_TB_ENTRIES.' SET entry_start_version = 0 WHERE entry_start_version = '.$id);
+		$db->execute('UPDATE '.TDL_TB_ENTRIES.' SET entry_fixed_version = 0 WHERE entry_fixed_version = '.$id);
 		$versions->remove_element($id);
 		
 		$pid = $input->get_predef(TDL_URL_ID,'get');
