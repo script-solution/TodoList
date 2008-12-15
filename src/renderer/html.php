@@ -154,9 +154,10 @@ class TDL_Renderer_HTML extends FWS_Document_Renderer_HTML_Default
 	protected function footer()
 	{
 		$locale = FWS_Props::get()->locale();
-		$profiler = FWS_Props::get()->profiler();
 		$db = FWS_Props::get()->db();
 		$tpl = FWS_Props::get()->tpl();
+		$doc = FWS_Props::get()->doc();
+		$profiler = $doc->get_profiler();
 
 		$mem = FWS_StringHelper::get_formated_data_size(
 			$profiler->get_memory_usage(),$locale->get_thousands_separator(),

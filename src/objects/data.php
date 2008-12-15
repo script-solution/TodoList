@@ -105,7 +105,7 @@ abstract class TDL_Objects_Data extends FWS_Object
 		
 		// no fields are not allowed
 		if(count($fields) == 0)
-			throw new FWS_Exceptions_MissingData('Please set at least one field first!');
+			throw new FWS_Exception_MissingData('Please set at least one field first!');
 		
 		$db->insert($this->table(),$fields);
 		
@@ -122,12 +122,12 @@ abstract class TDL_Objects_Data extends FWS_Object
 		$db = FWS_Props::get()->db();
 
 		if($this->get_id() === null)
-			throw new FWS_Exceptions_MissingData('The id is missing');
+			throw new FWS_Exception_MissingData('The id is missing');
 		
 		$fields = $this->_get_fields();
 		
 		if(count($fields) == 0)
-			throw new FWS_Exceptions_MissingData('Please set at least one field first!');
+			throw new FWS_Exception_MissingData('Please set at least one field first!');
 		
 		$db->update($this->table(),'WHERE id = '.$this->get_id(),$fields);
 	}
@@ -140,7 +140,7 @@ abstract class TDL_Objects_Data extends FWS_Object
 		$db = FWS_Props::get()->db();
 
 		if($this->get_id() === null)
-			throw new FWS_Exceptions_MissingData('The id is missing');
+			throw new FWS_Exception_MissingData('The id is missing');
 		
 		$db->execute('DELETE FROM '.$this->table().' WHERE id = '.$this->get_id());
 	}

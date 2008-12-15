@@ -93,10 +93,6 @@ $accessor = new TDL_PropAccessor();
 $accessor->set_loader(new TDL_PropLoader());
 FWS_Props::set_accessor($accessor);
 
-// start profiler
-$profiler = FWS_Props::get()->profiler();
-$profiler->start();
-
 // init user
 $user = FWS_Props::get()->user();
 $user->init();
