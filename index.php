@@ -77,6 +77,9 @@ define('FWS_PATH',TDL_FWS_PATH);
 // init the framework
 include_once(TDL_FWS_PATH.'init.php');
 
+// the db is latin1
+FWS_String::set_use_mb_functions(true,'ISO-8859-1');
+
 // set the path
 FWS_Path::set_server_app($path);
 FWS_Path::set_client_app($path);
