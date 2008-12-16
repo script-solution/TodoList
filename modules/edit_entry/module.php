@@ -109,10 +109,10 @@ final class TDL_Module_edit_entry extends TDL_Module
 				$rows = $db->get_rows(
 					'SELECT id,entry_title FROM '.TDL_TB_ENTRIES.' WHERE id IN ('.implode(',',$ids).')'
 				);
-				foreach($rows as $data)
+				foreach($rows as $row)
 				{
-					$selected_entries[] = $data['id'];
-					$entries .= '<li>'.$data['entry_title'].'</li>'."\n";
+					$selected_entries[] = $row['id'];
+					$entries .= '<li>'.$row['entry_title'].'</li>'."\n";
 				}
 				$entries .= '</ul>'."\n";
 				
