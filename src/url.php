@@ -63,6 +63,8 @@ class TDL_URL extends FWS_URL
 			$url->set(TDL_URL_ACTION,$action_param);
 		else if($target !== -1)
 			$url->set(TDL_URL_ACTION,$target);
+		else
+			$url->set(TDL_URL_ACTION,'view_entries');
 		
 		// add additional params
 		foreach(FWS_Array_Utils::advanced_explode($separator,$additional) as $param)

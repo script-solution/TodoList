@@ -140,7 +140,7 @@ class TDL_Renderer_HTML extends FWS_Document_Renderer_HTML_Default
 		
 		$tpl->set_template('navigation.htm');
 		$tpl->add_variables(array(
-			'location' => $this->get_breadcrumbs('tl_body'),
+			'location' => $this->get_breadcrumb_links('tl_body'),
 			'change_selected_project_url' => $functions->get_current_url(),
 			'action_type' => TDL_ACTION_CHANGE_SEL_PROJECT,
 			'selected_project_combo' => $project_combo
