@@ -62,7 +62,7 @@ final class TDL_Module_changelog extends TDL_Module
 		{
 			$sel_version = $versions->get_element_with(array('project_id' => $cfg['project_id']));
 			$title = $sel_version['project_name'];
-			$where .= ' AND project_id = '.$cfg['project_id'];
+			$where .= ' AND e.project_id = '.$cfg['project_id'];
 		}
 		else
 			$title = 'Alle Projekte';
@@ -74,29 +74,26 @@ final class TDL_Module_changelog extends TDL_Module
 		$entries = array();
 		$last_version = '';
 		$rows = $db->get_rows(
-			'SELECT id,entry_title,project_id,entry_fixed_date,entry_start_version,
-							entry_fixed_version,entry_type,
-							IF(entry_fixed_version = 0,entry_start_version,entry_fixed_version) version
-			 FROM '.TDL_TB_ENTRIES.'
+			'SELECT e.id,entry_title,e.project_id,entry_fixed_date,entry_start_version,
+							entry_fixed_version,entry_type
+			 FROM '.TDL_TB_ENTRIES.' e
+			 LEFT JOIN '.TDL_TB_VERSIONS.' v ON entry_fixed_version = v.id
 			 '.$where.'
-			 ORDER BY project_id DESC, version DESC, entry_fixed_date DESC'
+			 ORDER BY e.project_id DESC, v.version_name DESC, entry_fixed_date DESC'
 		);
 		foreach($rows as $data)
 		{
 			$tpldata = array();
 			$tpldata['show_version'] = false;
 			
-			if($last_version != $data['version'])
+			if($last_version != $data['entry_fixed_version'])
 			{
-				if($data['entry_fixed_version'] > 0)
-					$fixed_version = $versions->get_element($data['entry_fixed_version']);
-				else
-					$fixed_version = $versions->get_element($data['entry_start_version']);
+				$fixed_version = $versions->get_element($data['entry_fixed_version']);
 				
 				$tpldata['show_version'] = true;
 				$tpldata['product_version'] = $fixed_version['project_name'].' :: '.$fixed_version['version_name'];
 				
-				$last_version = $data['version'];
+				$last_version = $data['entry_fixed_version'];
 			}
 			
 			$type_text = $functions->get_type_text($data['entry_type']);
