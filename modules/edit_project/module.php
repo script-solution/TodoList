@@ -93,7 +93,7 @@ final class TDL_Module_edit_project extends TDL_Module
 			$data = array(
 				'project_name' => '',
 				'project_name_short' => '',
-				'project_start' => ''
+				'project_start' => 0
 			);
 			
 			$target_url = TDL_URL::get_url(0,'&amp;'.TDL_URL_MODE.'=add');

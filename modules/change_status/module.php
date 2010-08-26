@@ -61,6 +61,8 @@ final class TDL_Module_change_status extends TDL_Module
 			'open' => 'Offen',
 			'running' => 'In Bearbeitung',
 			'not_tested' => 'Noch nicht getestet',
+			'not_reproducable' => 'Nicht reproduzierbar',
+			'need_info' => 'Brauche Informationen',
 			'fixed' => 'Fixed'
 		);
 

@@ -225,6 +225,16 @@ td.tl_status_fixed {
 	background-color: #cceedd;
 }
 
+td.tl_status_not_reproducable {
+	padding: 4px 4px 4px 4px;
+	background-color: #CC99CC;
+}
+
+td.tl_status_need_info {
+	padding: 4px 4px 4px 4px;
+	background-color: #FF6633;
+}
+
 /* ------------ OTHER ------------ */
 
 form {

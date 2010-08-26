@@ -235,6 +235,10 @@ class TDL_Functions extends FWS_Object
 				return 'Fixed';
 			case 'not_tested':
 				return 'Noch nicht getestet';
+			case 'not_reproducable':
+				return 'Nicht reproduzierbar';
+			case 'need_info':
+				return 'Brauche Informationen';
 			default:
 				return 'In Bearbeitung';
 		}

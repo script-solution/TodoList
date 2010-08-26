@@ -428,7 +428,8 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 		
 		$this->check_field_for('entry_changed_date','timestamp',$type == 'create');
 		$this->check_field_for(
-			'entry_status','enum',$type == 'create',array('open','fixed','running','not_tested')
+			'entry_status','enum',$type == 'create',
+			array('open','fixed','running','not_tested','not_reproducable','need_info')
 		);
 		
 		// check fixed-version

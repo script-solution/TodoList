@@ -193,6 +193,8 @@ final class TDL_Module_edit_entry extends TDL_Module
 			'open' => 'Offen',
 			'running' => 'In Bearbeitung',
 			'not_tested' => 'Noch nicht getestet',
+			'not_reproducable' => 'Nicht reproduzierbar',
+			'need_info' => 'Brauche Informationen',
 			'fixed' => 'Fixed'
 		);
 		

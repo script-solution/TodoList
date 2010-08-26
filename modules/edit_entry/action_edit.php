@@ -45,7 +45,7 @@ class TDL_Action_edit_entry_edit extends FWS_Action_Base
 		$start_version = $input->get_var('start_version','post',FWS_Input::STRING);
 		$fixed_version = $input->get_var('fixed_version','post',FWS_Input::STRING);
 		$status = $input->correct_var('status','post',FWS_Input::STRING,
-			array('open','running','fixed','not_tested'),'open');
+			array('open','running','fixed','not_tested','not_reproducable','need_info'),'open');
 		$type = $input->correct_var('type','post',FWS_Input::STRING,
 			array('bug','feature','improvement','test'),'bug');
 		$priority = $input->correct_var('priority','post',FWS_Input::STRING,

@@ -27,7 +27,7 @@ class TDL_Action_change_status_default extends FWS_Action_Base
 		
 		// read variables from post
 		$status = $input->correct_var('status','post',FWS_Input::STRING,
-			array('open','fixed','running','not_tested'),'open');
+			array('open','fixed','running','not_tested','not_reproducable','need_info'),'open');
 		$fixed_version = $input->get_var('fixed_version','post',FWS_Input::STRING);
 		
 		if($status == 'fixed')

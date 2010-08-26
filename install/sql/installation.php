@@ -47,7 +47,7 @@ $this->db->execute("CREATE TABLE `".TDL_TB_ENTRIES."` (
   `entry_fixed_date` int(10) unsigned NOT NULL default '0',
   `entry_fixed_version` int(10) unsigned NOT NULL default '0',
   `entry_changed_date` int(10) unsigned NOT NULL default '0',
-  `entry_status` enum('open','running','not_tested','fixed') NOT NULL default 'open',
+  `entry_status` enum('open','running','not_tested','fixed','not_reproducable','need_info') NOT NULL default 'open',
   PRIMARY KEY  (`id`),
   KEY `entry_category` (`entry_category`),
   KEY `project_id` (`project_id`),

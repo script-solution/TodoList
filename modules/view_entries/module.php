@@ -94,6 +94,8 @@ final class TDL_Module_view_entries extends TDL_Module
 			'open' => 'Offen',
 			'running' => 'In Bearbeitung',
 			'not_tested' => 'Noch nicht getestet',
+			'not_reproducable' => 'Nicht reproduzierbar',
+			'need_info' => 'Brauche Informationen',
 			'fixed' => 'Fixed'
 		);
 		$s_status_combo = $form->get_combobox(TDL_URL_S_STATUS,$status_options,$s_status);
