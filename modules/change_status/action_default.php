@@ -32,7 +32,7 @@ class TDL_Action_change_status_default extends FWS_Action_Base
 		
 		if($status == 'fixed')
 		{
-			@list($fixed_project_id,$fixed_version_id) = explode(',',$fixed_version);
+			@list(,$fixed_version_id) = explode(',',$fixed_version);
 			$fixed_date = time();
 		}
 		else
