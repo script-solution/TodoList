@@ -71,6 +71,7 @@ class TDL_Renderer_HTML extends FWS_Document_Renderer_HTML_Default
 		$msgs = FWS_Props::get()->msgs();
 		$locale = FWS_Props::get()->locale();
 		$doc = FWS_Props::get()->doc();
+		$user = FWS_Props::get()->user();
 		
 		// add redirect information
 		$redirect = $doc->get_redirect();
@@ -90,15 +91,18 @@ class TDL_Renderer_HTML extends FWS_Document_Renderer_HTML_Default
 		// add objects
 		$js = FWS_Javascript::get_instance();
 		$js->set_cache_folder('cache/');
+		$js->set_shrink(false);
 		$tpl->add_global_ref('js',$js);
 		$url = new TDL_URL();
 		$tpl->add_global_ref('url',$url);
 		$tpl->add_global_ref('locale',$locale);
+		$tpl->add_global_ref('user',$user);
 		
 		// set callable methods
 		$tpl->add_allowed_method('url','simple_url');
 		$tpl->add_allowed_method('js','get_file');
 		$tpl->add_allowed_method('locale','lang');
+		$tpl->add_allowed_method('user','get_theme_item_path');
 		
 		// add messages
 		if($msgs->contains_msg())
@@ -118,7 +122,7 @@ class TDL_Renderer_HTML extends FWS_Document_Renderer_HTML_Default
 		$this->perform_action();
 		
 		// show page header
-		$tpl->set_template('header.htm');
+		$tpl->set_template('inc_header.htm');
 		$tpl->add_variables(array(
 			'cookie_domain' => TDL_COOKIE_DOMAIN,
 			'cookie_path' => TDL_COOKIE_PATH,
@@ -138,7 +142,7 @@ class TDL_Renderer_HTML extends FWS_Document_Renderer_HTML_Default
 			'selected_project',$projects,$cfg['project_id']
 		);
 		
-		$tpl->set_template('navigation.htm');
+		$tpl->set_template('inc_navigation.htm');
 		$tpl->add_variables(array(
 			'location' => $this->get_breadcrumb_links('tl_body'),
 			'change_selected_project_url' => $functions->get_current_url(),
@@ -165,7 +169,7 @@ class TDL_Renderer_HTML extends FWS_Document_Renderer_HTML_Default
 		);
 		
 		// show footer
-		$tpl->set_template('footer.htm');
+		$tpl->set_template('inc_footer.htm');
 		$tpl->add_variables(array(
 			'version' => TDL_VERSION,
 			'time' => $profiler->get_time(),
@@ -187,7 +191,7 @@ class TDL_Renderer_HTML extends FWS_Document_Renderer_HTML_Default
 
 		$amsgs = $msgs->get_all_messages();
 		$links = $msgs->get_links();
-		$tpl->set_template('messages.htm');
+		$tpl->set_template('inc_messages.htm');
 		$tpl->add_variable_ref('errors',$amsgs[FWS_Document_Messages::ERROR]);
 		$tpl->add_variable_ref('warnings',$amsgs[FWS_Document_Messages::WARNING]);
 		$tpl->add_variable_ref('notices',$amsgs[FWS_Document_Messages::NOTICE]);

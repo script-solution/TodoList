@@ -96,11 +96,8 @@ final class TDL_Module_changelog extends TDL_Module
 				$last_version = $data['entry_fixed_version'];
 			}
 			
-			$type_text = $functions->get_type_text($data['entry_type']);
-			$type = '<img src="'.$user->get_theme_item_path('images/type/'.$data['entry_type'].'.gif').'" align="top"';
-			$type .= ' alt="'.$type_text.'" title="'.$type_text.'" /> ';
-			
-			$tpldata['type'] = $type;
+			$tpldata['type'] = $data['entry_type'];
+			$tpldata['type_text'] = $functions->get_type_text($data['entry_type']);
 			$tpldata['title'] = $data['entry_title'];
 			$tpldata['date'] = FWS_Date::get_date($data['entry_fixed_date']);
 			

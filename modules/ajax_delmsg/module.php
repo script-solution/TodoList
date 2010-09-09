@@ -29,7 +29,7 @@ final class TDL_Module_ajax_delmsg extends TDL_Module
 		
 		$renderer->set_show_header(false);
 		$renderer->set_show_footer(false);
-		$renderer->set_template('delete_message.htm');
+		$renderer->set_template('inc_delete_message.htm');
 	}
 	
 	/**

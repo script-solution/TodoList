@@ -68,7 +68,7 @@ final class TDL_Module_change_status extends TDL_Module
 
 		$projects = array();		
 		$id_str = FWS_Array_Utils::advanced_implode(',',$ids);
-		$entry_string = '<ul>'."\n";
+		$entries = array();
 		$rows = $db->get_rows(
 			'SELECT id,project_id,entry_title,entry_status FROM '.TDL_TB_ENTRIES.'
 			 WHERE id IN ('.$id_str.')'
@@ -78,10 +78,11 @@ final class TDL_Module_change_status extends TDL_Module
 			if(!isset($projects[$data['project_id']]))
 				$projects[$data['project_id']] = true;
 			
-			$entry_string .= '	<li>'.$data['entry_title'].'<span style="padding-left: 10px; font-size: 9px;">';
-			$entry_string .= '['.$functions->get_status_text($data['entry_status']).']</span></li>'."\n";
+			$entries[] = array(
+				'title' => $data['entry_title'],
+				'status' => $functions->get_status_text($data['entry_status'])
+			);
 		}
-		$entry_string .= '</ul>'."\n";
 		
 		$version_options = array('&nbsp;');
 		$rows = $versions->get_elements();
@@ -101,7 +102,7 @@ final class TDL_Module_change_status extends TDL_Module
 			'status' => $status_options,
 			'versions' => $version_options,
 			'def_version' => $def_version,
-			'entries' => $entry_string,
+			'entries' => $entries,
 		));
 	}
 }

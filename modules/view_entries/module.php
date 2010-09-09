@@ -168,30 +168,30 @@ final class TDL_Module_view_entries extends TDL_Module
 		
 		$order = $input->get_predef(TDL_URL_ORDER,'get','changed');
 		
-		$base_url = TDL_URL::get_url(-1);
-		$base_url .= '?'.TDL_URL_S_KEYWORD.'='.$s_keyword;
-		$base_url .= '&amp;'.TDL_URL_S_CATEGORY.'='.$s_category;
-		$base_url .= '&amp;'.TDL_URL_S_PRIORITY.'='.$s_priority;
-		$base_url .= '&amp;'.TDL_URL_S_TYPE.'='.$s_type;
-		$base_url .= '&amp;'.TDL_URL_S_STATUS.'='.$s_status;
-		$base_url .= '&amp;'.TDL_URL_S_FROM_CHANGED_DATE.'='.$s_from_changed_date;
-		$base_url .= '&amp;'.TDL_URL_S_FROM_START_DATE.'='.$s_from_start_date;
-		$base_url .= '&amp;'.TDL_URL_S_FROM_FIXED_DATE.'='.$s_from_fixed_date;
-		$base_url .= '&amp;'.TDL_URL_S_TO_CHANGED_DATE.'='.$s_to_changed_date;
-		$base_url .= '&amp;'.TDL_URL_S_TO_START_DATE.'='.$s_to_start_date;
-		$base_url .= '&amp;'.TDL_URL_S_TO_FIXED_DATE.'='.$s_to_fixed_date;
-		$base_url .= '&amp;';
+		$base_url = new TDL_URL();
+		$base_url->set(TDL_URL_S_KEYWORD,$s_keyword);
+		$base_url->set(TDL_URL_S_CATEGORY,$s_category);
+		$base_url->set(TDL_URL_S_PRIORITY,$s_priority);
+		$base_url->set(TDL_URL_S_TYPE,$s_type);
+		$base_url->set(TDL_URL_S_STATUS,$s_status);
+		$base_url->set(TDL_URL_S_FROM_CHANGED_DATE,$s_from_changed_date);
+		$base_url->set(TDL_URL_S_FROM_START_DATE,$s_from_start_date);
+		$base_url->set(TDL_URL_S_FROM_FIXED_DATE,$s_from_fixed_date);
+		$base_url->set(TDL_URL_S_TO_CHANGED_DATE,$s_to_changed_date);
+		$base_url->set(TDL_URL_S_TO_START_DATE,$s_to_start_date);
+		$base_url->set(TDL_URL_S_TO_FIXED_DATE,$s_to_fixed_date);
 		
 		$num = $db->get_row_count(TDL_TB_ENTRIES.' e','e.id',' LEFT JOIN '.TDL_TB_CATEGORIES.' c ON entry_category = c.id '.$where);
 		
 		$site = $input->get_predef(TDL_URL_SITE,'get');
-		$order_url = $base_url.TDL_URL_SITE.'='.$site.'&amp;';
+		$order_url = clone $base_url;
+		$order_url->set(TDL_URL_SITE,$site);
 		
 		$tpl->add_variables(array(
 			'num' => $num,
 			'search_target' => $input->get_var('PHP_SELF','server',FWS_Input::STRING),
 			'cookie_name' => TDL_COOKIE_PREFIX.'display_search_form',
-			'search_display_value' => $search_display_value == 1 ? 'table-row' : 'none',
+			'search_display_value' => $search_display_value == 1 ? 'block' : 'none',
 			's_keyword_param' => TDL_URL_S_KEYWORD,
 			's_from_start_date_param' => TDL_URL_S_FROM_START_DATE,
 			's_to_start_date_param' => TDL_URL_S_TO_START_DATE,
@@ -242,8 +242,9 @@ final class TDL_Module_view_entries extends TDL_Module
 		
 		$limit = 20;
 		$page = $input->get_predef(TDL_URL_SITE,'get');
-		$pagination = new FWS_Pagination($limit,$num,$page);
+		$pagination = new TDL_Pagination($limit,$num,$page);
 		
+		$hl = new FWS_KeywordHighlighter(array($s_keyword));
 		$entries = array();
 		$rows = $db->get_rows(
 			'SELECT e.*,c.category_name FROM '.TDL_TB_ENTRIES.' e
@@ -257,10 +258,6 @@ final class TDL_Module_view_entries extends TDL_Module
 		{
 			$type_text = $functions->get_type_text($data['entry_type']);
 			$priority_text = $functions->get_priority_text($data['entry_priority']);
-			$type = '<img src="'.$user->get_theme_item_path('images/type/'.$data['entry_type'].'.gif').'" align="top"';
-			$type .= ' alt="'.$type_text.'" title="'.$type_text.'" /> ';
-			$type .= '<img src="'.$user->get_theme_item_path('images/priority/'.$data['entry_priority'].'.png').'" align="top"';
-			$type .= ' alt="'.$priority_text.'" title="'.$priority_text.'" />';
 			
 			$start = FWS_Date::get_date($data['entry_start_date']).' :: ';
 			$start_version = $versions->get_element($data['entry_start_version']);
@@ -278,30 +275,28 @@ final class TDL_Module_view_entries extends TDL_Module
 			else
 				$fixed = ' - ';
 			
-			$project = '<span title="'.$start_version['project_name'].'">'.$start_version['project_name_short'].'</span>';
-			$project .= ($data['entry_category'] != 0) ? ' ['.$data['category_name'].'] ' : '';
-			
 			$image = $data['entry_description'] != '' ? 'details_available' : 'details_not_available';
 			$img_title = $data['entry_description'] != '' ? 'Details anzeigen' : 'Details anzeigen (Keine Beschreibung vorhanden)';
-			$details_url = TDL_URL::get_url('entry_details','&amp;'.TDL_URL_ID.'='.$data['id']);
-			$title = '<a class="tl_main" href="'.$details_url.'">';
-			$title .= '<img src="'.$user->get_theme_item_path('images/'.$image.'.gif').'" border="0" title="'.$img_title.'" align="top"';
-			$title .= ' alt="'.$img_title.'" /></a>&nbsp;'.$data['entry_title'];
 			
-			if($data['entry_info_link'] != '')
-			{
-				$title = '<span style="float: left;">'.$title.'</span>';
-				$title .= '<span style="float: right;">';
-				$title .= '&nbsp;[ <a class="tl_main" href="'.$data['entry_info_link'].'">&raquo;</a> ]';
-				$title .= '</span>';
-			}
+			$title = $data['entry_title'];
+			if($s_keyword)
+				$title = $hl->highlight($title);
 			
 			$entries[] = array(
-				'type' => $type,
-				'title' => $title,
 				'start' => $start,
+				'project_name' => $start_version['project_name'],
+				'project_name_short' => $start_version['project_name_short'],
+				'category' => $data['entry_category'] ? $data['category_name'] : '',
 				'project' => $project,
 				'fixed' => $fixed,
+				'title' => $title,
+				'info_link' => $data['entry_info_link'],
+				'priority' => $data['entry_priority'],
+				'type' => $data['entry_type'],
+				'type_text' => $type_text,
+				'priority_text' => $priority_text,
+				'image' => $image,
+				'img_title' => $img_title,
 				'id' => $data['id'],
 				'status' => $functions->get_status_text($data['entry_status']),
 				'class' => 'tl_status_'.$data['entry_status']
@@ -311,14 +306,13 @@ final class TDL_Module_view_entries extends TDL_Module
 		
 		$tpl->add_variable_ref('entries',$entries);
 		
-		$base_url .= TDL_URL_ORDER.'='.$order.'&amp;'.TDL_URL_AD.'='.$ad.'&amp;';
-		$functions->add_pagination(
-			$pagination,$base_url.TDL_URL_SITE.'={d}',TDL_URL_SITE,'tl_body'
-		);
+		$base_url->set(TDL_URL_ORDER,$order);
+		$base_url->set(TDL_URL_AD,$ad);
+		$pagination->populate_tpl($base_url);
 		
 		$tpl->add_variables(array(
 			'index' => $i,
-			'base_url' => $base_url
+			'base_url' => $base_url->to_url()
 		));
 	}
 }

@@ -1,0 +1,19 @@
+<div style="float: left;">
+	<b>Position:</b> {location}
+</div>
+<div style="float: right;" class="tl_padbottom">
+	<form method="post" action="{url.simple_url(-1)}">
+	<input type="hidden" name="action_type" value="{action_type}" />
+	Projekt: {selected_project_combo} <input type="submit" value="Go!" />
+	</form>
+</div>
+<br style="clear: both;" />
+
+<div class="tl_padbottom">
+	<a class="tl_button_big" href="{url.simple_url('view_projects')}">Projekte</a>
+	<span style="float: right;">&nbsp;&middot;&nbsp;</span>
+	<a class="tl_button_big" href="{url.simple_url('changelog')}">Changelog</a>
+	<a class="tl_button_big" href="{url.simple_url('edit_entry','&amp;$URL_MODE=add')}">Neuer Eintrag</a>
+	<a class="tl_button_big" href="{url.simple_url(-1)}">Todos</a>
+	<br style="clear: both;" />
+</div>

@@ -28,7 +28,7 @@ final class FWS_Props extends FWS_UtilBase
 	private static $_accessor;
 	
 	/**
-	 * @return FWS_PropAccessor the property-accessor-instance
+	 * @return TDL_PropAccessor the property-accessor-instance
 	 */
 	public static function get()
 	{

@@ -9,66 +9,9 @@
  * @link				http://www.script-solution.de
  */
 
-function changeRowBorder(cell,location,pixel,color)
-{
-	switch(location)
-	{
-		case 'left':
-			cell.style.paddingLeft = (4 - pixel) + 'px';
-			cell.style.borderLeft = pixel + 'px solid ' + color;
-			break;
-		
-		case 'right':
-			cell.style.paddingRight = (4 - pixel) + 'px';
-			cell.style.borderRight = pixel + 'px solid ' + color;
-			break;
-		
-		case 'top':
-			cell.style.paddingTop = (4 - pixel) + 'px';
-			cell.style.borderTop = pixel + 'px solid ' + color;
-			break;
-		
-		case 'bottom':
-			cell.style.paddingBottom = (4 - pixel) + 'px';
-			cell.style.borderBottom = pixel + 'px solid ' + color;
-			break;
-	}
-}
-
 function toggleBorder(id)
 {
-	var color = '#7a8ba9';
-	var tr = document.getElementById(id);
-	if(tr != null)
-	{
-		var first = tr.cells[0];
-		changeRowBorder(first,'left',first.style.borderLeftWidth == '1px' ? 0 : 1,color);
-		
-		var last = tr.cells[tr.cells.length - 1];
-		changeRowBorder(last,'right',last.style.borderRightWidth == '1px' ? 0 : 1,color);
-		
-		for(var i = 0;i < tr.cells.length;i++)
-		{
-			changeRowBorder(tr.cells[i],'top',tr.cells[i].style.borderTopWidth == '1px' ? 0 : 1,color);
-			changeRowBorder(tr.cells[i],'bottom',tr.cells[i].style.borderBottomWidth == '1px' ? 0 : 1,color);
-		}
-	}
-}
-
-function toggleSearch(cookie_name,prefix)
-{
-	var oldStatus = 'none';
-	for(var i = 1;;i++)
-	{
-		var tr = document.getElementById(prefix + i);
-		if(tr == null)
-			break;
-		
-		oldStatus = tr.style.display;
-		tr.style.display = oldStatus == 'none' ? (Browser.isIE ? 'block' : 'table-row') : 'none';
-	}
-	
-	setCookie(cookie_name,oldStatus == 'none' ? "1" : "0",3600 * 24 * 30);
+	FWS_toggleClassName(document.getElementById(id),'tl_highlight');
 }
 
 function invert_selection(prefix)

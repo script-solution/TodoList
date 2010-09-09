@@ -75,7 +75,7 @@ final class TDL_Module_edit_entry extends TDL_Module
 		$multiple = false;
 		$base_url = $functions->get_entry_base_url();
 		
-		$entries = '';
+		$entries = array();
 		
 		$data = array(
 			'project_id' => $cfg['project_id'],
@@ -105,16 +105,14 @@ final class TDL_Module_edit_entry extends TDL_Module
 			if($multiple)
 			{
 				$selected_entries = array();
-				$entries = '<ul>'."\n";
 				$rows = $db->get_rows(
 					'SELECT id,entry_title FROM '.TDL_TB_ENTRIES.' WHERE id IN ('.implode(',',$ids).')'
 				);
 				foreach($rows as $row)
 				{
 					$selected_entries[] = $row['id'];
-					$entries .= '<li>'.$row['entry_title'].'</li>'."\n";
+					$entries[] = $row;
 				}
-				$entries .= '</ul>'."\n";
 				
 				if(count($selected_entries) == 0)
 				{

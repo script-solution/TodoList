@@ -1,63 +1,44 @@
-{include "header.htm"}
+{include "inc_header.htm"}
 
 {if action_result < 1}
 {if module_error == false}
 <form method="post" action="{target_url}">
 <input type="hidden" name="action_type" value="{action_type}" />
-<table width="100%" align="center" cellpadding="0" cellspacing="0">
-	<tr>
-		<td class="tl_tbl_top_left"></td>
-		<td class="tl_tbl_top"></td>
-		<td class="tl_tbl_top_right"></td>
-	</tr>
-	<tr>
-		<td class="tl_tbl_left"></td>
-		<td>
-		<table width="100%" cellpadding="2" cellspacing="1">
-			<tr>
-				<td height="22" align="center" colspan="2" class="tl_topic">{form_title}</td>
-			</tr>
-			<tr>
-				<td width="30%" class="tl_coldesc">Titel:</td>
-				<td width="70%" class="tl_main">{form.get_textbox('project_name',def_name,40,255)}</td>
-			</tr>
-			<tr>
-				<td width="30%" class="tl_coldesc">Abk&uuml;rzung:</td>
-				<td width="70%" class="tl_main">{form.get_textbox('project_name_short',def_name_short,8,10)}
-				</td>
-			</tr>
-			<tr>
-				<td width="30%" class="tl_coldesc">Start:</td>
-				<td width="70%" class="tl_main">{form.get_date_chooser('start_',def_start,false)}</td>
-			</tr>
-			{if mode == 'edit'}
-			<tr>
-				<td width="30%" class="tl_coldesc">Versionen:</td>
-				<td width="70%" class="tl_main">
+<div class="tl_border">
+	<h1 class="tl_topic">{form_title}</h1>
+	<fieldset class="tl_form">
+		<dl>
+			<dt>Titel:</dt>
+			<dd>{form.get_textbox('project_name',def_name,40,255)}</dd>
+		</dl>
+		<dl>
+			<dt>Abk&uuml;rzung:</dt>
+			<dd>{form.get_textbox('project_name_short',def_name_short,8,10)}</dd>
+		</dl>
+		<dl>
+			<dt>Start:</dt>
+			<dd>{form.get_date_chooser('start_',def_start,false)}</dd>
+		</dl>
+		{if mode == 'edit'}
+		<dl>
+			<dt>Versionen:</dt>
+			<dd>
 				{versions}
 				<input type="button" value="Version hinzuf&uuml;gen" style="margin-top: 3px;"
 					   onclick="document.location.href = '{add_version_url}';" />
-				</td>
-			</tr>
-			<tr>
-				<td width="30%" class="tl_coldesc">Kategorien:</td>
-				<td width="70%" class="tl_main">
+			</dd>
+		</dl>
+		<dl>
+			<dt>Kategorien:</dt>
+			<dd>
 				{categories}
 				<input type="button" value="Kategorie hinzuf&uuml;gen" style="margin-top: 3px;"
 					   onclick="document.location.href = '{add_category_url}';" />
-				</td>
-			</tr>
-			{endif}
-		</table>
-		</td>
-		<td class="tl_tbl_right"></td>
-	</tr>
-	<tr>
-		<td class="tl_tbl_bottom_left"></td>
-		<td class="tl_tbl_bottom"></td>
-		<td class="tl_tbl_bottom_right"></td>
-	</tr>
-</table>
+			</dd>
+		</dl>
+		{endif}
+	</fieldset>
+</div>
 <center>
 	<input type="button" value="Zur&uuml;ck" onclick="document.location.href='{url.simple_url('view_projects')}'" />
 	<input type="submit" name="submit" value="{submit_title}" />
@@ -66,4 +47,4 @@
 {endif}
 {endif}
 
-{include "footer.htm"}
+{include "inc_footer.htm"}

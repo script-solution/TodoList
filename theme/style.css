@@ -1,21 +1,8 @@
-/* ------------ BODY ------------ */
+/* ------------ GENERAL ------------ */
 
-body.tl_body {
-	margin: 5px 0px 5px 1px;
-	font-family: verdana, tahoma, arial, helvetica, sans-serif;
+body {
+	font-family: verdana, helvetica, arial, sans-serif;
 	font-size: 11px;
-	color: #000000;
-	background-color: #FFFFFF;
-}
-
-a.tl_body {
-	text-decoration: none;
-	color: #3F5E88;
-}
-
-a.tl_body:hover {
-	text-decoration: underline;
-	color: #3F5E88;
 }
 
 div#ajax_wait_bar {
@@ -29,178 +16,221 @@ div#ajax_wait_bar {
 	border: 1px dotted #fff;
 }
 
-/* ------------ HEADLINE ------------ */
-
-a.tl_top_menu {
-	font-size: 12px;
-	color: #FFFFFF;
-	font-weight: bold;
-	text-decoration: none;
+input,select,textarea {
+	font-size: 11px;
+	padding: 2px;
 }
 
-a.tl_top_menu:hover {
+.keyword {
+	background-color: #FFFF00;
+	color: #000;
+}
+
+img {
+	border: 0;
+}
+
+/* links */
+a {
+	text-decoration: none;
+	color: #3F5E88;
+}
+a:hover {
 	text-decoration: underline;
 }
 
-td.tl_top_menu {
-	cursor: default;
-	background-image: url(images/topic.gif);
-	background-repeat: repeat-x;
-	text-decoration: none;
+/* ------------ PADDING ------------ */
+
+.tl_padtop {
+	margin-top: 0.9em;
 }
 
-td.tl_top_menu:hover {
-	cursor: pointer;
+.tl_paddouble {
+	margin-top: 2em;
 }
 
-/* ------------ TABLE BORDER ------------ */
-
-td.tl_tbl_top_left {
-	background-color: #FFFFFF;
-	height: 1px;
-	width: 1px;
+.tl_padbottom {
+	margin-bottom: 0.9em;
 }
 
-td.tl_tbl_top {
-	background-color: #7F90AE;
-	height: 1px;
+.tl_padbottom_big {
+	margin-bottom: 1.5em;
 }
 
-td.tl_tbl_top_right {
-	background-color: #FFFFFF;
-	height: 1px;
-	width: 1px;
+/* ------------ FORMULARS ------------ */
+
+fieldset.tl_form {
+	padding: 0;
+	margin: 0;
+	border: 0;
 }
 
-td.tl_tbl_left {
-	background-color: #7F90AE;
-	width: 1px;
+fieldset.tl_form dl {
+	padding: 0;
+	margin: 0;
+	margin-top: 1px;
+	background-color: #dbdbdb;
 }
 
-td.tl_tbl_right {
-	background-color: #7F90AE;
-	width: 1px;
-}
-
-td.tl_tbl_bottom_left {
-	background-color: #FFFFFF;
-	height: 1px;
-	width: 1px;
-}
-
-td.tl_tbl_bottom {
-	background-color: #7F90AE;
-	height: 1px;
-}
-
-td.tl_tbl_bottom_right {
-	background-color: #FFFFFF;
-	height: 1px;
-	width: 1px;
-}
-
-/* ------------ BUTTON ------------ */
-
-a.tl_button {
-	background-image: url(images/button.gif);
-	background-repeat: no-repeat;
-	width: 80px;
-	height: 20px;
-	padding-top: 3px;
-	margin: 0px 2px 0px 2px;
+fieldset.tl_form dt {
 	display: block;
-	float: right;
-	text-align: center;
-	font-size: 10px;
-	text-decoration: none;
+	margin: 0;
+	float: left;
+	padding: 0.5em;
+	width: 21%;
 	font-weight: bold;
-	color: #000000;
+	text-align: left;
+	vertical-align: middle;
 }
 
-a.tl_button:hover {
-	color: #3F5E88;
-}
-
-a.tl_button_big {
-	background-image: url(images/button_big.gif);
-	background-repeat: no-repeat;
-	width: 120px;
-	height: 20px;
-	padding-top: 3px;
-	margin: 0px 2px 0px 2px;
+fieldset.tl_form dd {
 	display: block;
-	float: right;
-	text-align: center;
-	font-size: 10px;
-	text-decoration: none;
+	margin: 0;
+	padding: 0.5em;
+	margin-left: 23%;
+	background-color: #ebebeb;
+	vertical-align: middle;
+}
+
+/* ------------ PAGINATION ------------ */
+
+.tl_pageno {
+	background-color: #f0f0f0;
+	border: 1px solid #ccc;
+}
+
+.tl_pagecurrent {
+	padding: 0px 4px;
 	font-weight: bold;
-	color: #000000;
 }
 
-a.tl_button_big:hover {
-	color: #3F5E88;
+.tl_pageno a {
+	padding: 1px 4px;
 }
 
-/* ------------ GENERAL ------------ */
-
-td.tl_topic {
-	font-size: 12px;
-	font-weight: bold;
-	color: #FFFFFF;
-	padding: 0px 2px 0px 2px;
-	background-image: url(images/topic.gif);
-	background-repeat: repeat-x;
-}
-
-a.tl_topic {
-	text-decoration: underline;
-	color: #FFFFFF;
-	font-size: 12px;
-}
-
-a.tl_topic:hover {
-	color: #000000;
-}
-
-td.tl_main {
-	padding: 4px 4px 4px 4px;
-	background-color: #EBEBEB;
-}
-
-a.tl_main {
+.tl_pageno a:hover {
+	background-color: #3F5E88;
+	color: #fff;
 	text-decoration: none;
-	color: #3F5E88;
 }
 
-a.tl_main:hover {
-	text-decoration: underline;
+/* ------------ ROW-HOVER ------------ */
+
+td.hlCol {
+	padding: 0.4em;
+	background-color: #ebebeb;
 }
 
-td.tl_main_no_pad {
-	background-color: #EBEBEB;
+tr.hlRow:hover td.hlCol {
+	background-color: #f5f5f5;
+}
+td.hlCol_sel {
+	padding: 0.4em;
+	background-color: #FFBE5C;
 }
 
-td.tl_coldesc {
-	padding: 4px 4px 4px 4px;
-	font-size: 10px;
+/* ------------ THE DIFFERENT CONTENT-STYLES ------------ */
+
+/* for the main content */
+.tl_main {
+	padding: 0.3em;
+	background-color: #f6f6f6;
+}
+
+/* the columns on the left (if 2 column-layout) */
+.tl_left {
+	padding: 0.3em;
+	font-size: 0.9em;
 	background-color: #DBDBDB;
 	font-weight: bold;
 }
 
-a.tl_coldesc {
-	text-decoration: none;
-	color: #3F5E88;
-	font-size: 10px;
+.tl_topic {
+	font-size: 1.1em;
+	font-weight: bold;
+	color: #fff;
+	padding: 0.3em;
+	background-color: #637591;
+	text-align: center;
+}
+h1.tl_topic {
+	margin: 0;
+	padding: 0.3em;
 }
 
-a.tl_coldesc:hover {
+.tl_topic a {
+	color: #fff;
 	text-decoration: underline;
+}
+.tl_topic a:hover {
+	text-decoration: none;
 }
 
 .tl_desc {
-	padding-top: 2px;
-	font-size: 10px;
-	font-weight: normal;
+	padding-top: 0.3em;
+	font-size: 0.9em;
+}
+
+/* ------------ TABLES ------------ */
+
+table.tl_table {
+	border-collapse: collapse;
+	border-spacing: 2px;
+}
+table.tl_table td {
+	border: 1px solid #bbb;
+	padding: 0.3em;
+}
+table.tl_table th {
+	background-color: #637591;
+	border: 1px solid #bbb;
+	color: #fff;
+	padding: 0.3em;
+}
+table.tl_table th a {
+	color: #fff;
+	text-decoration: underline;
+}
+table.tl_table th a:hover {
+	color: #fff;
+	text-decoration: none;
+}
+td.tl_coldesc {
+	font-weight: bold;
+	background-color: #f0f0f0;
+}
+
+.tl_highlight {
+	border: 2px solid #7a8ba9;
+}
+
+/* ------------ TABLE BORDER ------------ */
+
+.tl_border {
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-khtml-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	padding: 1px;
+	border: 1px solid #7F90AE;
+}
+
+.tl_code {
+	margin: 0.3em;
+	padding: 0.3em;
+	border: 1px dotted #999;
+	background-color: #fff;
+	font-family: monospace;
+}
+
+/* ------------ LISTS ------------ */
+
+ul.tl_source {
+	padding: 35px;
+}
+ul.tl_source li {
+	margin: 0;
+	padding: 0;
 }
 
 /* ------------ STATUS ------------ */
@@ -235,67 +265,57 @@ td.tl_status_need_info {
 	background-color: #FF6633;
 }
 
-/* ------------ OTHER ------------ */
+/* ------------ BUTTONS ------------ */
 
-form {
-	margin: 0px;
-}
-
-ul {
-	margin: 5px 0px 0px 0px;
-	padding: 0px 0px 0px 20px;
-}
-
-li {
-	padding: 0px 0px 5px 0px;
-}
-
-label {
-	cursor: pointer;
-}
-
-input,select,textarea {
-	padding: 2px 2px 2px 2px;
-	font-family: verdana, arial, helvetica, sans-serif;
+a.tl_button {
+	background-image: url(images/button.gif);
+	background-repeat: no-repeat;
+	width: 80px;
+	height: 20px;
+	padding-top: 3px;
+	margin: 0px 2px 0px 2px;
+	display: block;
+	float: right;
+	text-align: center;
 	font-size: 10px;
+	text-decoration: none;
+	font-weight: bold;
 	color: #000000;
-	background-color: #FFFFFF;
-	border: 1px solid #AAAAAA;
+}
+a.tl_button:hover {
+	color: #3F5E88;
 }
 
-input.tl_checkbox {
-	background-color: #EBEBEB;
-	border: 0px;
+a.tl_button_big {
+	background-image: url(images/button_big.gif);
+	background-repeat: no-repeat;
+	width: 120px;
+	height: 20px;
+	padding-top: 3px;
+	margin: 0px 2px 0px 2px;
+	display: block;
+	float: right;
+	text-align: center;
+	font-size: 10px;
+	text-decoration: none;
+	font-weight: bold;
+	color: #000000;
+}
+a.tl_button_big:hover {
+	color: #3F5E88;
 }
 
-/* messages */
-span.msg_error {
+/* ------------ MESSAGES ------------ */
+
+span.tl_msg_error {
 	color: #f00;
 	font-weight: bold;
 }
-span.msg_warning {
+span.tl_msg_warning {
 	color: #f90;
 	font-weight: bold;
 }
-span.msg_notice {
+span.tl_msg_notice {
 	color: #008000;
 	font-weight: bold;
-}
-
-/* pagination */
-.tdl_pageno {
-	background-color: #f0f0f0;
-	border: 1px solid #ccc;
-}
-.tdl_pagecurrent {
-	padding: 0px 4px;
-	font-weight: bold;
-}
-.tdl_pageno a {
-	padding: 1px 4px;
-}
-.tdl_pageno a:hover {
-	background-color: #3F5E88;
-	color: #fff;
-	text-decoration: none;
 }

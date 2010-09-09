@@ -270,7 +270,7 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 	}
 
 	/**
-	 * @return string the value of the field "entry_start_date"
+	 * @return int the value of the field "entry_start_date"
 	 */
 	public function get_entry_start_date()
 	{
@@ -280,7 +280,7 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 	/**
 	 * Sets the value of the field "entry_start_date" to the given value
 	 *
-	 * @param string $value the new value
+	 * @param int $value the new value
 	 */
 	public function set_entry_start_date($value)
 	{
@@ -288,7 +288,7 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 	}
 
 	/**
-	 * @return string the value of the field "entry_start_version"
+	 * @return int the value of the field "entry_start_version"
 	 */
 	public function get_entry_start_version()
 	{
@@ -298,7 +298,7 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 	/**
 	 * Sets the value of the field "entry_start_version" to the given value
 	 *
-	 * @param string $value the new value
+	 * @param int $value the new value
 	 */
 	public function set_entry_start_version($value)
 	{
@@ -306,7 +306,7 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 	}
 
 	/**
-	 * @return string the value of the field "entry_fixed_date"
+	 * @return int the value of the field "entry_fixed_date"
 	 */
 	public function get_entry_fixed_date()
 	{
@@ -316,7 +316,7 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 	/**
 	 * Sets the value of the field "entry_fixed_date" to the given value
 	 *
-	 * @param string $value the new value
+	 * @param int $value the new value
 	 */
 	public function set_entry_fixed_date($value)
 	{
@@ -324,7 +324,7 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 	}
 
 	/**
-	 * @return string the value of the field "entry_fixed_version"
+	 * @return int the value of the field "entry_fixed_version"
 	 */
 	public function get_entry_fixed_version()
 	{
@@ -334,7 +334,7 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 	/**
 	 * Sets the value of the field "entry_fixed_version" to the given value
 	 *
-	 * @param string $value the new value
+	 * @param int $value the new value
 	 */
 	public function set_entry_fixed_version($value)
 	{
@@ -342,7 +342,7 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 	}
 
 	/**
-	 * @return string the value of the field "entry_changed_date"
+	 * @return int the value of the field "entry_changed_date"
 	 */
 	public function get_entry_changed_date()
 	{
@@ -352,7 +352,7 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 	/**
 	 * Sets the value of the field "entry_changed_date" to the given value
 	 *
-	 * @param string $value the new value
+	 * @param int $value the new value
 	 */
 	public function set_entry_changed_date($value)
 	{

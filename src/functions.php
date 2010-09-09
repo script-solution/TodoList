@@ -68,7 +68,7 @@ class TDL_Functions extends FWS_Object
 			'entries' => $entry_string,
 			'yes_url' => $yes_url,
 			'no_url' => $no_url
-		),'delete_message.htm');
+		),'inc_delete_message.htm');
 	}
 	
 	/**
@@ -78,26 +78,26 @@ class TDL_Functions extends FWS_Object
 	 * @param string $order_value the value of the order-parameter
 	 * @param string $def_ascdesc the default value for TDL_URL_AD (ASC or DESC)
 	 * @param string $order the current value of TDL_URL_ORDER
-	 * @param string $url the current URL
+	 * @param TDL_URL $url the current URL
 	 * @return string the column-content
 	 */
 	public function get_order_column($title,$order_value,$def_ascdesc,$order,$url)
 	{
 		$user = FWS_Props::get()->user();
 
+		$ourl = $url->set(TDL_URL_ORDER,$order_value);
 		if($order == $order_value)
 		{
-			$result = $title.' <a class="tl_coldesc" href="'.$url.TDL_URL_ORDER.'='.$order_value.'&amp;'.TDL_URL_AD.'=ASC">';
+			$result = $title.' <a class="tl_coldesc" href="'.$ourl->set(TDL_URL_AD,'ASC')->to_url().'">';
 			$result .= '<img src="'.$user->get_theme_item_path('images/asc.gif').'" alt="ASC" border="0" />';
 			$result .= '</a> ';
-			$result .= '<a class="tl_coldesc" href="'.$url.TDL_URL_ORDER.'='.$order_value.'&amp;'.TDL_URL_AD.'=DESC">';
+			$result .= '<a class="tl_coldesc" href="'.$ourl->set(TDL_URL_AD,'DESC')->to_url().'">';
 			$result .= '<img src="'.$user->get_theme_item_path('images/desc.gif').'" alt="DESC" border="0" />';
 			$result .= '</a>';
 		}
 		else
 		{
-			$result = '<a class="tl_coldesc" href="'.$url.TDL_URL_ORDER.'='.$order_value.'&amp;'.TDL_URL_AD.'=';
-			$result .= $def_ascdesc.'">'.$title.'</a>';
+			$result = '<a class="tl_coldesc" href="'.$ourl->set(TDL_URL_AD,$def_ascdesc)->to_url().'">'.$title.'</a>';
 		}
 		
 		return $result;
@@ -302,76 +302,6 @@ class TDL_Functions extends FWS_Object
 	}
 
 	/**
-	 * Generates the pagination from the given object
-	 *
-	 * @param FWS_Pagination $pagination the FWS_Pagination-object
-	 * @param string $url the URL containing {d} at the position where to put the page-number
-	 * @return string the result
-	 */
-	public function add_pagination($pagination,$url)
-	{
-		$tpl = FWS_Props::get()->tpl();
-		$user = FWS_Props::get()->user();
-
-		if(!($pagination instanceof FWS_Pagination))
-			FWS_Helper::def_error('instance','pagination','FWS_Pagination',$pagination);
-		
-		if(empty($url))
-			FWS_Helper::def_error('empty','url',$url);
-		
-		if($pagination->get_page_count() > 1)
-		{
-			$page = $pagination->get_page();
-			$numbers = $pagination->get_page_numbers();
-			$tnumbers = array();
-			foreach($numbers as $n)
-			{
-				$number = $n;
-				$link = '';
-				if(is_numeric($n))
-					$link = str_replace('{d}',$n,$url);
-				else
-					$link = '';
-				$tnumbers[] = array(
-					'number' => $number,
-					'link' => $link
-				);
-			}
-			
-			$start_item = $pagination->get_start() + 1;
-			$end_item = $start_item + $pagination->get_per_page() - 1;
-			$end_item = ($end_item > $pagination->get_num()) ? $pagination->get_num() : $end_item;
-			
-			$tpl->set_template('page_split.htm');
-			$tpl->add_variable_ref('numbers',$tnumbers);
-			$tpl->add_variables(array(
-				'page' => $page,
-				'total_pages' => $pagination->get_page_count(),
-				'start_item' => $start_item,
-				'end_item' => $end_item,
-				'total_items' => $pagination->get_num(),
-				'prev_url' => str_replace('{d}',$page - 1,$url),
-				'prev_image' => $user->get_theme_item_path('images/navigation/prev.gif'),
-				'prev_image_dis' => $user->get_theme_item_path(
-					'images/navigation/prev_disabled.gif'),
-				'next_url' => str_replace('{d}',$page + 1,$url),
-				'next_image' => $user->get_theme_item_path('images/navigation/next.gif'),
-				'next_image_dis' => $user->get_theme_item_path(
-					'images/navigation/next_disabled.gif'),
-				'first_url' => str_replace('{d}',1,$url),
-				'first_image' => $user->get_theme_item_path('images/navigation/jmp_to_start.gif'),
-				'first_image_dis' => $user->get_theme_item_path(
-					'images/navigation/jmp_to_start_disabled.gif'),
-				'last_url' => str_replace('{d}',$pagination->get_page_count(),$url),
-				'last_image' => $user->get_theme_item_path('images/navigation/jmp_to_end.gif'),
-				'last_image_dis' => $user->get_theme_item_path(
-					'images/navigation/jmp_to_end_disabled.gif')
-			));
-			$tpl->restore_template();
-		}
-	}
-
-	/**
 	 * Adds the default delete-info with the following SQL-statement to the template:
 	 * <code>
 	 * 	SELECT id,<field> FROM <table> WHERE id IN (implode(',',<ids>))
@@ -457,7 +387,7 @@ class TDL_Functions extends FWS_Object
 	{
 		$tpl = FWS_Props::get()->tpl();
 
-		$tpl->set_template('delete_message.htm');
+		$tpl->set_template('inc_delete_message.htm');
 		$tpl->add_variables(array(
 			'delete_message' => $message,
 			'yes_url' => $yes_url,

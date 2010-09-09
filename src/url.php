@@ -25,7 +25,7 @@ class TDL_URL extends FWS_URL
 	 * <code><constants_prefix><name></code>
 	 * Note that the constants will be assumed to be in uppercase!
 	 * 
-	 * @param string $target the action-parameter (0 = current, -1 = none)
+	 * @param string|int $target the action-parameter (0 = current, -1 = none)
 	 * @param string $additional additional parameters
 	 * @param string $separator the separator of the params (default is &amp;)
 	 * @param boolean $force_sid forces the method to append the session-id
@@ -45,7 +45,7 @@ class TDL_URL extends FWS_URL
 	 * will be appended.
 	 * The file will be <var>$_SERVER['PHP_SELF']</var>.
 	 *
-	 * @param string $target the action-parameter (0 = current, -1 = none)
+	 * @param string|int $target the action-parameter (0 = current, -1 = none)
 	 * @param string $additional additional parameters
 	 * @param string $seperator the separator of the params (default is &amp;)
 	 * @return string the url

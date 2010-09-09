@@ -73,7 +73,7 @@ if(is_file('install/.htaccess'))
 		 .' file will not be displayed althought it exists.');
 }
 
-$this->tpl->set_template('header.htm');
+$this->tpl->set_template('inc_header.htm');
 $this->tpl->add_variables(array(
 	'show_lang_choose' => $step < 3,
 	'target_url' => $_SERVER['PHP_SELF'],
@@ -90,7 +90,7 @@ if($step == 4)
 	$this->tpl->set_template('finish.htm');
 	echo $this->tpl->parse_template();
 	
-	$this->tpl->set_template('footer.htm');
+	$this->tpl->set_template('inc_footer.htm');
 	echo $this->tpl->parse_template();
 	
 	session_destroy();
@@ -257,7 +257,7 @@ $lang = $this->input->get_var('lang','get',FWS_Input::STRING);
 $step = $this->input->get_var('step','get',FWS_Input::INTEGER);
 BS_display_navigation('bottom',$step,$lang);
 
-$this->tpl->set_template('footer.htm');
+$this->tpl->set_template('inc_footer.htm');
 echo $this->tpl->parse_template();
 
 ob_end_flush();

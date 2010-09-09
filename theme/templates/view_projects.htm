@@ -1,13 +1,19 @@
-{include "header.htm"}
-{include "delete_message.htm"}
+{include "inc_header.htm"}
+{include "inc_delete_message.htm"}
 
 {if action_result < 1}
 {if module_error == false}
+<script type="text/javascript" src="{js.get_file('js/table_row_sel.js','fws')}"></script>
+<script type="text/javascript">
+<!--
+var rowHL = new FWS_TableRowSelector('row_','check_');
+//-->
+</script>
 <script type="text/javascript">
 <!--
 function showDeleteMessage()
 {
-	var ids = FWS_getDeleteIds('project_');
+	var ids = FWS_getDeleteIds('check_');
 	if(ids == '')
 		return;
 
@@ -22,72 +28,50 @@ function showDeleteMessage()
 //-->
 </script>
 
-<table width="100%" align="center" cellpadding="0" cellspacing="0">
+<div class="tl_border">
+	<h1 class="tl_topic">Projekte</h1>
+	<table width="100%" class="tl_table">
+		<tr>
+			<td width="36%" class="tl_left">Titel</td>
+			<td width="20%" class="tl_left" align="center">Abk&uuml;rzung</td>
+			<td width="20%" class="tl_left" align="center">Start</td>
+			<td width="12%" class="tl_left" align="center">Editieren</td>
+			<td width="12%" class="tl_left" align="center">L&ouml;schen</td>
+		</tr>
+		{if num == 0}
+		<tr>
+			<td colspan="5" align="center" class="tl_main">Es wurden keine Projekte gefunden</td>
+		</tr>
+		{endif}
+		{loop projects as index => project}
+		<tr id="row_{index}" class="hlRow">
+			<td class="hlCol">{project:title}</td>
+			<td class="hlCol" align="center">{project:shortcut}</td>
+			<td class="hlCol" align="center">{project:start}</td>
+			<td class="hlCol" align="center">
+			<a class="hlCol" href="{url.simple_url('edit_project','&amp;$URL_MODE=edit&amp;$URL_ID='~project:id)}">Editieren</a>
+			</td>
+			<td class="hlCol" align="center" onclick="rowHL.toggleRowSelected({index});">
+			<input id="check_{index}" type="checkbox" name="delete[]" value="{project:id}" />
+			</td>
+		</tr>
+		{endloop}
+	</table>
+</div>
+<table width="100%" cellpadding="0" cellspacing="0">
 	<tr>
-		<td class="tl_tbl_top_left"></td>
-		<td class="tl_tbl_top"></td>
-		<td class="tl_tbl_top_right"></td>
-	</tr>
-	<tr>
-		<td class="tl_tbl_left"></td>
-		<td>
-		<table width="100%" cellpadding="2" cellspacing="1">
-			<tr>
-				<td height="22" align="center" colspan="5" class="tl_topic">Projekte</td>
-			</tr>
-			<tr>
-				<td width="36%" class="tl_coldesc">Titel</td>
-				<td width="20%" class="tl_coldesc" align="center">Abk&uuml;rzung</td>
-				<td width="20%" class="tl_coldesc" align="center">Start</td>
-				<td width="12%" class="tl_coldesc" align="center">Editieren</td>
-				<td width="12%" class="tl_coldesc" align="center">L&ouml;schen</td>
-			</tr>
-			{if num == 0}
-			<tr>
-				<td colspan="5" align="center" class="tl_main">Es wurden keine Projekte gefunden</td>
-			</tr>
-			{endif}
-			{loop projects as index => project}
-			<tr>
-				<td class="tl_main">{project:title}</td>
-				<td class="tl_main" align="center">{project:shortcut}</td>
-				<td class="tl_main" align="center">{project:start}</td>
-				<td class="tl_main" align="center">
-				<a class="tl_main" href="{url.simple_url('edit_project','&amp;$URL_MODE=edit&amp;$URL_ID='~project:id)}">Editieren</a>
-				</td>
-				<td class="tl_main" align="center"
-					onclick="var cb = document.getElementById('project_{index}'); cb.checked = cb.checked ? false : true;">
-				<input type="checkbox" id="project_{index}" class="bs_checkbox" name="delete[]" value="{project:id}"
-							 onclick="this.checked = this.checked ? false : true;" />
-				</td>
-			</tr>
-			{endloop}
-		</table>
-		</td>
-		<td class="tl_tbl_right"></td>
-	</tr>
-	<tr>
-		<td class="tl_tbl_bottom_left"></td>
-		<td class="tl_tbl_bottom"></td>
-		<td class="tl_tbl_bottom_right"></td>
-	</tr>
-</table>
-<table width="100%" align="center" cellpadding="0" cellspacing="0">
-	<tr>
-		<td width="30%" class="tl_body">&nbsp;</td>
-		<td width="40%" class="tl_body" align="center">
+		<td width="30%">&nbsp;</td>
+		<td width="40%" align="center">
 		<input type="button" value="L&ouml;schen" onclick="showDeleteMessage();" />
 		</td>
-		<td width="30%" class="tl_body" align="right">
-		<a class="tl_body" href="javascript:invert_selection('project_');">Markierung umkehren</a>
+		<td width="30%" align="right">
+		<a href="{url.simple_url('edit_project','&amp;$URL_MODE=add')}">Projekt hinzuf&uuml;gen</a>
+		&middot;
+		<a href="javascript:rowHL.toggleAllSelected();">Markierung umkehren</a>
 		</td>
 	</tr>
 </table>
-<br />
-
-<a class="tl_button_big" href="{url.simple_url('edit_project','&amp;$URL_MODE=add')}">Projekt hinzuf&uuml;gen</a>
-<br clear="all" />
 {endif}
 {endif}
 
-{include "footer.htm"}
+{include "inc_footer.htm"}

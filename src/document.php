@@ -20,7 +20,8 @@
 final class TDL_Document extends FWS_Document
 {
 	/**
-	 * @see FWS_Document::use_default_renderer
+	 * Returns the default renderer. If it is already set the instance will be returned. Otherwise
+	 * it will be created, set and returned.
 	 *
 	 * @return TDL_Renderer_HTML
 	 */

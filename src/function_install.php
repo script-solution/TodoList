@@ -127,7 +127,7 @@ function BS_display_navigation($loc,$step,$lang)
 			$show_refresh = true;
 	}
 
-	$tpl->set_template('navigation.htm');
+	$tpl->set_template('inc_navigation.htm');
 	$tpl->add_variables(array(
 		'loc' => $loc,
 		'show_refresh' => $show_refresh,
