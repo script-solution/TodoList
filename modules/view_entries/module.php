@@ -43,6 +43,7 @@ final class TDL_Module_view_entries extends TDL_Module
 		$db = FWS_Props::get()->db();
 		$tpl = FWS_Props::get()->tpl();
 		$user = FWS_Props::get()->user();
+		$locale = FWS_Props::get()->locale();
 
 		$s_keyword = $input->get_predef(TDL_URL_S_KEYWORD,'get');
 		$s_from_changed_date = $input->get_predef(TDL_URL_S_FROM_CHANGED_DATE,'get');
@@ -56,51 +57,19 @@ final class TDL_Module_view_entries extends TDL_Module
 		$s_status = $input->get_predef(TDL_URL_S_STATUS,'get','');
 		$s_category = $input->get_predef(TDL_URL_S_CATEGORY,'get');
 		
-		if(!$functions->is_date($s_from_changed_date))
-			$s_from_changed_date = '';
-		if(!$functions->is_date($s_to_changed_date))
-			$s_to_changed_date = '';
-		
-		if(!$functions->is_date($s_from_start_date))
-			$s_from_start_date = '';
-		if(!$functions->is_date($s_to_start_date))
-			$s_to_start_date = '';
-		
-		if(!$functions->is_date($s_from_fixed_date))
-			$s_from_fixed_date = '';
-		if(!$functions->is_date($s_to_fixed_date))
-			$s_to_fixed_date = '';
+		$t_from_changed = $functions->get_date_from_string($s_from_changed_date);
+		$t_to_changed = $functions->get_date_from_string($s_to_changed_date,23,59,59);
+		$t_from_start = $functions->get_date_from_string($s_from_start_date);
+		$t_to_start = $functions->get_date_from_string($s_to_start_date,23,59,59);
+		$t_from_fixed = $functions->get_date_from_string($s_from_fixed_date);
+		$t_to_fixed = $functions->get_date_from_string($s_to_fixed_date,23,59,59);
 		
 		$form = new FWS_HTML_Formular(false);
-		$type_options = array(
-			'' => '- Alle -',
-			'bug' => 'Bug',
-			'feature' => 'Feature',
-			'improvement' => 'Verbesserung',
-			'test' => 'Test'
-		);
-		$s_type_combo = $form->get_combobox(TDL_URL_S_TYPE,$type_options,$s_type);
+		$s_type_combo = $form->get_combobox(TDL_URL_S_TYPE,$functions->get_types(true),$s_type);
+		$s_priority_combo = $form->get_combobox(TDL_URL_S_PRIORITY,$functions->get_priorities(true),$s_priority);
+		$s_status_combo = $form->get_combobox(TDL_URL_S_STATUS,$functions->get_states(true),$s_status);
 		
-		$priority_options = array(
-			'' => '- Alle -',
-			'current' => 'Aktuelle Version',
-			'next' => 'N&auml;chste Version',
-			'anytime' => 'Irgendwann'
-		);
-		$s_priority_combo = $form->get_combobox(TDL_URL_S_PRIORITY,$priority_options,$s_priority);
-		
-		$status_options = array(
-			'' => '- Alle -',
-			'open' => 'Offen',
-			'running' => 'In Bearbeitung',
-			'not_tested' => 'Noch nicht getestet',
-			'not_reproducable' => 'Nicht reproduzierbar',
-			'need_info' => 'Brauche Informationen',
-			'fixed' => 'Fixed'
-		);
-		$s_status_combo = $form->get_combobox(TDL_URL_S_STATUS,$status_options,$s_status);
-		
-		$category_options = array('' => '- Alle -');
+		$category_options = array('' => $locale->_('- All -'));
 		if($cfg['project_id'] != 0)
 			$cat_rows = $cats->get_elements_with(array('project_id' => $cfg['project_id']));
 		else
@@ -130,36 +99,18 @@ final class TDL_Module_view_entries extends TDL_Module
 			$where .= " e.entry_status = '".$s_status."' AND ";
 		if($s_category != '')
 			$where .= " e.entry_category = ".$s_category." AND ";
-		if($s_from_changed_date != '')
-		{
-			list($day,$month,$year) = explode('.',$s_from_changed_date);
-			$where .= ' e.entry_changed_date >= '.mktime(0,0,0,$month,$day,$year).' AND ';
-		}
-		if($s_to_changed_date != '')
-		{
-			list($day,$month,$year) = explode('.',$s_to_changed_date);
-			$where .= ' e.entry_changed_date <= '.mktime(0,0,0,$month,$day,$year).' AND ';
-		}
-		if($s_from_start_date != '')
-		{
-			list($day,$month,$year) = explode('.',$s_from_start_date);
-			$where .= ' e.entry_start_date >= '.mktime(0,0,0,$month,$day,$year).' AND ';
-		}
-		if($s_to_start_date != '')
-		{
-			list($day,$month,$year) = explode('.',$s_to_start_date);
-			$where .= ' e.entry_start_date <= '.mktime(0,0,0,$month,$day,$year).' AND ';
-		}
-		if($s_from_fixed_date != '')
-		{
-			list($day,$month,$year) = explode('.',$s_from_fixed_date);
-			$where .= ' e.entry_fixed_date >= '.mktime(0,0,0,$month,$day,$year).' AND ';
-		}
-		if($s_to_fixed_date != '')
-		{
-			list($day,$month,$year) = explode('.',$s_to_fixed_date);
-			$where .= ' e.entry_fixed_date <= '.mktime(0,0,0,$month,$day,$year).' AND ';
-		}
+		if($t_from_changed)
+			$where .= ' e.entry_changed_date >= '.$t_from_changed.' AND ';
+		if($t_to_changed)
+			$where .= ' e.entry_changed_date <= '.$t_to_changed.' AND ';
+		if($t_from_start)
+			$where .= ' e.entry_start_date >= '.$t_from_start.' AND ';
+		if($t_to_start)
+			$where .= ' e.entry_start_date <= '.$t_to_start.' AND ';
+		if($t_from_fixed)
+			$where .= ' e.entry_fixed_date >= '.$t_from_fixed.' AND ';
+		if($t_to_fixed)
+			$where .= ' e.entry_fixed_date <= '.$t_to_fixed.' AND ';
 		
 		if(FWS_String::substr($where,-5) == ' AND ')
 			$where = FWS_String::substr($where,0,-5);
@@ -181,7 +132,9 @@ final class TDL_Module_view_entries extends TDL_Module
 		$base_url->set(TDL_URL_S_TO_START_DATE,$s_to_start_date);
 		$base_url->set(TDL_URL_S_TO_FIXED_DATE,$s_to_fixed_date);
 		
-		$num = $db->get_row_count(TDL_TB_ENTRIES.' e','e.id',' LEFT JOIN '.TDL_TB_CATEGORIES.' c ON entry_category = c.id '.$where);
+		$num = $db->get_row_count(
+			TDL_TB_ENTRIES.' e','e.id',' LEFT JOIN '.TDL_TB_CATEGORIES.' c ON entry_category = c.id '.$where
+		);
 		
 		$site = $input->get_predef(TDL_URL_SITE,'get');
 		$order_url = clone $base_url;
@@ -189,6 +142,7 @@ final class TDL_Module_view_entries extends TDL_Module
 		
 		$tpl->add_variables(array(
 			'num' => $num,
+			'date_comps' => $locale->get_date_order(),
 			'search_target' => $input->get_var('PHP_SELF','server',FWS_Input::STRING),
 			'cookie_name' => TDL_COOKIE_PREFIX.'display_search_form',
 			'search_display_value' => $search_display_value == 1 ? 'block' : 'none',
@@ -210,11 +164,11 @@ final class TDL_Module_view_entries extends TDL_Module
 			's_priority_combo' => $s_priority_combo,
 			's_status_combo' => $s_status_combo,
 			's_category_combo' => $s_category_combo,
-			'type_col' => $functions->get_order_column('Typ','type','ASC',$order,$order_url),
-			'title_col' => $functions->get_order_column('Titel','title','ASC',$order,$order_url),
-			'project_col' => $functions->get_order_column('Projekt','project','ASC',$order,$order_url),
-			'start_col' => $functions->get_order_column('Start','start','DESC',$order,$order_url),
-			'fixed_col' => $functions->get_order_column('Fixed','fixed','DESC',$order,$order_url),
+			'type_col' => $functions->get_order_column($locale->_('Type'),'type','ASC',$order,$order_url),
+			'title_col' => $functions->get_order_column($locale->_('Title'),'title','ASC',$order,$order_url),
+			'project_col' => $functions->get_order_column($locale->_('Project'),'project','ASC',$order,$order_url),
+			'start_col' => $functions->get_order_column($locale->_('Start'),'start','DESC',$order,$order_url),
+			'fixed_col' => $functions->get_order_column($locale->_('Fixed'),'fixed','DESC',$order,$order_url),
 		));
 		
 		$ad = $input->get_predef(TDL_URL_AD,'get','DESC');
@@ -258,45 +212,35 @@ final class TDL_Module_view_entries extends TDL_Module
 		{
 			$type_text = $functions->get_type_text($data['entry_type']);
 			$priority_text = $functions->get_priority_text($data['entry_priority']);
-			
-			$start = FWS_Date::get_date($data['entry_start_date']).' :: ';
 			$start_version = $versions->get_element($data['entry_start_version']);
-			$start .= $start_version['version_name'];
-			
 			if($data['entry_fixed_date'] > 0)
 			{
-				$fixed = FWS_Date::get_date($data['entry_fixed_date']).' :: ';
 				if($data['entry_fixed_version'] > 0)
 					$fixed_version = $versions->get_element($data['entry_fixed_version']);
 				else
 					$fixed_version = $versions->get_element($data['entry_start_version']);
-				$fixed .= $fixed_version['version_name'];
 			}
-			else
-				$fixed = ' - ';
-			
-			$image = $data['entry_description'] != '' ? 'details_available' : 'details_not_available';
-			$img_title = $data['entry_description'] != '' ? 'Details anzeigen' : 'Details anzeigen (Keine Beschreibung vorhanden)';
 			
 			$title = $data['entry_title'];
 			if($s_keyword)
 				$title = $hl->highlight($title);
 			
 			$entries[] = array(
-				'start' => $start,
+				'start_date' => FWS_Date::get_date($data['entry_start_date']),
+				'start_version' => $start_version['version_name'],
 				'project_name' => $start_version['project_name'],
 				'project_name_short' => $start_version['project_name_short'],
 				'category' => $data['entry_category'] ? $data['category_name'] : '',
 				'project' => $project,
-				'fixed' => $fixed,
+				'fixed_date' => $data['entry_fixed_date'] ? FWS_Date::get_date($data['entry_fixed_date']) : '',
+				'fixed_version' => $data['entry_fixed_date'] ? $fixed_version['version_name'] : '',
 				'title' => $title,
 				'info_link' => $data['entry_info_link'],
 				'priority' => $data['entry_priority'],
 				'type' => $data['entry_type'],
 				'type_text' => $type_text,
 				'priority_text' => $priority_text,
-				'image' => $image,
-				'img_title' => $img_title,
+				'image' => $data['entry_description'] != '' ? 'details_available' : 'details_not_available',
 				'id' => $data['id'],
 				'status' => $functions->get_status_text($data['entry_status']),
 				'class' => 'tl_status_'.$data['entry_status']

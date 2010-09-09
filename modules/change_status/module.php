@@ -28,11 +28,14 @@ final class TDL_Module_change_status extends TDL_Module
 		
 		$input = FWS_Props::get()->input();
 		$renderer = $doc->use_default_renderer();
+		$locale = FWS_Props::get()->locale();
 		
 		$renderer->add_action(TDL_ACTION_CHANGE_STATUS,'default');
 
 		$id_str = $input->get_predef(TDL_URL_IDS,'get');
-		$renderer->add_breadcrumb('Status &auml;ndern',TDL_URL::get_url(0,'&amp;'.TDL_URL_IDS.'='.$id_str));
+		$renderer->add_breadcrumb(
+			$locale->_('Change state'),TDL_URL::get_url(0,'&amp;'.TDL_URL_IDS.'='.$id_str)
+		);
 	}
 	
 	/**
@@ -57,15 +60,6 @@ final class TDL_Module_change_status extends TDL_Module
 		
 		$this->request_formular();
 		
-		$status_options = array(
-			'open' => 'Offen',
-			'running' => 'In Bearbeitung',
-			'not_tested' => 'Noch nicht getestet',
-			'not_reproducable' => 'Nicht reproduzierbar',
-			'need_info' => 'Brauche Informationen',
-			'fixed' => 'Fixed'
-		);
-
 		$projects = array();		
 		$id_str = FWS_Array_Utils::advanced_implode(',',$ids);
 		$entries = array();
@@ -99,7 +93,7 @@ final class TDL_Module_change_status extends TDL_Module
 		$tpl->add_variables(array(
 			'ids' => $id_str,
 			'action_type' => TDL_ACTION_CHANGE_STATUS,
-			'status' => $status_options,
+			'status' => $functions->get_states(false),
 			'versions' => $version_options,
 			'def_version' => $def_version,
 			'entries' => $entries,

@@ -48,6 +48,7 @@ final class TDL_Module_changelog extends TDL_Module
 		$db = FWS_Props::get()->db();
 		$functions = FWS_Props::get()->functions();
 		$user = FWS_Props::get()->user();
+		$locale = FWS_Props::get()->locale();
 
 		$mode = $input->get_predef(TDL_URL_MODE,'get');
 		if($mode == 'export')
@@ -65,7 +66,7 @@ final class TDL_Module_changelog extends TDL_Module
 			$where .= ' AND e.project_id = '.$cfg['project_id'];
 		}
 		else
-			$title = 'Alle Projekte';
+			$title = $locale->_('All Projects');
 		
 		$tpl->add_variables(array(
 			'title' => $title

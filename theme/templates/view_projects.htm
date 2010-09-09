@@ -29,18 +29,18 @@ function showDeleteMessage()
 </script>
 
 <div class="tl_border">
-	<h1 class="tl_topic">Projekte</h1>
+	<h1 class="tl_topic">{#Projects#}</h1>
 	<table width="100%" class="tl_table">
 		<tr>
-			<td width="36%" class="tl_left">Titel</td>
-			<td width="20%" class="tl_left" align="center">Abk&uuml;rzung</td>
-			<td width="20%" class="tl_left" align="center">Start</td>
-			<td width="12%" class="tl_left" align="center">Editieren</td>
-			<td width="12%" class="tl_left" align="center">L&ouml;schen</td>
+			<td width="36%" class="tl_left">{#Title#}</td>
+			<td width="20%" class="tl_left" align="center">{#Shortcut#}</td>
+			<td width="20%" class="tl_left" align="center">{#Start#}</td>
+			<td width="12%" class="tl_left" align="center">{#Edit#}</td>
+			<td width="12%" class="tl_left" align="center">{#Delete#}</td>
 		</tr>
 		{if num == 0}
 		<tr>
-			<td colspan="5" align="center" class="tl_main">Es wurden keine Projekte gefunden</td>
+			<td colspan="5" align="center" class="tl_main">{#No projects found#}</td>
 		</tr>
 		{endif}
 		{loop projects as index => project}
@@ -49,7 +49,8 @@ function showDeleteMessage()
 			<td class="hlCol" align="center">{project:shortcut}</td>
 			<td class="hlCol" align="center">{project:start}</td>
 			<td class="hlCol" align="center">
-			<a class="hlCol" href="{url.simple_url('edit_project','&amp;$URL_MODE=edit&amp;$URL_ID='~project:id)}">Editieren</a>
+			<a class="hlCol"
+				href="{url.simple_url('edit_project','&amp;$URL_MODE=edit&amp;$URL_ID='~project:id)}">{#Edit#}</a>
 			</td>
 			<td class="hlCol" align="center" onclick="rowHL.toggleRowSelected({index});">
 			<input id="check_{index}" type="checkbox" name="delete[]" value="{project:id}" />
@@ -62,12 +63,12 @@ function showDeleteMessage()
 	<tr>
 		<td width="30%">&nbsp;</td>
 		<td width="40%" align="center">
-		<input type="button" value="L&ouml;schen" onclick="showDeleteMessage();" />
+		<input type="button" value="{#Delete#}" onclick="showDeleteMessage();" />
 		</td>
 		<td width="30%" align="right">
-		<a href="{url.simple_url('edit_project','&amp;$URL_MODE=add')}">Projekt hinzuf&uuml;gen</a>
+		<a href="{url.simple_url('edit_project','&amp;$URL_MODE=add')}">{#Add project#}</a>
 		&middot;
-		<a href="javascript:rowHL.toggleAllSelected();">Markierung umkehren</a>
+		<a href="javascript:rowHL.toggleAllSelected();">{#Invert selection#}</a>
 		</td>
 	</tr>
 </table>

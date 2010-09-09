@@ -28,6 +28,7 @@ final class TDL_Module_edit_project extends TDL_Module
 		
 		$input = FWS_Props::get()->input();
 		$renderer = $doc->use_default_renderer();
+		$locale = FWS_Props::get()->locale();
 		
 		$renderer->add_action(TDL_ACTION_ADD_PROJECT,'add_project');
 		$renderer->add_action(TDL_ACTION_EDIT_PROJECT,'edit_project');
@@ -41,12 +42,12 @@ final class TDL_Module_edit_project extends TDL_Module
 		{
 			$id = (int)$input->get_var(TDL_URL_ID,'get',FWS_Input::STRING);
 			$murl = TDL_URL::get_url(0,'&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$id);
-			$title = 'Projekt editieren';
+			$title = $locale->_('Edit project');
 		}
 		else
 		{
 			$murl = TDL_URL::get_url(0,'&amp;'.TDL_URL_MODE.'=add');
-			$title = 'Neues Projekt';
+			$title = $locale->_('New project');
 		}
 		
 		$renderer->add_breadcrumb('Projekte',TDL_URL::get_url('view_projects'));
@@ -84,8 +85,6 @@ final class TDL_Module_edit_project extends TDL_Module
 			}
 			
 			$target_url = TDL_URL::get_url(0,'&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$id);
-			$form_title = 'Projekt editieren';
-			$submit_title = 'Speichern';
 			$action_type = TDL_ACTION_EDIT_PROJECT;
 		}
 		else
@@ -97,8 +96,6 @@ final class TDL_Module_edit_project extends TDL_Module
 			);
 			
 			$target_url = TDL_URL::get_url(0,'&amp;'.TDL_URL_MODE.'=add');
-			$form_title = 'Neues Projekt';
-			$submit_title = 'Absenden';
 			$action_type = TDL_ACTION_ADD_PROJECT;
 		}
 		
@@ -108,7 +105,7 @@ final class TDL_Module_edit_project extends TDL_Module
 		$rows = $mode == 'edit' ? $versions->get_elements_with(array('project_id' => $id)) : array();
 		usort($rows,array($functions,'sort_versions_by_name_callback'));
 		if(count($rows) == 0)
-			$tplversions = '<i>Keine</i><br />';
+			$tplversions = ' - ';
 		else
 		{
 			foreach($rows as $row)
@@ -122,7 +119,7 @@ final class TDL_Module_edit_project extends TDL_Module
 		$categories = '';
 		$rows = $mode == 'edit' ? $cats->get_elements_with(array('project_id' => $id)) : array();
 		if(count($rows) == 0)
-			$categories = '<i>Keine</i><br />';
+			$categories = ' - ';
 		else
 		{
 			foreach($rows as $row)
@@ -142,8 +139,6 @@ final class TDL_Module_edit_project extends TDL_Module
 			'def_start' => $data['project_start'],
 			'versions' => $tplversions,
 			'categories' => $categories,
-			'form_title' => $form_title,
-			'submit_title' => $submit_title,
 			'add_version_url' => $target_url.'&amp;'.TDL_URL_AT.'='.TDL_ACTION_ADD_VERSION,
 			'add_category_url' => $target_url.'&amp;'.TDL_URL_AT.'='.TDL_ACTION_ADD_CATEGORY
 		));
@@ -161,9 +156,10 @@ final class TDL_Module_edit_project extends TDL_Module
 	 */
 	private function _get_input_delete_field($target_url,$id,$name,$value,$action_type)
 	{
+		$locale = FWS_Props::get()->locale();
 		$result = '<input type="text" name="'.$name.'['.$id.']" size="30" maxlength="50"';
 		$result .= ' value="'.$value.'" style="margin-bottom: 3px;" />&nbsp;';
-		$result .= '<input type="button" value="L&ouml;schen" onclick="document.location.href = \'';
+		$result .= '<input type="button" value="'.$locale->_('Delete').'" onclick="document.location.href = \'';
 		$result .= $target_url.'&amp;'.TDL_URL_AT.'='.$action_type;
 		$result .= '&amp;'.TDL_URL_SID.'='.$id.'\';" style="margin-bottom: 3px;" /><br />';
 		return $result;

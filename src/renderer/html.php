@@ -34,7 +34,7 @@ class TDL_Renderer_HTML extends FWS_Document_Renderer_HTML_Default
 		$tpl->set_cache_folder(FWS_Path::server_app().'cache/');
 		
 		// add the home-breadcrumb
-		$this->add_breadcrumb('Todo-Liste',TDL_URL::get_url('view_entries'));
+		$this->add_breadcrumb('TodoList',TDL_URL::get_url('view_entries'));
 		
 		$this->_action_perf->set_prefix('TDL_Action_');
 		
@@ -101,7 +101,7 @@ class TDL_Renderer_HTML extends FWS_Document_Renderer_HTML_Default
 		// set callable methods
 		$tpl->add_allowed_method('url','simple_url');
 		$tpl->add_allowed_method('js','get_file');
-		$tpl->add_allowed_method('locale','lang');
+		$tpl->add_allowed_method('locale','*');
 		$tpl->add_allowed_method('user','get_theme_item_path');
 		
 		// add messages

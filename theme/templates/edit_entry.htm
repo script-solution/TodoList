@@ -5,16 +5,22 @@
 <form method="post" action="{target_url}">
 <input type="hidden" name="action_type" value="{action_type}" />
 <div class="tl_border">
-	<h1 class="tl_topic">{form_title}</h1>
+	<h1 class="tl_topic">
+	{if mode == 'edit'}
+	{if not_multiple_edit}Edit entry{else}Edit entries{endif}
+	{else}
+	New entry
+	{endif}
+	</h1>
 	<fieldset class="tl_form">
 		{if not_multiple_edit}
 		<dl>
-			<dt>Titel *:</dt>
+			<dt>{#Title#} *:</dt>
 			<dd>{form.get_textbox('entry_title',def_title,90,255)}</dd>
 		</dl>
 		{else}
 		<dl>
-			<dt>Gew&auml;hlte Eintr&auml;ge:</dt>
+			<dt>{#Selected entries#}:</dt>
 			<dd>
 				<ul>
 				{loop selected_entries as entry}
@@ -27,9 +33,9 @@
 		<dl>
 			<dt>
 			{if not_multiple_edit}
-			Start-Version *:
+			{#Start-version#} *:
 			{else}
-			{form.get_checkbox('use_start_version',0,1,'Start-Version')}:
+			{form.get_checkbox('use_start_version',0,1,#Start-version#)}:
 			{endif}
 			</dt>
 			<dd>{start_version_combo}</dd>
@@ -37,9 +43,9 @@
 		<dl>
 			<dt>
 			{if not_multiple_edit}
-			Fixed-Version:
+			{#Fixed-version#}:
 			{else}
-			{form.get_checkbox('use_fixed_version',0,1,'Fixed-Version')}:
+			{form.get_checkbox('use_fixed_version',0,1,#Fixed-version#)}:
 			{endif}
 			</dt>
 			<dd>{fixed_version_combo}</dd>
@@ -47,9 +53,9 @@
 		<dl>
 			<dt>
 			{if not_multiple_edit}
-			Kategorie *:
+			{#Category#} *:
 			{else}
-			{form.get_checkbox('use_category',0,1,'Kategorie')}:
+			{form.get_checkbox('use_category',0,1,#Category#)}:
 			{endif}
 			</dt>
 			<dd>{category_combo}</dd>
@@ -57,9 +63,9 @@
 		<dl>
 			<dt>
 			{if not_multiple_edit}
-			Typ *:
+			{#Type#} *:
 			{else}
-			{form.get_checkbox('use_type',0,1,'Typ')}:
+			{form.get_checkbox('use_type',0,1,#Type#)}:
 			{endif}
 			</dt>
 			<dd>{type_combo}</dd>
@@ -67,36 +73,36 @@
 		<dl>
 			<dt>
 			{if not_multiple_edit}
-			Geplante Umsetzung *:
+			{#Planned realization#} *:
 			{else}
-			{form.get_checkbox('use_priority',0,1,'Geplante Umsetzung')}:
+			{form.get_checkbox('use_priority',0,1,#Planned realization#)}:
 			{endif}
 			</dt>
 			<dd>
 				{priority_combo}
-				<div class="tl_desc">In welcher Version wird der Eintrag voraussichtlich umgesetzt sein?</div>
+				<div class="tl_desc">{#In what version do you plan to realize this entry?#}</div>
 			</dd>
 		</dl>
 		<dl>
 			<dt>
 			{if not_multiple_edit}
-			Status *:
+			{#State#} *:
 			{else}
-			{form.get_checkbox('use_status',0,1,'Status')}:
+			{form.get_checkbox('use_status',0,1,#State#)}:
 			{endif}
 			</dt>
 			<dd>{status_combo}</dd>
 		</dl>
 		{if not_multiple_edit}
 		<dl>
-			<dt>Link:</dt>
+			<dt>{#Link#}:</dt>
 			<dd>
 				{form.get_textbox('entry_info_link',def_info_link,90,255)}
-				<div class="tl_desc">F&uuml;r weiterf&uuml;hrende Informationen o.&auml;. kannst Du hier einen Link angeben.</div>
+				<div class="tl_desc">{#For further informations or similar#}</div>
 			</dd>
 		</dl>
 		<dl>
-			<dt>Beschreibung:</dt>
+			<dt>{#Description#}:</dt>
 			<dd>
 				{form.get_textarea('entry_description',def_description,'90%',200)}
 			</dd>
@@ -104,15 +110,15 @@
 		{endif}
 		{if mode == 'edit'}
 		<dl>
-			<dt>Datum der letzten &Auml;nderung aktualisieren:</dt>
+			<dt>{#Refresh last-change-date#}:</dt>
 			<dd>{form.get_radio_yesno('change_lastchange_date',1)}</dd>
 		</dl>
 		{endif}
 	</fieldset>
 </div>
 <center>
-	<input type="button" value="Zur&uuml;ck" onclick="document.location.href='{back_url}'" />
-	<input type="submit" name="submit" value="{submit_title}" />
+	<input type="button" value="{#Back#}" onclick="document.location.href='{back_url}'" />
+	<input type="submit" name="submit" value="{#Save#}" />
 </center>
 </form>
 {endif}

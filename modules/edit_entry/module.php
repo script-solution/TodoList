@@ -29,6 +29,7 @@ final class TDL_Module_edit_entry extends TDL_Module
 		$input = FWS_Props::get()->input();
 		$functions = FWS_Props::get()->functions();
 		$renderer = $doc->use_default_renderer();
+		$locale = FWS_Props::get()->locale();
 		
 		$renderer->add_action(TDL_ACTION_EDIT_ENTRY,'edit');
 		$renderer->add_action(TDL_ACTION_NEW_ENTRY,'add');
@@ -39,12 +40,15 @@ final class TDL_Module_edit_entry extends TDL_Module
 			$id = $input->get_predef(TDL_URL_IDS,'get');
 			$murl = $functions->get_entry_base_url().'&amp;'.TDL_URL_ACTION.'=edit_entry&amp;'
 				.TDL_URL_MODE.'=edit&amp;'.TDL_URL_IDS.'='.$id;
-			$title = FWS_String::substr_count($id,',') > 1 ? 'Eintr&auml;ge editieren' : 'Eintrag editieren';
+			if(FWS_String::substr_count($id,',') > 1)
+				$title = $locale->_('Edit entries');
+			else
+				$title = $locale->_('Edit entry');
 		}
 		else
 		{
 			$murl = TDL_URL::get_url(0,'&amp;'.TDL_URL_MODE.'=add');
-			$title = 'Neuer Eintrag';
+			$title = $locale->_('New entry');
 		}
 		
 		$renderer->add_breadcrumb($title,$murl);
@@ -119,8 +123,6 @@ final class TDL_Module_edit_entry extends TDL_Module
 					$this->report_error();
 					return;
 				}
-				
-				$form_title = 'Eintr&auml;ge editieren';
 			}
 			else
 			{
@@ -137,19 +139,14 @@ final class TDL_Module_edit_entry extends TDL_Module
 					$this->report_error();
 					return;
 				}
-				
-				$form_title = 'Eintrag editieren';
 			}
 			
 			$target_url = $base_url.'&amp;'.TDL_URL_ACTION.'=edit_entry&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_IDS.'='.$id;
-			$submit_title = 'Speichern';
 			$action_type = TDL_ACTION_EDIT_ENTRY;
 		}
 		else
 		{
 			$target_url = $base_url.'&amp;'.TDL_URL_ACTION.'=edit_entry&amp;'.TDL_URL_MODE.'=add';
-			$form_title = 'Neuer Eintrag';
-			$submit_title = 'Absenden';
 			$action_type = TDL_ACTION_NEW_ENTRY;
 		}
 		
@@ -174,28 +171,6 @@ final class TDL_Module_edit_entry extends TDL_Module
 			$category_options[$row['id']] = $project['project_name_short'].' :: '.$row['category_name'];
 		}
 		
-		$type_options = array(
-			'bug' => 'Bug',
-			'feature' => 'Feature',
-			'improvement' => 'Verbesserung',
-			'test' => 'Test'
-		);
-		
-		$priority_options = array(
-			'current' => 'Aktuelle Version',
-			'next' => 'N&auml;chste Version',
-			'anytime' => 'Irgendwann'
-		);
-		
-		$status_options = array(
-			'open' => 'Offen',
-			'running' => 'In Bearbeitung',
-			'not_tested' => 'Noch nicht getestet',
-			'not_reproducable' => 'Nicht reproduzierbar',
-			'need_info' => 'Brauche Informationen',
-			'fixed' => 'Fixed'
-		);
-		
 		$tpl->add_variables(array(
 			'not_multiple_edit' => !$multiple,
 			'mode' => $mode,
@@ -217,17 +192,15 @@ final class TDL_Module_edit_entry extends TDL_Module
 				$multiple,'category',$category_options,$data['entry_category']
 			),
 			'status_combo' => $this->_get_combobox(
-				$multiple,'status',$status_options,$data['entry_status']
+				$multiple,'status',$functions->get_states(false),$data['entry_status']
 			),
 			'type_combo' => $this->_get_combobox(
-				$multiple,'type',$type_options,$data['entry_type']
+				$multiple,'type',$functions->get_types(false),$data['entry_type']
 			),
 			'priority_combo' => $this->_get_combobox(
-				$multiple,'priority',$priority_options,$data['entry_priority']
+				$multiple,'priority',$functions->get_priorities(false),$data['entry_priority']
 			),
-			'back_url' => $base_url,
-			'form_title' => $form_title,
-			'submit_title' => $submit_title
+			'back_url' => $base_url
 		));
 	}
 	

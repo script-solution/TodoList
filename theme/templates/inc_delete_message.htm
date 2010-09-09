@@ -1,16 +1,14 @@
 {if delete_message}
 <div class="tl_border tl_padbottom">
-	<h1 class="tl_topic">Information</h1>
+	<h1 class="tl_topic">{#Information#}</h1>
 	<div class="tl_main" style="text-align: center;">
 		{delete_message}
-		<div style="padding-left: 40%;" align="left">
-			{entries}
-		</div>
+		{entries}
 		<input id="del_yes" type="submit" style="width: 50px;" name="option_yes"
-				value="Ja" onclick="document.location.href = '{yes_url}';" />
+				value="{#Yes#}" onclick="document.location.href = '{yes_url}';" />
 		&nbsp;
 		<input id="del_no" type="submit" style="width: 50px;" name="option_no"
-				value="Nein" onclick="document.location.href = '{no_url}';" />
+				value="{#No#}" onclick="document.location.href = '{no_url}';" />
 	</div>
 </div>
 {endif}

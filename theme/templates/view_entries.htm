@@ -5,25 +5,24 @@
 <script type="text/javascript" src="{js.get_file('js/calendar_lang_en.js','fws')}"></script>
 <script type="text/javascript">
 <!--
+var dateComps = new Array(
+		{loop date_comps as comp}
+		'{comp}'{if date_comps.current != date_comps.last},{endif}
+		{endloop}
+);
 var calNames = new Array('startfrom','startto','changedfrom','changedto','fixedfrom','fixedto');
 var cals = new Array();
 for(var i = 0;i < calNames.length;i++)
 {
 	cals[calNames[i]] = new FWS_Calendar('{fwspath}js/',calNames[i],function(date) {
 		var input = FWS_getElement(this.inputId);
-		var val = this.get2Digits(date.getDate()) + ".";
-		val += this.get2Digits((date.getMonth() + 1)) + "." + date.getFullYear();
-		input.value = val;
+		input.value = this.dateToString(date,dateComps,'{locale.get_date_separator()}');
 	});
 	
 	cals[calNames[i]].setStartUpFunction(function() {
 		var input = FWS_getElement(this.inputId);
 		if(input.value != '')
-		{
-			var parts = input.value.split('.');
-			if(parts.length == 3)
-				this.setSelectedDate(parts[2],parts[1],parts[0]);
-		}
+			this.setSelectedDate(this.stringToDate(input.value,dateComps,'{locale.get_date_separator()}'));
 	});
 }
 
@@ -41,55 +40,52 @@ function toggleSearch(id)
 <div class="tl_border">
 	<h1 class="tl_topic" onmouseover="this.style.cursor='pointer';"
 			onmouseout="this.style.cursor='default';"
-			onclick="toggleSearch('search_table')">Suchen</h1>
+			onclick="toggleSearch('search_table')">{#Search#}</h1>
 	<div id="search_table" style="display: {search_display_value};">
 		<table width="100%" class="tl_table">
 			<tr>
-				<td width="15%" class="tl_main"><b>Stichwort:</b></td>
+				<td width="15%" class="tl_main"><b>{#Keyword#}:</b></td>
 				<td width="35%" class="tl_main"><input type="text" name="{s_keyword_param}" style="width: 90%;" value="{s_keyword}" /></td>
-				<td width="15%" class="tl_main"><b>&Auml;nderungs-Datum:</b></td>
+				<td width="15%" class="tl_main"><b>{#Changed#}:</b></td>
 				<td width="35%" class="tl_main">
-				Von <input id="changedfrom" type="text" name="{s_from_changed_date_param}" size="8" maxlength="10" value="{s_from_changed_date}" />
+				{#Between#} <input id="changedfrom" type="text" name="{s_from_changed_date_param}" size="8" maxlength="10" value="{s_from_changed_date}" />
 				<a href="javascript:cals['changedfrom'].display('image_changedfrom');"><img id="image_changedfrom" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
-				bis <input id="changedto" type="text" name="{s_to_changed_date_param}" size="8" maxlength="10" value="{s_to_changed_date}" />
+				{#and#} <input id="changedto" type="text" name="{s_to_changed_date_param}" size="8" maxlength="10" value="{s_to_changed_date}" />
 				<a href="javascript:cals['changedto'].display('image_changedto');"><img id="image_changedto" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
-				( DD.MM.YYYY )
 				</td>
 			</tr>
 			<tr>
-				<td class="tl_main"><b>Typ:</b></td>
+				<td class="tl_main"><b>{#Type#}:</b></td>
 				<td class="tl_main">{s_type_combo}</td>
-				<td class="tl_main"><b>Start-Datum:</b></td>
+				<td class="tl_main"><b>{#Started#}:</b></td>
 				<td class="tl_main">
-				Von <input id="startfrom" type="text" name="{s_from_start_date_param}" size="8" maxlength="10" value="{s_from_start_date}" />
+				{#Between#} <input id="startfrom" type="text" name="{s_from_start_date_param}" size="8" maxlength="10" value="{s_from_start_date}" />
 				<a href="javascript:cals['startfrom'].display('image_startfrom');"><img id="image_startfrom" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
-				bis <input id="startto" type="text" name="{s_to_start_date_param}" size="8" maxlength="10" value="{s_to_start_date}" />
+				{#and#} <input id="startto" type="text" name="{s_to_start_date_param}" size="8" maxlength="10" value="{s_to_start_date}" />
 				<a href="javascript:cals['startto'].display('image_startto');"><img id="image_startto" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
-				( DD.MM.YYYY )
 				</td>
 			</tr>
 			<tr>
-				<td class="tl_main"><b>Priorit&auml;t:</b></td>
+				<td class="tl_main"><b>{#Priority#}:</b></td>
 				<td class="tl_main">{s_priority_combo}</td>
-				<td class="tl_main"><b>Fixed-Datum:</b></td>
+				<td class="tl_main"><b>{#Fixed#}:</b></td>
 				<td class="tl_main">
-				Von <input id="fixedfrom" type="text" name="{s_from_fixed_date_param}" size="8" maxlength="10" value="{s_from_fixed_date}" />
+				{#Between#} <input id="fixedfrom" type="text" name="{s_from_fixed_date_param}" size="8" maxlength="10" value="{s_from_fixed_date}" />
 				<a href="javascript:cals['fixedfrom'].display('image_fixedfrom');"><img id="image_fixedfrom" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
-				bis <input id="fixedto" type="text" name="{s_to_fixed_date_param}" size="8" maxlength="10" value="{s_to_fixed_date}" />
+				{#and#} <input id="fixedto" type="text" name="{s_to_fixed_date_param}" size="8" maxlength="10" value="{s_to_fixed_date}" />
 				<a href="javascript:cals['fixedto'].display('image_fixedto');"><img id="image_fixedto" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
-				( DD.MM.YYYY )
 				</td>
 			</tr>
 			<tr>
-				<td class="tl_main"><b>Status:</b></td>
+				<td class="tl_main"><b>{#State#}:</b></td>
 				<td class="tl_main">{s_status_combo}</td>
-				<td class="tl_main"><b>Kategorie:</b></td>
+				<td class="tl_main"><b>{#Category#}:</b></td>
 				<td class="tl_main">{s_category_combo}</td>
 			</tr>
 			<tr>
 				<td colspan="4" align="center" class="tl_coldesc">
-				<input type="submit" value="Suchen" />
-				<input type="button" onclick="document.location.href = '{search_target}';" value="Zur&uuml;cksetzen" />
+				<input type="submit" value="{#Search#}" />
+				<input type="button" onclick="document.location.href = '{search_target}';" value="{#Reset#}" />
 				</td>
 			</tr>
 		</table>
@@ -110,7 +106,7 @@ function toggleSearch(id)
 		</tr>
 		{if num == 0}
 		<tr>
-			<td colspan="6" align="center" class="tl_main">Es wurden keine Eintr&auml;ge gefunden</td>
+			<td colspan="6" align="center" class="tl_main">{#No entries found#}</td>
 		</tr>
 		{endif}
 		{loop entries as index => entry}
@@ -125,7 +121,7 @@ function toggleSearch(id)
 			{if entry:info_link != ''}<span style="float: left;">{endif}
 			<a href="{url.simple_url('entry_details','&amp;$URL_ID='~entry:id)}">
 			<img src="{user.get_theme_item_path('images/'~entry:image~'.gif')}"
-					title="{entry:img_title}" align="top" alt="{entry:img_title}" />
+					align="top" alt="+" />
 			</a>&nbsp;{entry:title}
 			{if entry:info_link != ''}
 			</span>
@@ -138,8 +134,12 @@ function toggleSearch(id)
 			<span title="{entry:project_name}">{entry:project_name_short}</span>
 			{if entry:category != ''}[&nbsp;{entry:category}&nbsp;]{endif}
 			</td>
-			<td class="{entry:class}" align="center">{entry:start}</td>
-			<td class="{entry:class}" align="center">{entry:fixed}</td>
+			<td class="{entry:class}" align="center">{entry:start_date} :: {entry:start_version}</td>
+			<td class="{entry:class}" align="center">
+			{if entry:fixed_date != ''}
+			{entry:fixed_date} :: {entry:fixed_version}
+			{endif}
+			</td>
 			<td class="{entry:class}" align="center"
 				onclick="toggleBorder('row_{index}'); var cb = document.getElementById('entry_{index}'); cb.checked = cb.checked ? false : true;">
 			<input type="checkbox" id="entry_{index}" class="bs_checkbox" name="delete[]" value="{entry:id}"
@@ -158,15 +158,15 @@ function toggleSearch(id)
 	<div style="float: left;">
 	<b>Aktion:</b>
 	<select id="actionCombo" name="action" onchange="performListAction('{base_url}&amp;','actionCombo','entry_');">
-		<option value="">- Bitte w&auml;hlen -</option>
-		<option value="edit">Editieren</option>
-		<option value="status">Status &auml;ndern</option>
-		<option value="delete">L&ouml;schen</option>
+		<option value="">- {#Please select#} -</option>
+		<option value="edit">{#Edit#}</option>
+		<option value="status">{#Change state#}</option>
+		<option value="delete">{#Delete#}</option>
 	</select>
-	<input type="button" value="Ausf&uuml;hren!" onclick="performListAction('{base_url}&amp;','actionCombo','entry_');" />
+	<input type="button" value="{#Go#}" onclick="performListAction('{base_url}&amp;','actionCombo','entry_');" />
 	</div>
 	<div style="float: right;">
-	<a href="javascript:invert_selection('entry_');">Markierung umkehren</a>
+	<a href="javascript:invert_selection('entry_');">{#Invert selection#}</a>
 	</div>
 	<br style="clear: both;" />
 </div>

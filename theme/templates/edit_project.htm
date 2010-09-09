@@ -5,43 +5,43 @@
 <form method="post" action="{target_url}">
 <input type="hidden" name="action_type" value="{action_type}" />
 <div class="tl_border">
-	<h1 class="tl_topic">{form_title}</h1>
+	<h1 class="tl_topic">{if mode == 'edit'}{#Edit project#}{else}{#New project#}{endif}</h1>
 	<fieldset class="tl_form">
 		<dl>
-			<dt>Titel:</dt>
+			<dt>{#Title#}:</dt>
 			<dd>{form.get_textbox('project_name',def_name,40,255)}</dd>
 		</dl>
 		<dl>
-			<dt>Abk&uuml;rzung:</dt>
+			<dt>{#Shortcut#}:</dt>
 			<dd>{form.get_textbox('project_name_short',def_name_short,8,10)}</dd>
 		</dl>
 		<dl>
-			<dt>Start:</dt>
+			<dt>{#Start#}:</dt>
 			<dd>{form.get_date_chooser('start_',def_start,false)}</dd>
 		</dl>
 		{if mode == 'edit'}
 		<dl>
-			<dt>Versionen:</dt>
+			<dt>{#Versions#}:</dt>
 			<dd>
 				{versions}
-				<input type="button" value="Version hinzuf&uuml;gen" style="margin-top: 3px;"
-					   onclick="document.location.href = '{add_version_url}';" />
+				<div><input type="button" value="{#Add version#}" style="margin-top: 3px;"
+					   onclick="document.location.href = '{add_version_url}';" /></div>
 			</dd>
 		</dl>
 		<dl>
-			<dt>Kategorien:</dt>
+			<dt>{#Categories#}:</dt>
 			<dd>
 				{categories}
-				<input type="button" value="Kategorie hinzuf&uuml;gen" style="margin-top: 3px;"
-					   onclick="document.location.href = '{add_category_url}';" />
+				<div><input type="button" value="{#Add category#}" style="margin-top: 3px;"
+					   onclick="document.location.href = '{add_category_url}';" /></div>
 			</dd>
 		</dl>
 		{endif}
 	</fieldset>
 </div>
 <center>
-	<input type="button" value="Zur&uuml;ck" onclick="document.location.href='{url.simple_url('view_projects')}'" />
-	<input type="submit" name="submit" value="{submit_title}" />
+	<input type="button" value="{#Back#}" onclick="document.location.href='{url.simple_url('view_projects')}'" />
+	<input type="submit" name="submit" value="{#Save#}" />
 </center>
 </form>
 {endif}

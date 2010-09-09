@@ -52,6 +52,7 @@ class TDL_Functions extends FWS_Object
 	{
 		$db = FWS_Props::get()->db();
 		$tpl = FWS_Props::get()->tpl();
+		$locale = FWS_Props::get()->locale();
 
 		$entries = array();
 		$sql = FWS_StringHelper::get_default_delete_sql($ids,$table,$field);
@@ -64,7 +65,7 @@ class TDL_Functions extends FWS_Object
 		$entry_string .= '</ul>'."\n";
 		
 		$tpl->add_variables(array(
-			'delete_message' => 'M&ouml;chtest Du die folgenden Eintr&auml;ge wirklich l&ouml;schen?',
+			'delete_message' => $locale->_('Are you sure to delete the following entries?'),
 			'entries' => $entry_string,
 			'yes_url' => $yes_url,
 			'no_url' => $no_url
@@ -211,14 +212,91 @@ class TDL_Functions extends FWS_Object
 	}
 	
 	/**
-	 * checks wether the given date has the format: DD.MM.YYYY
+	 * Builds a timestamp from given string. The string is expected in the date-form given by the
+	 * locale.
 	 * 
 	 * @param string $date the date to check
-	 * @return boolean true if the date is valid
+	 * @param int $hour the hour to use
+	 * @param int $min the minute to use
+	 * @param int $sec the second to use
+	 * @return int the timestamp or 0 if invalid
 	 */
-	public function is_date($date)
+	public function get_date_from_string($date,$hour = 0,$min = 0,$sec = 0)
 	{
-		return preg_match('/^\d{2}\.\d{2}\.\d{4}$/',$date);
+		$locale = FWS_Props::get()->locale();
+		$sep = preg_quote($locale->get_date_separator(),'/');
+		$regex = '/^';
+		foreach($locale->get_date_order() as $comp)
+		{
+			if($comp == 'd' || $comp == 'm')
+				$regex .= '(\d{2})';
+			else
+				$regex .= '(\d{4})';
+			$regex .= $sep;
+		}
+		$regex = substr($regex,0,-strlen($sep)).'$/';
+		$match = array();
+		if(preg_match($regex,$date,$match))
+		{
+			$datecomps = array();
+			$comps = $locale->get_date_order();
+			for($i = 0; $i < count($comps); $i++)
+				$datecomps[$comps[$i]] = $match[$i + 1];
+			return mktime($hour,$min,$sec,$datecomps['m'],$datecomps['d'],$datecomps['Y']);
+		}
+		return 0;
+	}
+	
+	/**
+	 * @param bool $all wether to include the "all"-entry
+	 * @return array an array of all types, with the name mapped to the language-name
+	 */
+	public function get_types($all = false)
+	{
+		$locale = FWS_Props::get()->locale();
+		$types = array();
+		if($all)
+			$types[''] = $locale->_('- All -');
+		$types['bug'] = $locale->_('Bug');
+		$types['feature'] = $locale->_('Feature');
+		$types['improvement'] = $locale->_('Improvement');
+		$types['test'] = $locale->_('Test');
+		return $types;
+	}
+	
+	/**
+	 * @param bool $all wether to include the "all"-entry
+	 * @return array an array of all priorities, with the name mapped to the language-name
+	 */
+	public function get_priorities($all = false)
+	{
+		$locale = FWS_Props::get()->locale();
+		$prios = array();
+		if($all)
+			$prios[''] = $locale->_('- All -');
+		$prios['current'] = $locale->_('Current version');
+		$prios['next'] = $locale->_('Next version');
+		$prios['anytime'] = $locale->_('Anytime');
+		return $prios;
+	}
+	
+	/**
+	 * @param bool $all wether to include the "all"-entry
+	 * @return array an array of all priorities, with the name mapped to the language-name
+	 */
+	public function get_states($all = false)
+	{
+		$locale = FWS_Props::get()->locale();
+		$states = array();
+		if($all)
+			$states[''] = $locale->_('- All -');
+		$states['open'] = $locale->_('Open');
+		$states['running'] = $locale->_('In process');
+		$states['not_tested'] = $locale->_('Not tested');
+		$states['not_reproducable'] = $locale->_('Not reproducable');
+		$states['need_info'] = $locale->_('Need information');
+		$states['fixed'] = $locale->_('Fixed');
+		return $states;
 	}
 	
 	/**
@@ -227,20 +305,21 @@ class TDL_Functions extends FWS_Object
 	 */
 	public function get_status_text($status)
 	{
+		$locale = FWS_Props::get()->locale();
 		switch($status)
 		{
 			case 'open':
-				return 'Offen';
+				return $locale->_('Open');
 			case 'fixed':
-				return 'Fixed';
+				return $locale->_('Fixed');
 			case 'not_tested':
-				return 'Noch nicht getestet';
+				return $locale->_('Not tested');
 			case 'not_reproducable':
-				return 'Nicht reproduzierbar';
+				return $locale->_('Not reproducable');
 			case 'need_info':
-				return 'Brauche Informationen';
+				return $locale->_('Need information');
 			default:
-				return 'In Bearbeitung';
+				return $locale->_('In process');
 		}
 	}
 	
@@ -250,16 +329,17 @@ class TDL_Functions extends FWS_Object
 	 */
 	public function get_type_text($type)
 	{
+		$locale = FWS_Props::get()->locale();
 		switch($type)
 		{
 			case 'bug':
-				return 'Bug';
+				return $locale->_('Bug');
 			case 'feature':
-				return 'Feature';
+				return $locale->_('Feature');
 			case 'test':
-				return 'Test';
+				return $locale->_('Test');
 			default:
-				return 'Verbesserung';
+				return $locale->_('Improvement');
 		}
 	}
 	
@@ -269,14 +349,15 @@ class TDL_Functions extends FWS_Object
 	 */
 	public function get_priority_text($priority)
 	{
+		$locale = FWS_Props::get()->locale();
 		switch($priority)
 		{
 			case 'current':
-				return 'Aktuelle Version';
+				return $locale->_('Current version');
 			case 'next':
-				return 'N&auml;chste Version';
+				return $locale->_('Next version');
 			default:
-				return 'Irgendwann';
+				return $locale->_('Anytime');
 		}
 	}
 		

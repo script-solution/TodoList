@@ -6,13 +6,13 @@
 		<div style="padding: 0.3em;">
 		{if errors.length == 1}
 		<p>
-		<span class="tl_msg_error">Error:</span>
+		<span class="tl_msg_error">{#Error#}:</span>
 		{loop errors as error}
 		{error}
 		{endloop}
 		</p>
 		{else}
-		<span class="tl_msg_error">Errors:</span>
+		<span class="tl_msg_error">{#Errors#}:</span>
 		<ul>
 			{loop errors as error}
 			<li>{error}</li>
@@ -26,13 +26,13 @@
 		<div style="padding: 0.3em;">
 		{if warnings.length == 1}
 		<p>
-		<span class="tl_msg_warning">Warning:</span>
+		<span class="tl_msg_warning">{#Warning#}:</span>
 		{loop warnings as warning}
 		{warning}
 		{endloop}
 		</p>
 		{else}
-		<span class="tl_msg_warning">Warnings:</span>
+		<span class="tl_msg_warning">{#Warnings#}:</span>
 		<ul>
 			{loop warnings as warning}
 			<li>{warning}</li>
@@ -46,13 +46,13 @@
 		<div style="padding: 0.3em;">
 		{if notices.length == 1}
 		<p>
-		<span class="tl_msg_notice">Notice:</span>
+		<span class="tl_msg_notice">{#Notice#}:</span>
 		{loop notices as notice}
 		{notice}
 		{endloop}
 		</p>
 		{else}
-		<span class="tl_msg_notice">Notices:</span>
+		<span class="tl_msg_notice">{#Notices#}:</span>
 		<ul>
 			{loop notices as notice}
 			<li>{notice}</li>
