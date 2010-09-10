@@ -22,6 +22,7 @@ class TDL_Action_edit_entry_add extends FWS_Action_Base
 		$input = FWS_Props::get()->input();
 		$db = FWS_Props::get()->db();
 		$functions = FWS_Props::get()->functions();
+		$locale = FWS_Props::get()->locale();
 
 		$title = $input->get_var('entry_title','post',FWS_Input::STRING);
 		$description = $input->get_var('entry_description','post',FWS_Input::STRING);
@@ -85,8 +86,8 @@ class TDL_Action_edit_entry_add extends FWS_Action_Base
 			'last_status' => $status,
 		));
 		
-		// TODO we have to get FWS_URL here
-		$this->add_link('Zur&uuml;ck',TDL_URL::get_url(-1));
+		$url = new TDL_URL();
+		$this->add_link($locale->_('Back'),$url->set(TDL_URL_ACTION,'view_entries'));
 		$this->set_success_msg('Der Eintrag wurde erfolgreich erstellt!');
 		$this->set_redirect(true,$functions->get_entry_base_url());
 		$this->set_action_performed(true);

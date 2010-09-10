@@ -20,6 +20,8 @@ class TDL_Action_edit_project_add_project extends FWS_Action_Base
 	public function perform_action()
 	{
 		$input = FWS_Props::get()->input();
+		$locale = FWS_Props::get()->locale();
+		
 		$project_name = $input->get_var('project_name','post',FWS_Input::STRING);
 		$project_name_short = $input->get_var('project_name_short','post',FWS_Input::STRING);
 		$start_day = $input->get_var('start_day','post',FWS_Input::INTEGER);
@@ -39,11 +41,10 @@ class TDL_Action_edit_project_add_project extends FWS_Action_Base
 		$project->create();
 		$id = $project->get_id();
 		
-		$this->set_success_msg('Das Projekt wurde erfolgreich hinzugef&uuml;gt');
-		$this->set_redirect(
-			true,
-			TDL_URL::get_url('edit_project','&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$id)
-		);
+		$edit_url = TDL_URL::get_url('edit_project','&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$id);
+		$this->set_success_msg($locale->_('The project has been added'));
+		$this->set_redirect(true,$edit_url);
+		$this->add_link($locale->_('Edit the project'),$edit_url);
 		$this->set_action_performed(true);
 	
 		return '';

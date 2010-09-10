@@ -447,8 +447,7 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 	protected function field_name($field)
 	{
 		$locale = FWS_Props::get()->locale();
-
-		return $locale->lang('entry_fields_'.$field);
+		return $locale->_($field);
 	}
 }
 ?>

@@ -29,12 +29,13 @@ class TDL_Renderer_HTML extends FWS_Document_Renderer_HTML_Default
 		$this->set_action_performer(new TDL_Actions_Performer());
 		
 		$tpl = FWS_Props::get()->tpl();
+		$locale = FWS_Props::get()->locale();
 		
 		$tpl->set_path('theme/templates/');
 		$tpl->set_cache_folder(FWS_Path::server_app().'cache/');
 		
 		// add the home-breadcrumb
-		$this->add_breadcrumb('TodoList',TDL_URL::get_url('view_entries'));
+		$this->add_breadcrumb($locale->_('TodoList'),TDL_URL::get_url('view_entries'));
 		
 		$this->_action_perf->set_prefix('TDL_Action_');
 		
@@ -79,12 +80,13 @@ class TDL_Renderer_HTML extends FWS_Document_Renderer_HTML_Default
 			$tpl->add_variable_ref('redirect',$redirect,'inc_header.htm');
 		
 		// notify the template if an error has occurred
-		$tpl->add_global('module_error',$doc->get_module()->error_occurred());
+		$tpl->add_global('module_error',!$this->has_access() || $doc->get_module()->error_occurred());
+		if(!$this->has_access())
+			$msgs->add_error($locale->_('You don\'t have access to this module!'));
 		
 		// add global variables
 		$action_result = $this->get_action_result();
 		$tpl->add_global('action_result',$action_result);
-		$tpl->add_global('module_error',false);
 		$tpl->add_global('path',FWS_Path::client_app());
 		$tpl->add_global('fwspath',FWS_Path::client_fw());
 		
@@ -118,6 +120,7 @@ class TDL_Renderer_HTML extends FWS_Document_Renderer_HTML_Default
 		$cfg = FWS_Props::get()->cfg();
 		$versions = FWS_Props::get()->versions();
 		$functions = FWS_Props::get()->functions();
+		$locale = FWS_Props::get()->locale();
 		
 		$this->perform_action();
 		
@@ -130,7 +133,7 @@ class TDL_Renderer_HTML extends FWS_Document_Renderer_HTML_Default
 		));
 		$tpl->restore_template();
 		
-		$projects = array(0 => '- Alle Projekte -');
+		$projects = array(0 => $locale->_('- All Projects -')) ;
 		foreach($versions as $vdata)
 		{
 			if(!isset($projects[$vdata['project_id']]))
@@ -144,6 +147,7 @@ class TDL_Renderer_HTML extends FWS_Document_Renderer_HTML_Default
 		
 		$tpl->set_template('inc_navigation.htm');
 		$tpl->add_variables(array(
+			'project_id' => $cfg['project_id'],
 			'location' => $this->get_breadcrumb_links('tl_body'),
 			'change_selected_project_url' => $functions->get_current_url(),
 			'action_type' => TDL_ACTION_CHANGE_SEL_PROJECT,

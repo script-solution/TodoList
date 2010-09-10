@@ -261,9 +261,11 @@ abstract class TDL_Objects_Data extends FWS_Object
 	 */
 	protected function invalid_field_msg($field)
 	{
+		$locale = FWS_Props::get()->locale();
 		$method = 'get_'.$field;
 		return sprintf(
-			'The value "%s" for the field "%s" is invalid',$this->$method(),$this->field_name($field)
+			$locale->_('The value "%s" for the field "%s" is invalid'),
+			$this->$method(),$this->field_name($field)
 		);
 	}
 	
@@ -275,7 +277,8 @@ abstract class TDL_Objects_Data extends FWS_Object
 	 */
 	protected function missing_field_msg($field)
 	{
-		return sprintf('The value for the field "%s" is missing!',$this->field_name($field));
+		$locale = FWS_Props::get()->locale();
+		return sprintf($locale->_('The value for the field "%s" is missing!'),$this->field_name($field));
 	}
 	
 	/**

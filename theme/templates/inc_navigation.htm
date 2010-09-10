@@ -13,7 +13,9 @@
 	<a class="tl_button_big" href="{url.simple_url('view_projects')}">{#Projects#}</a>
 	<span style="float: right;">&nbsp;&middot;&nbsp;</span>
 	<a class="tl_button_big" href="{url.simple_url('changelog')}">{#Changelog#}</a>
+	{if project_id != 0}
 	<a class="tl_button_big" href="{url.simple_url('edit_entry','&amp;$URL_MODE=add')}">{#Add Todo#}</a>
+	{endif}
 	<a class="tl_button_big" href="{url.simple_url(-1)}">{#Todos#}</a>
 	<br style="clear: both;" />
 </div>

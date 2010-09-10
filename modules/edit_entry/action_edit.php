@@ -21,6 +21,7 @@ class TDL_Action_edit_entry_edit extends FWS_Action_Base
 	{
 		$input = FWS_Props::get()->input();
 		$functions = FWS_Props::get()->functions();
+		$locale = FWS_Props::get()->locale();
 
 		// check id
 		$id = $input->get_predef(TDL_URL_IDS,'get');
@@ -114,8 +115,10 @@ class TDL_Action_edit_entry_edit extends FWS_Action_Base
 			$entry->update();
 		}
 		
-		$msg = $multiple ? 'Die Eintr&auml;ge wurden' : 'Der Eintrag wurde';
-		$msg .= ' erfolgreich editiert!';
+		if($multiple)
+			$msg = $locale->_('The entries have been edited successfully');
+		else
+			$msg = $locale->_('The entry has been edited successfully');
 		$this->set_success_msg($msg);
 		$this->set_redirect(true,$functions->get_entry_base_url());
 		$this->set_action_performed(true);

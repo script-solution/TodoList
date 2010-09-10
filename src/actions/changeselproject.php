@@ -22,6 +22,7 @@ class TDL_Actions_ChangeSelProject extends FWS_Action_Base
 		$input = FWS_Props::get()->input();
 		$versions = FWS_Props::get()->versions();
 		$functions = FWS_Props::get()->functions();
+		$locale = FWS_Props::get()->locale();
 
 		$id = $input->get_var('selected_project','post',FWS_Input::INTEGER);
 		if($id === null)
@@ -33,7 +34,7 @@ class TDL_Actions_ChangeSelProject extends FWS_Action_Base
 		$functions->select_project($id);
 		
 		$this->set_show_status_page(false);
-		$this->set_success_msg('Das Projekt wurde erfolgreich gewechselt');
+		$this->set_success_msg($locale->_('The project has been changed successfully'));
 		$this->set_redirect(true,$functions->get_current_url());
 		$this->set_action_performed(true);
 	

@@ -23,6 +23,7 @@ class TDL_Action_edit_project_edit_project extends FWS_Action_Base
 		$db = FWS_Props::get()->db();
 		$cats = FWS_Props::get()->cats();
 		$versions = FWS_Props::get()->versions();
+		$locale = FWS_Props::get()->locale();
 
 		$pid = $input->get_predef(TDL_URL_ID,'get');
 		if($pid == null)
@@ -67,7 +68,7 @@ class TDL_Action_edit_project_edit_project extends FWS_Action_Base
 			}
 		}
 		
-		$this->set_success_msg('Das Projekt wurde erfolgreich editiert');
+		$this->set_success_msg($locale->_('The project has been edited successfully'));
 		$this->set_redirect(
 			true,
 			TDL_URL::get_url('edit_project','&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$pid)

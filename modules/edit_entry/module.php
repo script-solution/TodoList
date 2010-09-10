@@ -30,6 +30,7 @@ final class TDL_Module_edit_entry extends TDL_Module
 		$functions = FWS_Props::get()->functions();
 		$renderer = $doc->use_default_renderer();
 		$locale = FWS_Props::get()->locale();
+		$cfg = FWS_Props::get()->cfg();
 		
 		$renderer->add_action(TDL_ACTION_EDIT_ENTRY,'edit');
 		$renderer->add_action(TDL_ACTION_NEW_ENTRY,'add');
@@ -51,6 +52,7 @@ final class TDL_Module_edit_entry extends TDL_Module
 			$title = $locale->_('New entry');
 		}
 		
+		$renderer->set_has_access($mode == 'edit' || $cfg['project_id'] != 0);
 		$renderer->add_breadcrumb($title,$murl);
 	}
 	

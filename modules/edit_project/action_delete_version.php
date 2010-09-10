@@ -22,6 +22,8 @@ class TDL_Action_edit_project_delete_version extends FWS_Action_Base
 		$input = FWS_Props::get()->input();
 		$db = FWS_Props::get()->db();
 		$versions = FWS_Props::get()->versions();
+		$locale = FWS_Props::get()->locale();
+		
 		$id = $input->get_predef(TDL_URL_SID,'get');
 		if($id == null)
 			return TDL_GENERAL_ERROR;
@@ -32,7 +34,7 @@ class TDL_Action_edit_project_delete_version extends FWS_Action_Base
 		$versions->remove_element($id);
 		
 		$pid = $input->get_predef(TDL_URL_ID,'get');
-		$this->set_success_msg('Die Version wurde erfolgreich gel&ouml;scht');
+		$this->set_success_msg($locale->_('The version has been deleted'));
 		$this->set_redirect(
 			true,
 			TDL_URL::get_url('edit_project','&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$pid)

@@ -8,7 +8,12 @@
 	</span>
 	{#Changelog#} - {title}
 	</h1>
-	<table class="tl_table">
+	<table class="tl_table" width="100%">
+		{if entries.length == 0}
+		<tr>
+			<td class="tl_main" align="center">{#No entries found#}</td>
+		</tr>
+		{endif}
 		{loop entries as entry}
 		{if entry:show_version}
 		<tr>
