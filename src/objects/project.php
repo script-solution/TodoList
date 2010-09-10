@@ -20,7 +20,7 @@ class TDL_Objects_Project extends TDL_Objects_Data
 	/**
 	 * The value of the field "id"
 	 *
-	 * @var string
+	 * @var int
 	 */
 	private $_id;
 
@@ -41,7 +41,7 @@ class TDL_Objects_Project extends TDL_Objects_Data
 	/**
 	 * The value of the field "project_start"
 	 *
-	 * @var string
+	 * @var int
 	 */
 	private $_project_start;
 	
@@ -56,7 +56,7 @@ class TDL_Objects_Project extends TDL_Objects_Data
 	}
 
 	/**
-	 * @return string the value of the field "id"
+	 * @return int the value of the field "id"
 	 */
 	public function get_id()
 	{
@@ -66,7 +66,7 @@ class TDL_Objects_Project extends TDL_Objects_Data
 	/**
 	 * Sets the value of the field "id" to the given value
 	 *
-	 * @param string $value the new value
+	 * @param int $value the new value
 	 */
 	public function set_id($value)
 	{
@@ -110,7 +110,7 @@ class TDL_Objects_Project extends TDL_Objects_Data
 	}
 
 	/**
-	 * @return string the value of the field "project_start"
+	 * @return int the value of the field "project_start"
 	 */
 	public function get_project_start()
 	{
@@ -120,7 +120,7 @@ class TDL_Objects_Project extends TDL_Objects_Data
 	/**
 	 * Sets the value of the field "project_start" to the given value
 	 *
-	 * @param string $value the new value
+	 * @param int $value the new value
 	 */
 	public function set_project_start($value)
 	{

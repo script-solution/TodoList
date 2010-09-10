@@ -117,7 +117,7 @@ final class TDL_PropLoader extends FWS_PropLoader
 		$db = FWS_Props::get()->db();
 
 		$cfg = $db->get_row('SELECT * FROM '.TDL_TB_CONFIG.' WHERE is_selected = 1');
-		if($cfg['project_id'] == '')
+		if(!$cfg || $cfg['project_id'] == '')
 		{
 			$cfg = array(
 				'project_id' => 0,
@@ -134,7 +134,7 @@ final class TDL_PropLoader extends FWS_PropLoader
 	}
 	
 	/**
-	 * @return array all categories
+	 * @return FWS_Array_2Dim all categories
 	 */
 	protected function cats()
 	{
@@ -151,7 +151,7 @@ final class TDL_PropLoader extends FWS_PropLoader
 	}
 	
 	/**
-	 * @return array all versions
+	 * @return FWS_Array_2Dim all versions
 	 */
 	protected function versions()
 	{

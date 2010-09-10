@@ -17,6 +17,19 @@
  */
 class TDL_Locale_EN extends FWS_Locale_EN
 {
+	/**
+	 * The language-entries
+	 * 
+	 * @var array
+	 */
+	private $_lang = array();
+	
+	/**
+	 * Fetches the value of the language-entry $name. If it does not exist, it returns $name
+	 * 
+	 * @param string $name the entry-name
+	 * @return string the value
+	 */
 	public function _($name)
 	{
 		return $this->lang($name,false);
@@ -24,6 +37,8 @@ class TDL_Locale_EN extends FWS_Locale_EN
 	
 	public function lang($name,$mark_missing = true)
 	{
+		// TODO read entries from ini-file
+		
 		if(isset($this->_lang[$name]))
 			return $this->_lang[$name];
 		

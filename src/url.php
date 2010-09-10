@@ -28,15 +28,13 @@ class TDL_URL extends FWS_URL
 	 * @param string|int $target the action-parameter (0 = current, -1 = none)
 	 * @param string $additional additional parameters
 	 * @param string $separator the separator of the params (default is &amp;)
-	 * @param boolean $force_sid forces the method to append the session-id
 	 * @return string the url
 	 */
-	public static function simple_url($target = 0,$additional = '',$separator = '&amp;',
-		$force_sid = false)
+	public static function simple_url($target = 0,$additional = '',$separator = '&amp;')
 	{
 		if($additional != '')
 			$additional = preg_replace('/\$([a-z0-9_]+)/ie','TDL_\\1',$additional);
-		return self::get_url($target,$additional,$separator,$force_sid);
+		return self::get_url($target,$additional,$separator);
 	}
 	
 	/**
@@ -47,7 +45,7 @@ class TDL_URL extends FWS_URL
 	 *
 	 * @param string|int $target the action-parameter (0 = current, -1 = none)
 	 * @param string $additional additional parameters
-	 * @param string $seperator the separator of the params (default is &amp;)
+	 * @param string $separator the separator of the params (default is &amp;)
 	 * @return string the url
 	 */
 	public static function get_url($target = 0,$additional = '',$separator = '&amp;')

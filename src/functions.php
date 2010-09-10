@@ -20,7 +20,7 @@ class TDL_Functions extends FWS_Object
 	/**
 	 * Selects the project with given id
 	 * 
-	 * @param int the id of the project
+	 * @param int $id the id of the project
 	 */
 	public function select_project($id)
 	{

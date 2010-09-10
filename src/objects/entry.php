@@ -20,14 +20,14 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 	/**
 	 * The value of the field "id"
 	 *
-	 * @var string
+	 * @var int
 	 */
 	private $_id = null;
 
 	/**
 	 * The value of the field "project_id"
 	 *
-	 * @var string
+	 * @var int
 	 */
 	private $_project_id = null;
 
@@ -41,7 +41,7 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 	/**
 	 * The value of the field "entry_category"
 	 *
-	 * @var string
+	 * @var int
 	 */
 	private $_entry_category = null;
 
@@ -76,35 +76,35 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 	/**
 	 * The value of the field "entry_start_date"
 	 *
-	 * @var string
+	 * @var int
 	 */
 	private $_entry_start_date = null;
 
 	/**
 	 * The value of the field "entry_start_version"
 	 *
-	 * @var string
+	 * @var int
 	 */
 	private $_entry_start_version = null;
 
 	/**
 	 * The value of the field "entry_fixed_date"
 	 *
-	 * @var string
+	 * @var int
 	 */
 	private $_entry_fixed_date = null;
 
 	/**
 	 * The value of the field "entry_fixed_version"
 	 *
-	 * @var string
+	 * @var int
 	 */
 	private $_entry_fixed_version = null;
 
 	/**
 	 * The value of the field "entry_changed_date"
 	 *
-	 * @var string
+	 * @var int
 	 */
 	private $_entry_changed_date = null;
 
@@ -126,7 +126,7 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 	}
 
 	/**
-	 * @return string the value of the field "id"
+	 * @return int the value of the field "id"
 	 */
 	public function get_id()
 	{
@@ -136,7 +136,7 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 	/**
 	 * Sets the value of the field "id" to the given value
 	 *
-	 * @param string $value the new value
+	 * @param int $value the new value
 	 */
 	public function set_id($value)
 	{
@@ -144,7 +144,7 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 	}
 
 	/**
-	 * @return string the value of the field "project_id"
+	 * @return int the value of the field "project_id"
 	 */
 	public function get_project_id()
 	{
@@ -154,7 +154,7 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 	/**
 	 * Sets the value of the field "project_id" to the given value
 	 *
-	 * @param string $value the new value
+	 * @param int $value the new value
 	 */
 	public function set_project_id($value)
 	{
@@ -180,7 +180,7 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 	}
 
 	/**
-	 * @return string the value of the field "entry_category"
+	 * @return int the value of the field "entry_category"
 	 */
 	public function get_entry_category()
 	{
@@ -190,7 +190,7 @@ class TDL_Objects_Entry extends TDL_Objects_Data
 	/**
 	 * Sets the value of the field "entry_category" to the given value
 	 *
-	 * @param string $value the new value
+	 * @param int $value the new value
 	 */
 	public function set_entry_category($value)
 	{

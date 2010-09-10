@@ -18,39 +18,34 @@ define('TDL_GENERAL_ERROR',					'Die Aktion ist fehlgeschlagen (Keine genaueren 
 define('TDL_FWS_PATH',							'../FrameWorkSolution/');
 
 define('TDL_DB_CHARSET',						'latin1');
-
 define('TDL_HTML_CHARSET',					'iso-8859-1');
 
-# Die absolute URL zur TodoList ohne / am Ende
-# The absolute URL to the TodoList without an / at the end
-define('TDL_FOLDER_URL','http://localhost/scriptsolution/todolist');
-
-# Soll GZip aktiviert sein? (muss der Server unterst�tzen)
+# Soll GZip aktiviert sein? (muss der Server unterstuetzen)
 # Do you want to enable GZip (the server has to support that)
 define('TDL_ENABLE_GZIP',							false);
 
 # Der Cookie-Pfad. Falls die Todoliste hier liegt: http://www.domain.tdl/todolist
-# w�re der Pfad "/todolist". Falls sie im Root-Verzeichnis liegt, "/"
+# waere der Pfad "/todolist". Falls sie im Root-Verzeichnis liegt, "/"
 # The cookie-path. If the todolist lies here: http://www.domain.tdl/todolist
 # the path would be "/todolist". If it lies in the root-dir it would be "/"
 define('TDL_COOKIE_PATH',							'/scriptsolution/todolist');
 
 # Die Cookie-Domain. Falls die Todoliste hier liegt: http://www.domain.tdl/todolist
-# w�re die Domain ".domain.tdl". Falls sie unter todolist.domain.tdl liegt, ist die
+# waere die Domain ".domain.tdl". Falls sie unter todolist.domain.tdl liegt, ist die
 # Domain "todolist.domain.tdl".
 # The cookie-domain. If the todolist lies here: http://www.domain.tdl/todolist
 # the domain would be ".domain.tdl". If it lies at todolist.domain.tdl the domain
 # would be "todolist.domain.tdl".
 define('TDL_COOKIE_DOMAIN',						'');
 
-# Das Pr�fix der Cookies, die die Todoliste setzt
+# Das Praefix der Cookies, die die Todoliste setzt
 # The prefix of the cookies the todolist sets
 define('TDL_COOKIE_PREFIX',						'todoList_');
 
 #============= GET-Parameter =============
 # Falls Sie einen dieser Werte schon auf Ihrer Homepage in der
-# URL verwenden und das Board per PHP einbinden, k�nnen Sie die
-# Werte hier ver�ndern um Konflikte zu vermeiden.
+# URL verwenden und das Board per PHP einbinden, koennen Sie die
+# Werte hier veraendern um Konflikte zu vermeiden.
 # If you are already using one of this values in the URL and you
 # include Boardsolution with PHP you can edit them here to prevent
 # conflicts.
@@ -79,12 +74,12 @@ define('TDL_URL_S_STATUS',						'ss');
 define('TDL_URL_S_CATEGORY',					'sc');
 
 #============= Action-Messages =============
-# Hier k�nnen Sie einstellen bei welcher Aktion eine "Status-Seite"
+# Hier koennen Sie einstellen bei welcher Aktion eine "Status-Seite"
 # angezeigt werden soll und bei welcher nicht.
-# Bitte ver�ndern Sie nicht die Zeilen mit "define(..." sondern
+# Bitte veraendern Sie nicht die Zeilen mit "define(..." sondern
 # den Abschnitt weiter unten beginnend mit "$TDL_ACTION_MSGS = ..."
 # Wenn Sie z.B. keine "Status-Seite" nach einem neuen Beitrag anzeigen
-# m�chten, setzen Sie "TDL_ACTION_REPLY" von "true" auf "false".
+# moechten, setzen Sie "TDL_ACTION_REPLY" von "true" auf "false".
 # Here you can configure after which action a "status-page" will
 # be displayed. Please don't modify the lines with "define(..." but
 # change the part below with "$TDL_ACTION_MSGS = ..."
@@ -104,7 +99,7 @@ define('TDL_ACTION_DELETE_CATEGORY',		9);
 define('TDL_ACTION_DELETE_PROJECTS',		10);
 define('TDL_ACTION_CHANGE_SEL_PROJECT',	11);
 
-# Hier bitte ggf. die �nderungen durchf�hren!
+# Hier bitte ggf. die Aenderungen durchfuehren!
 # Please perform the changes here!
 $TDL_ACTION_MSGS = array(
 	TDL_ACTION_NEW_ENTRY =>								false,

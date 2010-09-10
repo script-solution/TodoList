@@ -195,8 +195,7 @@ final class TDL_Module_view_entries extends TDL_Module
 		}
 		
 		$limit = 20;
-		$page = $input->get_predef(TDL_URL_SITE,'get');
-		$pagination = new TDL_Pagination($limit,$num,$page);
+		$pagination = new TDL_Pagination($limit,$num);
 		
 		$hl = new FWS_KeywordHighlighter(array($s_keyword));
 		$entries = array();
