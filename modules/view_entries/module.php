@@ -256,7 +256,8 @@ final class TDL_Module_view_entries extends TDL_Module
 				'image' => $data['entry_description'] != '' ? 'details_available' : 'details_not_available',
 				'id' => $data['id'],
 				'status' => $functions->get_status_text($data['entry_status']),
-				'class' => 'tl_status_'.$data['entry_status']
+				'class' => 'tl_status_'.$data['entry_status'],
+				'description' => nl2br($data['entry_description']),
 			);
 			$i++;
 		}
