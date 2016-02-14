@@ -32,7 +32,7 @@ final class TDL_PropLoader extends FWS_PropLoader
 	 */
 	protected function db()
 	{
-		$c = new FWS_DB_MySQL_Connection();
+		$c = new FWS_DB_MySQLi_Connection();
 		$c->connect(TDL_MYSQL_HOST,TDL_MYSQL_LOGIN,TDL_MYSQL_PASSWORD);
 		$c->select_database(TDL_MYSQL_DATABASE);
 		$c->set_save_queries(false);
