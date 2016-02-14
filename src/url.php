@@ -71,7 +71,7 @@ class TDL_URL extends FWS_URL
 	 * @param string $separator the separator of the params (default is &amp;)
 	 * @return string the url
 	 */
-	public static function get_url($target = 0,$additional = '',$separator = '&amp;')
+	private static function get_url($target = 0,$additional = '',$separator = '&amp;')
 	{
 		$url = new TDL_URL();
 		$url->set_separator($separator);
@@ -97,6 +97,69 @@ class TDL_URL extends FWS_URL
 		return $url->to_url();
 	}
 	
+
+	/**
+	 * Builds an URL for the given module.
+	 *
+	 * @param string|int $mod the module-name (0 = current, -1 = none)
+	 * @param string $separator the separator of the params (default is &amp;)
+	 * @return string the url
+	 */
+	public static function build_mod_url($mod = 0,$separator = '&amp;')
+	{
+		$url = self::get_mod_url($mod,$separator);
+		return $url->to_url();
+	}
+
+	/**
+	 * Builds an URL-instance for the given module.
+	 *
+	 * @param string|int $mod the module-name (0 = current, -1 = none)
+	 * @param string $separator the separator of the params (default is &amp;)
+	 * @return BS_URL the url-instance
+	 */
+	public static function get_mod_url($mod = 0,$separator = '&amp;')
+	{
+		$url = new self();
+		$url->set_separator($separator);
+
+		if($mod === 0)
+		{
+			$input = FWS_Props::get()->input();
+			$action = $input->get_var(TDL_URL_ACTION,'get',FWS_Input::STRING);
+			if($action != null)
+				$url->set(TDL_URL_ACTION,$action);
+		}
+		else if($mod !== -1)
+			$url->set(TDL_URL_ACTION,$mod);
+
+		return $url;
+	}
+
+	/**
+	 * Builds the base-url for the entries
+	 *
+	 * @return FWS_URL the URL
+	 */
+	public static function get_entry_url()
+	{
+		$input = FWS_Props::get()->input();
+		$url = new self();
+		$vals = array(
+			TDL_URL_S_KEYWORD,
+			TDL_URL_S_FROM_CHANGED_DATE,TDL_URL_S_TO_CHANGED_DATE,
+			TDL_URL_S_FROM_START_DATE,TDL_URL_S_TO_START_DATE,
+			TDL_URL_S_FROM_FIXED_DATE,TDL_URL_S_TO_FIXED_DATE,
+			TDL_URL_S_TYPE,TDL_URL_S_PRIORITY,TDL_URL_S_STATUS,TDL_URL_S_CATEGORY,
+			TDL_URL_SITE
+		);
+		foreach($vals as $val)
+			$url->set($val,$input->get_predef($val,'get'));
+		$url->set(TDL_URL_ORDER,$input->get_predef(TDL_URL_ORDER,'get','changed'));
+		$url->set(TDL_URL_AD,$input->get_predef(TDL_URL_AD,'get','DESC'));
+		return $url;
+	}
+
 	/**
 	 * Constructor
 	 */

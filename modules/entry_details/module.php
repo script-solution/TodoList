@@ -44,7 +44,7 @@ final class TDL_Module_entry_details extends TDL_Module
 		$renderer = $doc->use_default_renderer();
 		
 		$id = $input->get_predef(TDL_URL_ID,'get');
-		$renderer->add_breadcrumb('Eintrags Details',TDL_URL::get_url(0,'&amp;'.TDL_URL_ID.'='.$id));
+		$renderer->add_breadcrumb('Eintrags Details',TDL_URL::get_mod_url()->set(TDL_URL_ID,$id)->to_url());
 	}
 	
 	/**

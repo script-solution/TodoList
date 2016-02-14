@@ -267,9 +267,23 @@ final class TDL_Module_view_entries extends TDL_Module
 		$base_url->set(TDL_URL_AD,$ad);
 		$pagination->populate_tpl($base_url);
 		
+		$edit_base = clone $base_url;
+		$edit_base->set_separator('&');
+		$edit_base->set(TDL_URL_IDS,'__IDS__');
+		$edit_url = clone $edit_base;
+		$edit_url->set(TDL_URL_ACTION,'edit_entry');
+		$edit_url->set(TDL_URL_MODE,'edit');
+		$chgstate_url = clone $edit_base;
+		$chgstate_url->set(TDL_URL_ACTION,'change_status');
+		$del_url = clone $edit_base;
+		$del_url->set(TDL_URL_ACTION,'ajax_delmsg');
+		$del_url->set(TDL_URL_LOC,'view_entries');
+		
 		$tpl->add_variables(array(
 			'index' => $i,
-			'base_url' => $base_url->to_url()
+			'edit_url' => $edit_url->to_url(),
+			'chgstate_url' => $chgstate_url->to_url(),
+			'del_url' => $del_url->to_url(),
 		));
 	}
 }

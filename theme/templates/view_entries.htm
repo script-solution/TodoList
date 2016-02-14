@@ -33,6 +33,36 @@ function toggleSearch(id)
 	FWS_toggleElement(id);
 	setCookie('{cookie_name}',oldValue == 'none' ? "1" : "0",3600 * 24 * 30);
 }
+
+function performListAction(comboID,checkBoxPrefix)
+{
+	var combo = document.getElementById(comboID);
+	if(combo != null)
+	{
+		var ids = FWS_getDeleteIds(checkBoxPrefix);
+		if(ids == '')
+			return;
+		
+		switch(combo.value)
+		{
+			case 'edit':
+				document.location.href = '{edit_url}'.replace(/__IDS__/,ids);
+				break;
+			case 'status':
+				document.location.href = '{chgstate_url}'.replace(/__IDS__/,ids);
+				break;
+			case 'delete':
+				var url = '{del_url}'.replace(/__IDS__/,ids);
+				var onfinished = function(text) {
+					FWS_replaceContent('delete_message_box',text);
+					FWS_getElement('delete_message_box').style.display = 'block';
+					window.scrollTo(0,0);
+				};
+				myAjax.sendGetRequest(url,onfinished);
+				break;
+		}
+	}
+}
 //-->
 </script>
 
@@ -157,13 +187,13 @@ function toggleSearch(id)
 <div class="tl_body tl_padtop">
 	<div style="float: left;">
 	<b>Aktion:</b>
-	<select id="actionCombo" name="action" onchange="performListAction('{base_url}&amp;','actionCombo','entry_');">
+	<select id="actionCombo" name="action" onchange="performListAction('actionCombo','entry_');">
 		<option value="">- {#Please select#} -</option>
 		<option value="edit">{#Edit#}</option>
 		<option value="status">{#Change state#}</option>
 		<option value="delete">{#Delete#}</option>
 	</select>
-	<input type="button" value="{#Go#}" onclick="performListAction('{base_url}&amp;','actionCombo','entry_');" />
+	<input type="button" value="{#Go#}" onclick="performListAction('actionCombo','entry_');" />
 	</div>
 	<div style="float: right;">
 	<a href="javascript:invert_selection('entry_');">{#Invert selection#}</a>

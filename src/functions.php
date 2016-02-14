@@ -119,48 +119,6 @@ class TDL_Functions extends FWS_Object
 	}
 	
 	/**
-	 * builds the base-url for the entries
-	 * 
-	 * @return string the URL
-	 */
-	public function get_entry_base_url()
-	{
-		$input = FWS_Props::get()->input();
-		$s_keyword = $input->get_predef(TDL_URL_S_KEYWORD,'get');
-		$s_from_changed_date = $input->get_predef(TDL_URL_S_FROM_CHANGED_DATE,'get');
-		$s_to_changed_date = $input->get_predef(TDL_URL_S_TO_CHANGED_DATE,'get');
-		$s_from_start_date = $input->get_predef(TDL_URL_S_FROM_START_DATE,'get');
-		$s_to_start_date = $input->get_predef(TDL_URL_S_TO_START_DATE,'get');
-		$s_from_fixed_date = $input->get_predef(TDL_URL_S_FROM_FIXED_DATE,'get');
-		$s_to_fixed_date = $input->get_predef(TDL_URL_S_TO_FIXED_DATE,'get');
-		$s_type = $input->get_predef(TDL_URL_S_TYPE,'get','');
-		$s_priority = $input->get_predef(TDL_URL_S_PRIORITY,'get','');
-		$s_status = $input->get_predef(TDL_URL_S_STATUS,'get','');
-		$s_category = $input->get_predef(TDL_URL_S_CATEGORY,'get');
-		
-		$site = $input->get_predef(TDL_URL_SITE,'get');
-		$order = $input->get_predef(TDL_URL_ORDER,'get','changed');
-		$ad = $input->get_predef(TDL_URL_AD,'get','DESC');
-		
-		$base_url = TDL_URL::get_url(-1);
-		$base_url .= '?'.TDL_URL_S_KEYWORD.'='.$s_keyword;
-		$base_url .= '&amp;'.TDL_URL_S_CATEGORY.'='.$s_category;
-		$base_url .= '&amp;'.TDL_URL_S_PRIORITY.'='.$s_priority;
-		$base_url .= '&amp;'.TDL_URL_S_TYPE.'='.$s_type;
-		$base_url .= '&amp;'.TDL_URL_S_STATUS.'='.$s_status;
-		$base_url .= '&amp;'.TDL_URL_S_FROM_CHANGED_DATE.'='.$s_from_changed_date;
-		$base_url .= '&amp;'.TDL_URL_S_FROM_START_DATE.'='.$s_from_start_date;
-		$base_url .= '&amp;'.TDL_URL_S_FROM_FIXED_DATE.'='.$s_from_fixed_date;
-		$base_url .= '&amp;'.TDL_URL_S_TO_CHANGED_DATE.'='.$s_to_changed_date;
-		$base_url .= '&amp;'.TDL_URL_S_TO_START_DATE.'='.$s_to_start_date;
-		$base_url .= '&amp;'.TDL_URL_S_TO_FIXED_DATE.'='.$s_to_fixed_date;
-		$base_url .= '&amp;'.TDL_URL_SITE.'='.$site;
-		$base_url .= '&amp;'.TDL_URL_ORDER.'='.$order;
-		$base_url .= '&amp;'.TDL_URL_AD.'='.$ad;
-		return $base_url;
-	}
-	
-	/**
 	 * generates the url for the current location
 	 * 
 	 * @return string the url

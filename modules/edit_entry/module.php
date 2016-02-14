@@ -53,8 +53,10 @@ final class TDL_Module_edit_entry extends TDL_Module
 		if($mode == 'edit')
 		{
 			$id = $input->get_predef(TDL_URL_IDS,'get');
-			$murl = $functions->get_entry_base_url().'&amp;'.TDL_URL_ACTION.'=edit_entry&amp;'
-				.TDL_URL_MODE.'=edit&amp;'.TDL_URL_IDS.'='.$id;
+			$murl = TDL_URL::get_entry_url();
+			$murl->set(TDL_URL_ACTION,'edit_entry');
+			$murl->set(TDL_URL_MODE,'edit');
+			$murl->set(TDL_URL_IDS,$id);
 			if(FWS_String::substr_count($id,',') > 1)
 				$title = $locale->_('Edit entries');
 			else
@@ -62,12 +64,13 @@ final class TDL_Module_edit_entry extends TDL_Module
 		}
 		else
 		{
-			$murl = TDL_URL::get_url(0,'&amp;'.TDL_URL_MODE.'=add');
+			$murl = TDL_URL::get_mod_url();
+			$murl->set(TDL_URL_MODE,'add');
 			$title = $locale->_('New entry');
 		}
 		
 		$renderer->set_has_access($mode == 'edit' || $cfg['project_id'] != 0);
-		$renderer->add_breadcrumb($title,$murl);
+		$renderer->add_breadcrumb($title,$murl->to_url());
 	}
 	
 	/**
@@ -93,7 +96,7 @@ final class TDL_Module_edit_entry extends TDL_Module
 		}
 		
 		$multiple = false;
-		$base_url = $functions->get_entry_base_url();
+		$base_url = TDL_URL::get_entry_url();
 		
 		$entries = array();
 		
@@ -157,12 +160,17 @@ final class TDL_Module_edit_entry extends TDL_Module
 				}
 			}
 			
-			$target_url = $base_url.'&amp;'.TDL_URL_ACTION.'=edit_entry&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_IDS.'='.$id;
+			$target_url = clone $base_url;
+			$target_url->set(TDL_URL_ACTION,'edit_entry');
+			$target_url->set(TDL_URL_MODE,'edit');
+			$target_url->set(TDL_URL_IDS,$id);
 			$action_type = TDL_ACTION_EDIT_ENTRY;
 		}
 		else
 		{
-			$target_url = $base_url.'&amp;'.TDL_URL_ACTION.'=edit_entry&amp;'.TDL_URL_MODE.'=add';
+			$target_url = clone $base_url;
+			$target_url->set(TDL_URL_ACTION,'edit_entry');
+			$target_url->set(TDL_URL_MODE,'add');
 			$action_type = TDL_ACTION_NEW_ENTRY;
 		}
 		
@@ -191,7 +199,7 @@ final class TDL_Module_edit_entry extends TDL_Module
 			'not_multiple_edit' => !$multiple,
 			'mode' => $mode,
 			'selected_entries' => $entries,
-			'target_url' => $target_url,
+			'target_url' => $target_url->to_url(),
 			'action_type' => $action_type,
 			'def_title' => $data['entry_title'],
 			'def_description' => $data['entry_description'],
@@ -216,7 +224,7 @@ final class TDL_Module_edit_entry extends TDL_Module
 			'priority_combo' => $this->_get_combobox(
 				$multiple,'priority',$functions->get_priorities(false),$data['entry_priority']
 			),
-			'back_url' => $base_url
+			'back_url' => $base_url->to_url()
 		));
 	}
 	

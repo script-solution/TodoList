@@ -134,7 +134,7 @@ class TDL_Action_edit_entry_edit extends FWS_Action_Base
 		else
 			$msg = $locale->_('The entry has been edited successfully');
 		$this->set_success_msg($msg);
-		$this->set_redirect(true,$functions->get_entry_base_url());
+		$this->set_redirect(true,TDL_URL::get_entry_url());
 		$this->set_action_performed(true);
 		
 		return '';

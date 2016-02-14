@@ -53,8 +53,8 @@ class TDL_Action_view_projects_delete extends FWS_Action_Base
 		}
 		
 		$this->set_success_msg($locale->_('The projects have been deleted'));
-		$this->set_redirect(true,TDL_URL::get_url('view_projects'));
-		$this->add_link($locale->_('Back'),TDL_URL::get_url('view_projects'));
+		$this->set_redirect(true,TDL_URL::get_mod_url('view_projects'));
+		$this->add_link($locale->_('Back'),TDL_URL::get_mod_url('view_projects'));
 		$this->set_action_performed(true);
 	
 		return '';

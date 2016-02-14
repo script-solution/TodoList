@@ -43,7 +43,7 @@ final class TDL_Module_view_projects extends TDL_Module
 		$renderer = $doc->use_default_renderer();
 		$locale = FWS_Props::get()->locale();
 		$renderer->add_action(TDL_ACTION_DELETE_PROJECTS,'delete');
-		$renderer->add_breadcrumb($locale->_('Projects'),TDL_URL::get_url('view_projects'));
+		$renderer->add_breadcrumb($locale->_('Projects'),TDL_URL::get_mod_url()->to_url());
 	}
 	
 	/**

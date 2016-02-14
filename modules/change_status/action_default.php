@@ -77,7 +77,7 @@ class TDL_Action_change_status_default extends FWS_Action_Base
 		$this->set_show_status_page(false);
 		$this->set_success_msg($locale->_('The status has been changed successfully'));
 		$this->set_action_performed(true);
-		$this->set_redirect(true,TDL_URL::get_url(-1));
+		$this->set_redirect(true,TDL_URL::get_mod_url(-1));
 	
 		return '';
 	}

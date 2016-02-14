@@ -48,7 +48,7 @@ final class TDL_Module_change_status extends TDL_Module
 
 		$id_str = $input->get_predef(TDL_URL_IDS,'get');
 		$renderer->add_breadcrumb(
-			$locale->_('Change state'),TDL_URL::get_url(0,'&amp;'.TDL_URL_IDS.'='.$id_str)
+			$locale->_('Change state'),TDL_URL::get_mod_url()->set(TDL_URL_IDS,$id_str)->to_url()
 		);
 	}
 	

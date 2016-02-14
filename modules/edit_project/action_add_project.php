@@ -55,7 +55,7 @@ class TDL_Action_edit_project_add_project extends FWS_Action_Base
 		$project->create();
 		$id = $project->get_id();
 		
-		$edit_url = TDL_URL::get_url('edit_project','&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$id);
+		$edit_url = TDL_URL::get_mod_url('edit_project')->set(TDL_URL_MODE,'edit')->set(TDL_URL_ID,$id);
 		$this->set_success_msg($locale->_('The project has been added'));
 		$this->set_redirect(true,$edit_url);
 		$this->add_link($locale->_('Edit the project'),$edit_url);

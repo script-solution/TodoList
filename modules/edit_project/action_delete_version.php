@@ -51,7 +51,7 @@ class TDL_Action_edit_project_delete_version extends FWS_Action_Base
 		$this->set_success_msg($locale->_('The version has been deleted'));
 		$this->set_redirect(
 			true,
-			TDL_URL::get_url('edit_project','&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$pid)
+			TDL_URL::get_mod_url('edit_project')->set(TDL_URL_MODE,'edit')->set(TDL_URL_ID,$pid)
 		);
 		$this->set_show_status_page(false);
 		$this->set_action_performed(true);

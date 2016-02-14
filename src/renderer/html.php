@@ -47,7 +47,7 @@ class TDL_Renderer_HTML extends FWS_Document_Renderer_HTML_Default
 		$tpl->set_cache_folder(FWS_Path::server_app().'cache/');
 		
 		// add the home-breadcrumb
-		$this->add_breadcrumb($locale->_('TodoList'),TDL_URL::get_url('view_entries'));
+		$this->add_breadcrumb($locale->_('TodoList'),TDL_URL::get_mod_url('view_entries')->to_url());
 		
 		$this->_action_perf->set_prefix('TDL_Action_');
 		

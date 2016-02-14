@@ -55,17 +55,20 @@ final class TDL_Module_edit_project extends TDL_Module
 		if($mode == 'edit')
 		{
 			$id = (int)$input->get_var(TDL_URL_ID,'get',FWS_Input::STRING);
-			$murl = TDL_URL::get_url(0,'&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$id);
+			$murl = TDL_URL::get_mod_url();
+			$murl->set(TDL_URL_MODE,'edit');
+			$murl->set(TDL_URL_ID,$id);
 			$title = $locale->_('Edit project');
 		}
 		else
 		{
-			$murl = TDL_URL::get_url(0,'&amp;'.TDL_URL_MODE.'=add');
+			$murl = TDL_URL::get_mod_url();
+			$murl->set(TDL_URL_MODE,'add');
 			$title = $locale->_('New project');
 		}
 		
-		$renderer->add_breadcrumb('Projekte',TDL_URL::get_url('view_projects'));
-		$renderer->add_breadcrumb($title,$murl);
+		$renderer->add_breadcrumb('Projekte',TDL_URL::get_mod_url('view_projects')->to_url());
+		$renderer->add_breadcrumb($title,$murl->to_url());
 	}
 	
 	/**
@@ -98,7 +101,9 @@ final class TDL_Module_edit_project extends TDL_Module
 				return;
 			}
 			
-			$target_url = TDL_URL::get_url(0,'&amp;'.TDL_URL_MODE.'=edit&amp;'.TDL_URL_ID.'='.$id);
+			$target_url = TDL_URL::get_mod_url();
+			$target_url->set(TDL_URL_MODE,'edit');
+			$target_url->set(TDL_URL_ID,$id);
 			$action_type = TDL_ACTION_EDIT_PROJECT;
 		}
 		else
@@ -109,7 +114,8 @@ final class TDL_Module_edit_project extends TDL_Module
 				'project_start' => 0
 			);
 			
-			$target_url = TDL_URL::get_url(0,'&amp;'.TDL_URL_MODE.'=add');
+			$target_url = TDL_URL::get_mod_url();
+			$target_url->set(TDL_URL_MODE,'add');
 			$action_type = TDL_ACTION_ADD_PROJECT;
 		}
 		
@@ -146,22 +152,22 @@ final class TDL_Module_edit_project extends TDL_Module
 		
 		$tpl->add_variables(array(
 			'mode' => $mode,
-			'target_url' => $target_url,
+			'target_url' => $target_url->to_url(),
 			'action_type' => $action_type,
 			'def_name' => $data['project_name'],
 			'def_name_short' => $data['project_name_short'],
 			'def_start' => $data['project_start'],
 			'versions' => $tplversions,
 			'categories' => $categories,
-			'add_version_url' => $target_url.'&amp;'.TDL_URL_AT.'='.TDL_ACTION_ADD_VERSION,
-			'add_category_url' => $target_url.'&amp;'.TDL_URL_AT.'='.TDL_ACTION_ADD_CATEGORY
+			'add_version_url' => $target_url->set(TDL_URL_AT,TDL_ACTION_ADD_VERSION)->to_url(),
+			'add_category_url' => $target_url->set(TDL_URL_AT,TDL_ACTION_ADD_CATEGORY)->to_url()
 		));
 	}
 	
 	/**
 	 * builds an input-box with an delete-button
 	 * 
-	 * @param string $target_url the base-url
+	 * @param FWS_URL $target_url the base-url
 	 * @param int $id the id of the entry
 	 * @param string $name the name of the field
 	 * @param string $value the value of the input-box
@@ -174,7 +180,7 @@ final class TDL_Module_edit_project extends TDL_Module
 		$result = '<input type="text" name="'.$name.'['.$id.']" size="30" maxlength="50"';
 		$result .= ' value="'.$value.'" style="margin-bottom: 3px;" />&nbsp;';
 		$result .= '<input type="button" value="'.$locale->_('Delete').'" onclick="document.location.href = \'';
-		$result .= $target_url.'&amp;'.TDL_URL_AT.'='.$action_type;
+		$result .= $target_url->to_url().'&amp;'.TDL_URL_AT.'='.$action_type;
 		$result .= '&amp;'.TDL_URL_SID.'='.$id.'\';" style="margin-bottom: 3px;" /><br />';
 		return $result;
 	}

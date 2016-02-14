@@ -103,7 +103,7 @@ class TDL_Action_edit_entry_add extends FWS_Action_Base
 		$url = new TDL_URL();
 		$this->add_link($locale->_('Back'),$url->set(TDL_URL_ACTION,'view_entries'));
 		$this->set_success_msg('Der Eintrag wurde erfolgreich erstellt!');
-		$this->set_redirect(true,$functions->get_entry_base_url());
+		$this->set_redirect(true,TDL_URL::get_entry_url());
 		$this->set_action_performed(true);
 		
 		return '';

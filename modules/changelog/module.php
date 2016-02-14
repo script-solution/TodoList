@@ -47,7 +47,7 @@ final class TDL_Module_changelog extends TDL_Module
 		if($mode == 'export')
 			$doc->use_raw_renderer();
 		
-		$renderer->add_breadcrumb('Changelog',TDL_URL::get_url('changelog'));
+		$renderer->add_breadcrumb('Changelog',TDL_URL::build_mod_url('changelog'));
 	}
 	
 	/**
