@@ -15,7 +15,7 @@
 define('TDL_VERSION',								'TodoList v1.0');
 define('TDL_GENERAL_ERROR',					'Die Aktion ist fehlgeschlagen (Keine genaueren Informationen).');
 
-define('TDL_FWS_PATH',							'../FrameWorkSolution/');
+define('TDL_FWS_PATH',							'fws/');
 
 define('TDL_DB_CHARSET',						'latin1');
 define('TDL_HTML_CHARSET',					'iso-8859-1');
