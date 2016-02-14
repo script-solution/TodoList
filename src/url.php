@@ -33,7 +33,16 @@ class TDL_URL extends FWS_URL
 	public static function simple_url($target = 0,$additional = '',$separator = '&amp;')
 	{
 		if($additional != '')
-			$additional = preg_replace('/\$([a-z0-9_]+)/ie','TDL_\\1',$additional);
+		{
+			$additional = preg_replace_callback(
+				'/\$([a-z0-9_]+)/i',
+				function($m)
+				{
+					return constant('TDL_'.$m[1]);
+				},
+				$additional
+			);
+		}
 		return self::get_url($target,$additional,$separator);
 	}
 	
